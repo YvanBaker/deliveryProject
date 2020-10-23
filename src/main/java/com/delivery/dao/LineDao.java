@@ -13,20 +13,21 @@ import java.util.List;
 public interface LineDao {
 
     /**
+     * 添加路线
      * @param line line
      * @return boolean
      */
     boolean addLine(Line line);
 
     /**
-     *
+     *修改路线和删除路线
      * @param line line
      * @return boolean
      */
     boolean updateAndRemoveLine(Line line);
 
     /**
-     *
+     *查询全部路线
      * @return list
      */
     List<Line> selectLine();
