@@ -46,14 +46,14 @@ public interface StaffDao {
     List<Staff> selectAllStaff();
     /**
      * 通过任意一个元素查询员工
-     * @param staff
+     * @param staff staff
      * @return list
      */
     List<Staff> selectStaffByOneElement(Staff staff);
 
     /**
      * 查询运货标准是否被使用
-     * @param  standard
+     * @param  standard standard
      * @return list
      */
     List<Staff> selectStaffByStandard(String standard);
@@ -69,4 +69,15 @@ public interface StaffDao {
 
     int staffDelIsYCount();
 
+     * 模糊查询
+     * @param staff staff
+     * @return list
+     */
+    List<Staff> selectStaffByDimElements(Staff staff);
+
+    /**
+     * 多表联查
+     * @return list
+     */
+    List<Staff> selectStaffStandardLineInstead();
 }
