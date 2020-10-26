@@ -3,9 +3,11 @@ package com.delivery.dao;
 import com.delivery.entity.Staff;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -23,6 +25,7 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
+@Transactional
 public class TestStaffDao extends AbstractJUnit4SpringContextTests {
 
     @Resource
@@ -90,6 +93,23 @@ public class TestStaffDao extends AbstractJUnit4SpringContextTests {
     public void selectStaffByStandard(){
         List<Staff> staff=staffDao.selectStaffByStandard("test");
         assertFalse(staff.isEmpty());
+    }
+
+    @Test
+    @Rollback
+    public void selectStaffByDimElement(){
+        Staff staff=new Staff();
+        staff.setName("test");
+        List<Staff> staff1=staffDao.selectStaffByDimElements(staff);
+        assertFalse(staff1.isEmpty());
+    }
+
+    @Test
+    @Rollback
+    public void selectStaffStandardLineInstead(){
+        List list=staffDao.selectStaffStandardLineInstead();
+        assertFalse(list.isEmpty());
+
     }
 
 

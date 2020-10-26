@@ -1,6 +1,7 @@
 package com.delivery.service;
 
 import com.delivery.entity.Staff;
+import com.delivery.utilentity.FindStaff;
 
 import java.util.List;
 
@@ -42,4 +43,21 @@ public interface StaffService {
      */
     List<Staff> selectStaffByOneElement(Staff staff);
 
+    /**
+     * 通过 工号，所属定区，收派标准，所属单位查寻
+     * @param findStaff
+     * @return
+     */
+    Staff selectStaffByColumns(FindStaff findStaff);
+
+    /**
+     * 分页查询
+     * @param page
+     * @param rows
+     * @return
+     */
+    List<Staff> selectStaffByPage(int page, int rows);
+
+
+    int staffDelIsYTotal();
 }

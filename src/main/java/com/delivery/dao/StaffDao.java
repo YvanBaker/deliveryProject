@@ -1,6 +1,7 @@
 package com.delivery.dao;
 
 import com.delivery.entity.Staff;
+import com.delivery.utilentity.FindStaff;
 
 import java.util.List;
 
@@ -45,15 +46,38 @@ public interface StaffDao {
     List<Staff> selectAllStaff();
     /**
      * 通过任意一个元素查询员工
-     * @param staff
+     * @param staff staff
      * @return list
      */
     List<Staff> selectStaffByOneElement(Staff staff);
 
     /**
      * 查询运货标准是否被使用
-     * @param  standard
+     * @param  standard standard
      * @return list
      */
     List<Staff> selectStaffByStandard(String standard);
+
+    /**
+     * 通过 工号，所属定区，收派标准，所属单位查寻
+     * @param findStaff
+     * @return
+     */
+    Staff selectStaffByColumns(FindStaff findStaff);
+
+    List<Staff> selectStafflimit(int page, int rows);
+
+    int staffDelIsYCount();
+
+     * 模糊查询
+     * @param staff staff
+     * @return list
+     */
+    List<Staff> selectStaffByDimElements(Staff staff);
+
+    /**
+     * 多表联查
+     * @return list
+     */
+    List<Staff> selectStaffStandardLineInstead();
 }

@@ -13,6 +13,10 @@ public class Staff {
     private String deltag;
     private String station;
     private String standard;
+    private Standard s;
+    private Line line;
+    private Instead instead;
+
 
     public Staff() {
     }
@@ -100,6 +104,30 @@ public class Staff {
         this.standard = standard;
     }
 
+    public Standard getS() {
+        return s;
+    }
+
+    public void setS(Standard s) {
+        this.s = s;
+    }
+
+    public Line getLine() {
+        return line;
+    }
+
+    public void setLine(Line line) {
+        this.line = line;
+    }
+
+    public Instead getInstead() {
+        return instead;
+    }
+
+    public void setInstead(Instead instead) {
+        this.instead = instead;
+    }
+
     @Override
     public String toString() {
         return "Staff{" +
@@ -111,6 +139,9 @@ public class Staff {
                 ", deltag='" + deltag + '\'' +
                 ", station='" + station + '\'' +
                 ", standard='" + standard + '\'' +
+                ", s=" + s +
+                ", line=" + line +
+                ", instead=" + instead +
                 '}';
     }
 }
