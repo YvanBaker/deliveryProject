@@ -2,6 +2,7 @@ package com.delivery.util;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  * @author Yvan
@@ -11,14 +12,31 @@ import java.time.format.DateTimeFormatter;
  */
 public class TimeUtil {
     /**
-    * @author fujianian
+     * 获取当前时间
+     * @author fujianian
      * return String
      * @Date 2020/10/22 9:41
-    */
-    public static String localtime(){
+     */
+    public static String localtime() {
         LocalDateTime dateTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         return dateTime.format(formatter);
+    }
+
+    /**
+     * 日期减日期
+     * @author fujianian
+     * @return boolean
+     */
+    public static boolean datedate(Date insteadDate) {
+        long nowDate = System.currentTimeMillis();
+        long day = 0;
+        day = insteadDate.getTime() - nowDate;
+        if (day<=0){
+            return false;
+        }else{
+            return true;
+        }
     }
 
 }

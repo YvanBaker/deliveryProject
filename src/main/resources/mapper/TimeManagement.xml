@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.delivery.dao.TimeManagementDao">
+    <resultMap id="timeManagementMap" type="TimeManagement">
+        <id property="id" column="id"/>
+        <result property="timeName" column="timeName"/>
+        <result property="station" column="station"/>
+        <result property="normalWorkName" column="normalWorkName"/>
+        <result property="normalOffWorkTime" column="normalOffWorkTime"/>
+        <result property="weekWorkName" column="weekWorkName"/>
+        <result property="weekOffWorkName" column="weekOffWorkName"/>
+        <result property="status" column="status"/>
+        <result property="operator" column="operator"/>
+        <result property="oStation" column="oStation"/>
+        <result property="oTime" column="oTime"/>
+    </resultMap>
+
+    <insert id="addTimeManagement">
+        INSERT INTO timeManagement (timeName, station, normalWorkTime, normalOffWorkTime, weekWorkTime, weekOffWorkTime, operator, oStation, oTime)
+        VALUE (#{timeName},#{station},#{normalWorkTime},#{normalOffWorkTime},#{weekWorkTime},#{weekOffWorkTime},#{operator},#{oStation},#{oTime})
+    </insert>
+    <update id="updateAndRemoveTimeManagement">
+        UPDATE timeManagement SET
+        <if test="timeName!=null and timeName!='' ">timeName=#{timeName},</if>
+        <if test="normalWorkTime!=null and normalWorkTime!=''">normalWorkTime=#{normalWorkTime},</if>
+        <if test="normalOffWorkTime!=null and normalOffWorkTime!=''">normalOffWorkTime=#{normalOffWorkTime},</if>
+        <if test="weekWorkTime!=null and weekWorkTime!=''">weekWorkTime=#{weekWorkTime},</if>
+        <if test="weekOffWorkTime!=null and weekOffWorkTime!=''">weekOffWorkTime=#{weekOffWorkTime},</if>
+        <if test="status!=null and status!=''">status=#{status},</if>
+        <if test="operator!=null and operator!=''">operator=#{operator},</if>
+        <if test="oStation!=null and oStation!=''">oStation=#{oStation},</if>
+        <if test="oTime!=null and oTime!=''">oTime=#{oTime}</if>
+        WHERE id=#{id}
+    </update>
+
+    <select id="selectTimeManagement" resultMap="timeManagementMap">
+        SELECT * FROM timeManagement
+    </select>
+</mapper>
