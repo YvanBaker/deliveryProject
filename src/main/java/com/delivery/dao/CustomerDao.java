@@ -2,10 +2,7 @@ package com.delivery.dao;
 
 import com.delivery.entity.Customer;
 import com.delivery.mapper.CustomerDaoMapper;
-import org.apache.ibatis.annotations.InsertProvider;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.UpdateProvider;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,6 +22,7 @@ public interface CustomerDao {
      * @return int
      */
     @InsertProvider(type = CustomerDaoMapper.class, method = "insertCustomerSql")
+    @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
     int insertCustomer(Customer customer);
 
     /**
