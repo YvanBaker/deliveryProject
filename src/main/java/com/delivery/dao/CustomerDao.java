@@ -75,16 +75,26 @@ public interface CustomerDao {
      *
      * @param name     名字
      * @param password 密码
-     * @return Customer
+     * @return Customer 用户
      */
     @Select("select id, phone, password, name, customer_email, create_time, sex from customer where name = #{name} and password = #{password}")
     Customer selectCustomerByNameAndPassword(@Param("name") String name, @Param("password") String password);
 
     /**
+     * 根据 邮箱 和 密码 查询 用户
+     *
+     * @param email    邮箱
+     * @param password 密码
+     * @return Customer 用户
+     */
+    @Select("select * from customer where customer_email = #{email} and password = #{password}")
+    Customer selectCustomerByEmailAndPassword(@Param("email") String email, @Param("password") String password);
+
+    /**
      * 根据 性别 查询
      *
      * @param sex 性别
-     * @return List<Customer>
+     * @return List<CustomerService>
      */
     @Select("select id, phone, password, name, customer_email, create_time, sex from customer where sex = #{sex}")
     List<Customer> selectCustomerBySex(@Param("sex") int sex);
