@@ -63,4 +63,10 @@ public interface StaffDao {
      * @return list
      */
     List<Staff> selectStaffByDimElements(Staff staff);
+
+    /**
+     * 多表联查
+     * @return list
+     */
+    List<Staff> selectStaffStandardLineInstead();
 }

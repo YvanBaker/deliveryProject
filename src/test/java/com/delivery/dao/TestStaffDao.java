@@ -100,10 +100,17 @@ public class TestStaffDao extends AbstractJUnit4SpringContextTests {
     public void selectStaffByDimElement(){
         Staff staff=new Staff();
         staff.setName("test");
-        List<Staff> staff1=staffDao.selectStaffByDimElement(staff);
+        List<Staff> staff1=staffDao.selectStaffByDimElements(staff);
         assertFalse(staff1.isEmpty());
     }
 
+    @Test
+    @Rollback
+    public void selectStaffStandardLineInstead(){
+        List list=staffDao.selectStaffStandardLineInstead();
+        assertFalse(list.isEmpty());
+
+    }
 
 
 }

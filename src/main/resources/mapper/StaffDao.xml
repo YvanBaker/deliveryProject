@@ -49,9 +49,40 @@
         <where>
             <if test="name!=null and name!=''">and name like '%${name}%'</if>
             <if test="station!=null and station!=''"> and station like '%${station}%'</if>
-            <if test="standard!=null and standard!=''">and station like '%${standard}%'</if>
+            <if test="standard!=null and standard!=''">and standard like '%${standard}%'</if>
         </where>
     </select>
 
+    <select id="selectStaffStandardLineInstead" resultType="com.delivery.entity.Staff">
+        SELECT
+            staff.id,
+            staff.uuid,
+            staff.name,
+            staff.telephone,
+            staff.haspda,
+            staff.deltag,
+            staff.station,
+            staff.standard,
+            standard.minWeight,
+            standard.maxWeight,
+            standard.minVolume,
+            standard.maxVolume,
+            line.lineType,
+            line.lineName,
+            line.licensePlate,
+            line.carModel,
+            line.weightControl,
+            instead.replacedStaffName,
+            instead.replacedStaffUuid,
+            instead.insteadStaffUuid,
+            instead.insteadStaffName,
+            instead.startTime,
+            instead.endTime
+        FROM staff, standard, line, instead
+        WHERE staff.standard = standard.standardName
+        AND line.driver = staff.id
+        AND instead.replacedStaffUuid = staff.uuid
+        AND instead.status = '1'
+    </select>
 
 </mapper>
