@@ -34,7 +34,7 @@ a:hover{color:#000}
 .locationTestTitle,
 .verSelected,
 .servSelected,
-.locationTestTitleClose{background-image:url(../images/bg_grey.png)}
+.locationTestTitleClose{background-image:url(../img/bg_grey.png)}
 .headerLogo,
 .headerIntro,
 .headerNav,
@@ -118,8 +118,8 @@ a:hover{color:#000}
 .forgetPwd:hover{color:#333;}
 .loginFormCbx{width:13px;height:13px;padding:0;overflow:hidden;margin:0;}
 .loginFormSslText{font-family:simsun}
-.btn{float:left;height:35px;text-align:center;cursor:pointer;border:0;padding:0;font-weight:700;font-size:14px;display:inline-block;vertical-align:baseline;line-height:35px;outline:0;}
-.btn-login{width:102px;background-position:0 -208px;color:#fff;float:right;}
+.btn{float:left;height:34px;text-align:center;cursor:pointer;border:0;padding:0;font-weight:700;font-size:14px;display:inline-block;vertical-align:baseline;line-height:20px;outline:0;}
+.btn-login{width:102px;background-position:0 -208px;color:#0e2d5f;float:right;}
 .btn-login-hover{background-position:0 -256px;}
 .btn-login-active{background-position:0 -304px}
 .btn-reg{width:102px;background-position:-112px -208px;color:#555;float:right;}

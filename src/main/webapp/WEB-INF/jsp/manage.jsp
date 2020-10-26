@@ -14,40 +14,47 @@
 <head>
     <base href="<%=basePath%>"/>
     <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="../easyui/themes/default/easyui.css">
-    <link rel="stylesheet" type="text/css" href="../easyui/themes/icon.css">
-    <script type="text/javascript" src="../js/jquery-1.8.3.js"></script>
-    <script type="text/javascript" src="../easyui/jquery.min.js"></script>
-    <script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <script type="text/javascript" src="/js/jquery-1.8.3.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
     <!-- 导入ztree类库 -->
     <link rel="stylesheet"
-          href="../js/ztree/zTreeStyle.css"
+          href="/js/ztree/zTreeStyle.css"
           type="text/css"/>
     <script
-            src="../js/ztree/jquery.ztree.all-3.5.js"
+            src="/js/ztree/jquery.ztree.all-3.5.js"
             type="text/javascript"></script>
 </head>
 <body>
 <div id="cc" class="easyui-layout" style="width:100%;height:100%;">
+    <%-- 头部--%>
     <div data-options="region:'north' " style="height:100px;"></div>
-    <div data-options="region:'south',title:'South Title'" style="height:100px;"></div>
-    <div data-options="region:'west',title:'West'" style="width:200px;">
+
+    <%--左边--%>
+    <div data-options="region:'west',title:'系统菜单'" style="width:200px;">
         <div class="easyui-accordion" data-options="fit:true">
-            <div title="面版1">
-                <ul id="ztree3" class="ztree"></ul>
+            <div title="基础功能">
+                <ul id="ztree1" class="ztree"></ul>
             </div>
-            <div title="面版1">sss</div>
+            <div title="系统管理" id="ztree2" class="ztree"> </div>
         </div>
     </div>
-    <div data-options="region:'center',title:'center title'" style="padding:5px;background:#eee;">
+
+    <%--中间--%>
+    <div data-options="region:'center'" style="padding:5px;background:#eee;">
         <div id="tt" class="easyui-tabs" data-options="fit:true">
-            <%--                <div data-options="closable:true,iconCls:'icon-edit'" title="面版1">Aaa</div>--%>
+            <%-- <div data-options="closable:true,iconCls:'icon-edit'" title="面版1">Aaa</div>--%>
         </div>
     </div>
+    <%--尾部--%>
+    <div data-options="region:'south',title:'South Title'" style="height:100px;"></div>
 </div>
 <script>
+    /*基础功能菜单列表*/
     $(function () {
-        var setting3 = {
+        var setting1 = {
             data: {
                 simpleData: {
                     enable: true
@@ -79,22 +86,65 @@
             }
         };//设置ztree相关的属性
         //发送ajax请求获取json数据构造ztree
-        var url = "../json/menu.json";
-        $.post(url, {}, function (data) {
+        var url = "/json/menu.json";
+        $.get(
+            url,
+            {},
+            function (data) {
             //创建ztree
-            $.fn.zTree.init($("#ztree3"), setting3, data);
-        }, 'json');
+            $.fn.zTree.init($("#ztree1"), setting1, data);},
+            'json');
     });
 
-    function doAdd() {
+    /*系统管理菜单*/
+    $(function () {
+        var setting2 ={
+            data:{
+                simpleData: {
+                    enable: true
+                }
+            },
+            callback:{
+                onClick:function (a,b,treeNode) {
+                    var page=treeNode.page;
+                    if (page != undefined) {
+                        var e = $("#tt").tabs("exists", treeNode.name);
+                        if (e) {
+                            //已经打开
+                            $("#tt").tabs("select", treeNode.name);
+                        } else {
+                            $("#tt").tabs(
+                                    "add",
+                                    {
+                                        title: treeNode.name,
+                                        content: '<iframe frameborder="0" width="100%" height="100%" src="' + page + '"/>',
+                                        closable: true,
+                                        iconCls: 'icon-edit'
+                                    });
+                        }
+                    }
+                }
+            }
+        };
+        //发送ajax请求获取json数据构造ztree
+        var url = "/json/menu2.json";
+        $.get(url, {}, function (data) {
+            //创建ztree
+            $.fn.zTree.init($("#ztree2"), setting2, data);
+        }, 'json');
+    })
+
+
+    /*function doAdd() {
         $("#tt").tabs('add', {
             title: "面版1",
-            content: '<iframe frameborder="0" width="80%" height="50%" src="loginView.do"></iframe>',
+            content: '<iframe frameborder="0" width="80%" height="50%" src="loginView"></iframe>',
             iconCls: 'icon-edit',
             closable: true
         })
-    }
+    }*/
 
+    /*欢迎界面*/
     <%Admin admin=(Admin) session.getAttribute("admin");%>
     var username = "<%=admin.getUserName()%>"
     $(

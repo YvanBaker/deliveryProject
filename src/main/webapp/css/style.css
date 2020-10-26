@@ -69,12 +69,12 @@ a {
 
 .btn {
     padding: 5px 5px 5px 8px;
-    background-image: url(../images/163btn.png);
+    /*background-image: url(../img/163btn.png);*/
     border: 1px solid #bbbbbb;
     font-weight: bold;
     color: rgba(68, 64, 64, 0.89);
     letter-spacing: 3px;
-    font-size:10pt;
+    font-size:13pt;
     margin-left:3px;
 }
 
@@ -1370,7 +1370,7 @@ textarea[type="textarea"], input[type="text"], input[type="password"], select {
 
 textarea[type="textarea"], input[type="text"], input[type="password"], select {
     background-color: #FFFFFF;
-    background-image: url("../images/bg_grey.png");
+    background-image: url("../img/bg_grey.png");
     border-color: #BED6F8;
     color: #000000;
     font-family: Arial,Verdana,sans-serif;

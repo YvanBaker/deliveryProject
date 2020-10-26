@@ -15,6 +15,6 @@
     <title>Title</title>
 </head>
 <body>
-<a href="admin/loginView">userindex</a>
+<%--<a href="admin/loginView">userindex</a>--%><jsp:forward page="admin/loginView"></jsp:forward>
 </body>
 </html>
