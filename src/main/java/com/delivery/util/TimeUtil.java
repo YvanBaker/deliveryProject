@@ -14,8 +14,8 @@ public class TimeUtil {
     /**
      * 获取当前时间
      * @author fujianian
-     * return String
      * @Date 2020/10/22 9:41
+     * @return String
      */
     public static String localtime() {
         LocalDateTime dateTime = LocalDateTime.now();
@@ -26,6 +26,7 @@ public class TimeUtil {
     /**
      * 日期减日期
      * @author fujianian
+     * @Date 2020/10/26 15:31
      * @return boolean
      */
     public static boolean datedate(Date insteadDate) {

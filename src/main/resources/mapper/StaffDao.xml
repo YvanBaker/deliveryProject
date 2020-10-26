@@ -38,9 +38,20 @@
         <if test="name!=null and name!=''">and name=#{name}</if>
         <if test="station!=null and station!=''"> and station=#{station}</if>
         <if test="uuid!=null and uuid!=''">and uuid=#{uuid}</if>
-
     </select>
+
     <select id="selectStaffByStandard" resultMap="StaffMap" parameterType="Staff">
         select * from staff where standard=#{standard};
     </select>
+
+    <select id="selectStaffByDimElements" resultMap="StaffMap" parameterType="Staff">
+        select * from staff
+        <where>
+            <if test="name!=null and name!=''">and name like '%${name}%'</if>
+            <if test="station!=null and station!=''"> and station like '%${station}%'</if>
+            <if test="standard!=null and standard!=''">and station like '%${standard}%'</if>
+        </where>
+    </select>
+
+
 </mapper>
