@@ -51,7 +51,7 @@
     <select id="selectStafflimit" resultType="staff" >
         select id,uuid,name,telephone,haspda,deltag,station,standard from staff where deltag='Y' ORDER BY id asc limit #{arg0},#{arg1}
     </select>
-    <select id="staffDelIsYCount" resultType="_int">
+    <select id="staffDelIsYCount" resultType="java.lang.Integer">
         select count(*) from staff where deltag='Y'
     </select>
 

@@ -68,7 +68,7 @@ public interface StaffDao {
     List<Staff> selectStafflimit(int page, int rows);
 
     int staffDelIsYCount();
-
+    /**
      * 模糊查询
      * @param staff staff
      * @return list

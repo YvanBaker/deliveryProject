@@ -66,21 +66,21 @@ public class StandardDaoTest {
         assertTrue(i);
     }
 
-    @Test
-    public void selectStandardTest(){
-        List<Standard> list=standardDao.selectStandard();
-        assertTrue(list.size()>0);
-    }
+//    @Test
+//    public void selectStandardTest(){
+//        List<Standard> list=standardDao.selectStandard();
+//        assertTrue(list.size()>0);
+//    }
 
-    @Test
-    public void selectStandardByStatusTest(){
-        List<Standard> list=standardDao.selectStandardByStatus(1);
-        assertTrue(list.size()>0);
-    }
+//    @Test
+//    public void selectStandardByStatusTest(){
+//        List<Standard> list=standardDao.selectStandardByStatus(1);
+//        assertTrue(list.size()>0);
+//    }
 
-    @Test
-    public void selectStandardByStandardName(){
-        List<Standard> list=standardDao.selectStandardByStandardName("test");
-        assertTrue(list.size()>0);
-    }
+//    @Test
+//    public void selectStandardByStandardName(){
+//        List<Standard> list=standardDao.selectStandardByStandardName("test");
+//        assertTrue(list.size()>0);
+//    }
 }
