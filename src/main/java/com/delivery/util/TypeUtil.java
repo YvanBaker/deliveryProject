@@ -17,10 +17,7 @@ public class TypeUtil {
      * @return true
      */
     public static boolean isValidString(String input) {
-        if (input == null) {
-            return false;
-        }
         input = input.replaceAll("^[\\s\\u3000]{1,}([^\\s\\u3000].*[^\\s\\u3000])[\\s\\u3000]{1,}$", "$1");
-        return !"".equals(input);
+        return input != null && !"".equals(input);
     }
 }

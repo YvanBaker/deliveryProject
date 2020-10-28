@@ -35,30 +35,21 @@ public class StaffController {
     /**
      * 查看员工
      *
-     * @param page      当前页
-     * @param rows      记录条数
      * @param findStaff 查询条件
      * @param response  响应
      * @throws IOException
      */
     @RequestMapping("/staffShow")
-    public void staffShow(int page, int rows, FindStaff findStaff,Model model, HttpServletResponse response) throws IOException {
-        System.out.println("findStaffssssssssssssssssssssssssssssssssssssss = " + findStaff);
-        List<Staff> staff = staffService.selectStaffByPage(page, rows);
-        int total= staffService.staffDelIsYTotal();
-        System.out.println("total =sssssssssssssssssssssssssssaaaaaaaaaaaaaaaaaaaaa " + total);
-        PageUtil pageUtil = new PageUtil();
-        pageUtil.setTotal(total);
-        pageUtil.setRows(staff);
-        //List<Staff> staff = staffService.selectStaffDeltagIsYes();total
+    public void staffShow( FindStaff findStaff,HttpServletResponse response) throws IOException {
+        PageUtil pageUtil = staffService.selectStaff(findStaff);
         response.getWriter().write(JSONObject.toJSONString(pageUtil));
     }
 
-    /**
+ /*   *//**
      * TODO 查找员工 selectStaffByColumns的数据库查询语句需要写(多表联查)
      * 通过 工号，所属定区，收派标准，所属单位查寻 395887b2d9de
      * @return
-     */
+     *//*
     @RequestMapping("/findStaffView")
     public void findStaffView(FindStaff findStaff,HttpServletResponse response) throws IOException {
         System.out.println("findStaff = " + findStaff);
@@ -66,7 +57,7 @@ public class StaffController {
         System.out.println("staff = " + staff);
         response.getWriter().write(JSONObject.toJSONString(staff));
 //        return "base/staff";
-    }
+    }*/
 
     /**
      * 添加员工

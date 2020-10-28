@@ -30,7 +30,7 @@
 <body>
 <div id="cc" class="easyui-layout" style="width:100%;height:100%;">
     <%-- 头部--%>
-    <div data-options="region:'north' " style="height:100px;"></div>
+    <div data-options="region:'north' " style="height:100px; "><div><img src="/img/head11.png" ></div></div>
 
     <%--左边--%>
     <div data-options="region:'west',title:'系统菜单'" style="width:200px;">
@@ -49,7 +49,8 @@
         </div>
     </div>
     <%--尾部--%>
-    <div data-options="region:'south',title:'South Title'" style="height:100px;"></div>
+    <div data-options="region:'south'">
+    </div>
 </div>
 <script>
     /*基础功能菜单列表*/
