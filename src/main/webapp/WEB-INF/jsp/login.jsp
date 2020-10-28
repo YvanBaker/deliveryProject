@@ -108,5 +108,17 @@
         href="http://download.firefox.com.cn/releases/full/23.0/zh-CN/Firefox-full-latest.exe">Firefox</a>
 		</span><span style="float: right; color: #488ED5;">程心服务BOS系统</span>
 </div>
+<script>
+    var manager='${msg2}';
+    if (manager!=''){
+            $.messager.show({
+                title: "提示信息",
+                msg:manager ,
+                timeout: 3000,
+                showTimer: "slide"
+            },1000)
+    }
+
+</script>
 </body>
 </html>
