@@ -1,6 +1,8 @@
 package com.delivery.service;
 
 import com.delivery.entity.Standard;
+import com.delivery.util.PageUtil;
+import com.delivery.utilentity.FindStandard;
 
 import java.util.List;
 
@@ -15,27 +17,32 @@ public interface StandardService {
      */
     boolean addStandard(Standard standard);
     /**
-     * 添加标准
+     * 删除标准
      * @param standard standard
      * @return boolean
      */
     boolean removeStandardStatus(Standard standard);
     /**
-     * 添加标准
+     * 更新标准
      * @param standard standard
      * @return boolean
      */
     boolean updateStandard(Standard standard);
-    /**
-     * 查询标准
-     * @return List
-     */
-    List<Standard> selectStandard();
 
     /**
-     * 按状态查询标准
-     * @param status status
+     * 条件查询标准
+     * @return List
+     */
+    PageUtil selectStandardByElements(FindStandard findStandard);
+
+
+
+    /**
+     * 标准分页
+     * @param page
+     * @param rows
      * @return list
      */
-    List<Standard> selectStandardByStatus(int status);
+    List<Standard> selectStandardLimit(int page, int rows);
+    int standardCount();
 }

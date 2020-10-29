@@ -7,12 +7,14 @@ public class PageUtil {
     private int total;//总记录数
     private List rows;//当前页需要展示的数据集合
 
-    public PageUtil() {
-    }
-
     public PageUtil(int total, List rows) {
         this.total = total;
         this.rows = rows;
+    }
+
+
+    public PageUtil() {
+
     }
 
     @Override

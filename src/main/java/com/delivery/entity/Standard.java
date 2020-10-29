@@ -19,6 +19,13 @@ public class Standard {
     public Standard() {
     }
 
+    public Standard(String standardName, double minWeight, double maxWeight, int status) {
+        this.standardName = standardName;
+        this.minWeight = minWeight;
+        this.maxWeight = maxWeight;
+        this.status = status;
+    }
+
     public Standard(int id, String standardName, double minWeight, double maxWeight, double minVolume, double maxVolume, int status, String operator, String oStation, String oTime) {
         this.id = id;
         this.standardName = standardName;
@@ -96,7 +103,7 @@ public class Standard {
         this.operator = operator;
     }
 
-    public String getoStation() {
+    public String getOStation() {
         return oStation;
     }
 
@@ -104,7 +111,7 @@ public class Standard {
         this.oStation = oStation;
     }
 
-    public String getoTime() {
+    public String getOTime() {
         return oTime;
     }
 

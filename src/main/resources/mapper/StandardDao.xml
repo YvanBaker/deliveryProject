@@ -7,7 +7,7 @@
         <result property="minWeight" column="minWeight"/>
         <result property="maxWeight" column="maxWeight"/>
         <result property="status" column="status"/>
-        <result property="operation" column="operator"/>
+        <result property="operator" column="operator"/>
         <result property="oStation" column="oStation"/>
         <result property="oTime" column="oTime"/>
 
@@ -30,7 +30,7 @@
         where id=#{id}
     </update>
     <update id="removeStandard">
-        UPDATE standard SET status=#{status} where id=#{id}
+        UPDATE standard SET status='0' where id=#{id}
     </update>
 
     <select id="selectStandard" resultMap="standardMap" parameterType="Standard">
@@ -39,7 +39,23 @@
     <select id="selectStandardByStatus" resultMap="standardMap" parameterType="Standard">
         select standardName,minWeight,maxWeight,status FROM standard WHERE status=#{status}
     </select>
-    <select id="selectStandardByStandardName" resultType="com.delivery.entity.Standard">
-        SELECT * from standard where standardName=#{standardName}
+    <select id="selectStandardByElements" resultMap="standardMap" parameterType="FindStaff">
+        SELECT * from standard
+        <where>
+            status='1'
+            <if test="standardName!=null and standardName!=''"> AND standardName LIKE '${standardName}'</if>
+        </where>
+        <!--<if test="status!=null and status!=''">or status=#{status}</if>-->
+        <!--<if test="minWeight!=null and minWeight!=''">or minWeight=#{minWeight}</if>-->
+        <!--<if test="maxWeight!=null and maxWeight!=''">or maxWeight=#{maxWeight}</if>-->
+    </select>
+    <select id="selectStandardLimit" resultMap="standardMap" parameterType="Standard">
+        SELECT * from standard WHERE status='1' ORDER BY id asc limit #{arg0},#{arg1}
+    </select>
+    <select id="standardCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM standard
+    </select>
+    <select id="selectStandardByStandardName" resultMap="standardMap">
+        SELECT * FROM standard WHERE standardName=#{standardName}
     </select>
 </mapper>

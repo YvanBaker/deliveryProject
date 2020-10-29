@@ -4,6 +4,8 @@ import com.delivery.dao.StaffDao;
 import com.delivery.dao.StandardDao;
 import com.delivery.entity.Standard;
 import com.delivery.service.StandardService;
+import com.delivery.util.PageUtil;
+import com.delivery.utilentity.FindStandard;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -42,7 +44,8 @@ public class StandardServiceImpl implements StandardService {
 
     @Override
     public boolean updateStandard(Standard standard) {
-        if (standard.getStatus()!=1){
+        String standardId=String.valueOf(standard.getId());
+        if (staffDao.selectStaffByStandard(standardId).size()>0){
             return false;
         }else{
             return standardDao.updateStandard(standard);
@@ -50,13 +53,22 @@ public class StandardServiceImpl implements StandardService {
     }
 
     @Override
-    public List<Standard> selectStandard() {
-        return standardDao.selectStandard();
+    public PageUtil selectStandardByElements(FindStandard findStandard) {
+
+        List<Standard> standard = standardDao.selectStandardByElements(findStandard);
+        int i = standardDao.standardCount();
+        return new PageUtil(i,standard);
+    }
+
+
+    @Override
+    public List<Standard> selectStandardLimit(int page, int rows) {
+        return standardDao.selectStandardLimit((page-1)*rows,rows);
     }
 
     @Override
-    public List<Standard> selectStandardByStatus(int status) {
-        return standardDao.selectStandardByStatus(status);
+    public int standardCount() {
+        return standardDao.standardCount();
     }
 
 
