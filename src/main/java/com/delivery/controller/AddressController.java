@@ -9,10 +9,7 @@ import com.delivery.model.MsgResponse;
 import com.delivery.service.AddressService;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -36,6 +33,7 @@ public class AddressController {
 
     @GetMapping(value = "/provinces", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
+    @CrossOrigin
     public String getProvince() {
         List<Provinces> provincesList = addressService.queryProvincesAll();
         MsgResponse msgResponse = MsgResponse.buildSuccess(SUCCESS, provincesList);

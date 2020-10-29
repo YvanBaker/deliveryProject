@@ -9,17 +9,26 @@ import java.util.Properties;
  * 邮箱
  */
 public final class MailUtils {
-    private static final String USER = "344620671@qq.com"; // 发件人称号，同邮箱地址
-    private static final String PASSWORD = "gxhiosswajkscaeg"; // 如果是qq邮箱可以使户端授权码，或者登录密码
+    /**
+     * 发件人称号，同邮箱地址
+     */
+    private static final String USER = "344620671@qq.com";
+    /**
+     * 如果是qq邮箱可以使户端授权码，或者登录密码
+     */
+    private static final String PASSWORD = "gxhiosswajkscaeg";
+
+    public static final String CODE_TITLE = "程心验证码";
+
 
     /**
+     * 发送验证信息的邮件
      *
-     * @param to 收件人邮箱
-     * @param text 邮件正文
+     * @param to    收件人邮箱
+     * @param text  邮件正文
      * @param title 标题
      */
-    /* 发送验证信息的邮件 */
-    public static boolean sendMail(String to, String text, String title){
+    public static boolean sendMail(String to, String text, String title) throws Exception {
         try {
             final Properties props = new Properties();
             props.put("mail.smtp.auth", "true");
@@ -59,19 +68,15 @@ public final class MailUtils {
             // 发送邮件
             Transport.send(message);
             return true;
-        }catch (Exception e){
-            e.printStackTrace();
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
         }
-        return false;
     }
+
     public static class amintest {
         public static void main(String[] args) throws Exception { // 做测试用wxs1321133@163.com
-            MailUtils.sendMail("344620671@qq.com","你好，这是一封测试邮件，无需回复。","测试邮件");
+            MailUtils.sendMail("344620671@qq.com", "你好，这是一封测试邮件，无需回复。", "测试邮件");
             System.out.println("发送成功");
         }
     }
-
-
-
-
 }

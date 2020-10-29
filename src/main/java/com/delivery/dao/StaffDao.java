@@ -69,7 +69,7 @@ public interface StaffDao {
 
     int staffDelIsYCount();
 
-     * 模糊查询
+     /** 模糊查询
      * @param staff staff
      * @return list
      */

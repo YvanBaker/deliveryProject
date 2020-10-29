@@ -73,6 +73,6 @@ public interface UserDao {
      *
      * @return list
      */
-    @Select("select * from user")
+    @Select("select id, user_number, user_name, user_password, user_salary, user_date, user_gender, user_company, user_phone, user_remark, email from user")
     List<User> selectUserAll();
 }
