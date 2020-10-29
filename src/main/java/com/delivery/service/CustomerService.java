@@ -116,4 +116,11 @@ public interface CustomerService {
      * @return Customer
      */
     Customer queryCustomerByNameAndPassword(String name, String password);
+
+    /**
+     * 根据 电话
+     * @param telephone
+     * @return
+     */
+    Customer findCustomerByTelephone(String telephone);
 }
