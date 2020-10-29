@@ -111,4 +111,14 @@ public class CustomerServiceImpl implements CustomerService {
         Customer resData = customerDao.selectCustomerByNameAndPassword(name, password);
         return resData;
     }
+
+    /**
+     * 根据电话
+     * @param telephone
+     * @return
+     */
+    @Override
+    public Customer findCustomerByTelephone(String telephone) {
+        return customerDao.getCustomerByTelephone(telephone);
+    }
 }

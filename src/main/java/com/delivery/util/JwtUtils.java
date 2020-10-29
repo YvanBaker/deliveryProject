@@ -1,6 +1,7 @@
 package com.delivery.util;
 
 
+import com.delivery.entity.Customer;
 import com.delivery.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -18,7 +19,7 @@ public class JwtUtils {
     /**
      * 过期时间，毫秒，一天
      */
-    public static final long EXPIRE = 1000 * 60 * 60 * 24 * 7;
+    public static final long EXPIRE = 1000 * 60 * 60 * 24 * 1;
 
     /**
      * 秘钥
@@ -37,6 +38,24 @@ public class JwtUtils {
         }
         return Jwts.builder().setSubject(SUBJECT)
                 .claim("name", user.getUserName())
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRE))
+                .signWith(SignatureAlgorithm.HS256, APPSECRET).compact();
+    }
+
+    /**
+     * 生成JWT
+     *
+     * @param customer 用户
+     * @return token
+     */
+    public static String geneJsonWebToken(Customer customer) {
+        if (customer == null || customer.getName() == null || customer.getCustomerEmail() == null) {
+            return null;
+        }
+        return Jwts.builder().setSubject(SUBJECT)
+                .claim("name", customer.getName())
+                .claim("customerEmail", customer.getCustomerEmail())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRE))
                 .signWith(SignatureAlgorithm.HS256, APPSECRET).compact();

@@ -98,4 +98,12 @@ public interface CustomerDao {
      */
     @Select("select id, phone, password, name, customer_email, create_time, sex from customer where sex = #{sex}")
     List<Customer> selectCustomerBySex(@Param("sex") int sex);
+
+    /**
+     * 根据 电话
+     * @param phone
+     * @return
+     */
+    @Select("select id, phone, password, name, customer_email, create_time, sex  from customer where phone=#{phone}")
+    Customer getCustomerByTelephone(@Param("phone") String phone);
 }

@@ -1,6 +1,7 @@
 package com.delivery.dao;
 
 import com.delivery.entity.Region;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -21,4 +22,5 @@ public interface RegionDao {
 
     List<Region> selectRegionLimit(int page, int rows);
     //boolean updateRegion(Region region);
+
 }
