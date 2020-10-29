@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.delivery.dao.WorkorderDao">
+
+    <insert id="addWorkorder" parameterType="qpWorkorder">
+        insert into workor_dermanage (workor_id,arrivecity,product,num,weight,floadreqr)values (#{workorId},#{arrivecity},#{product},#{num},#{weight},#{floadreqr});
+    </insert>
+    <select id="getAllWorkorder" resultType="qpWorkorder">
+        select * from workor_dermanage  limit #{arg0},#{arg1}
+    </select>
+    <select id="getAllWorkorderCount" resultType="_int">
+        select count(*) from workor_dermanage
+    </select>
+</mapper>

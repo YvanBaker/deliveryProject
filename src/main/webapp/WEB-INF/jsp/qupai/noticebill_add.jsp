@@ -22,8 +22,6 @@
 </head>
 <script type="text/javascript">
 	$(function(){
-		$("body").css({visibility:"visible"});
-		
 		// 对save按钮条件 点击事件
 		$('#save').click(function(){
 			// 对form 进行校验
@@ -32,15 +30,17 @@
 			}
 		});
 	});
+
+
 </script>
 </head>
-<body class="easyui-layout" style="visibility:hidden;">
+<body class="easyui-layout" >
 	<div region="north" style="height:31px;overflow:hidden;" split="false"
 		border="false">
 		<div class="datagrid-toolbar">
-			<a id="save" icon="icon-save" href="#" class="easyui-linkbutton"
-				plain="true">新单</a>
-			<a id="edit" icon="icon-edit" href="/page_qupai_noticebill.action" class="easyui-linkbutton"
+			<a id="save" icon="icon-save" href="javascript:void(0);" class="easyui-linkbutton"
+				plain="true">保存新单</a>
+			<a id="edit" icon="icon-edit" href="/sys/noticebillView" class="easyui-linkbutton"
 				plain="true">工单操作</a>	
 		</div>
 	</div>
@@ -51,7 +51,7 @@
 					<td colspan="4">客户信息</td>
 				</tr>
 				<tr>
-					<td>来电号码:</td>
+					<td>客户电话:</td>
 					<td><input type="text" class="easyui-validatebox" name="telephone"
 						required="true" /></td>
 					<td>客户编号:</td>
@@ -70,7 +70,7 @@
 					<td colspan="4">货物信息</td>
 				</tr>
 				<tr>
-					<td>品名:</td>
+					<td>物品名:</td>
 					<td><input type="text" class="easyui-validatebox" name="product"
 						required="true" /></td>
 					<td>件数:</td>
@@ -80,7 +80,7 @@
 				<tr>
 					<td>重量:</td>
 					<td><input type="text" class="easyui-numberbox" name="weight"
-						required="true" /></td>
+						required="true" /><em>kg</em></td>
 					<td>体积:</td>
 					<td><input type="text" class="easyui-validatebox" name="volume"
 						required="true" /></td>
@@ -106,5 +106,23 @@
 			</table>
 		</form>
 	</div>
+<script>
+	$("input[name=telephone]").blur(function () {
+		var phone = $(this).val();
+		var url="/sys/billVerify";
+				$.post(
+						url,
+						{"telephone":phone},
+						function (data) {
+							if (data != null) {
+								$("input[name=customerId]").val(data.id);
+								$("input[name=customerName]").val(data.name);
+								$("input[name=delegater]").val(data.name);
+							}
+						},'json'
+				);
+				console.log(phone)
+	})
+</script>
 </body>
 </html>

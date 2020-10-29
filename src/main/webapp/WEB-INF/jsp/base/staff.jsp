@@ -220,7 +220,8 @@
             });
         });
         //查询表单提交 TODO 查询表单提交
-        $(function () {
+
+        /*$(function () {
             $("#find").click(function () {
                 //校验表单输入项
                 var v = $("#lookStaffForm").form("validate");
@@ -230,7 +231,7 @@
                             console.log(data1)
                             $('#grid').datagrid({data:[data1] });
                             $('#lookStaffWindow').close();
-                           /* $('#grid').datagrid({
+                           /!* $('#grid').datagrid({
                                 iconCls: 'icon-forward',
                                 fit: true,
                                 border: false,
@@ -248,13 +249,13 @@
                                 idField: 'id',
                                 columns: columns,
                                 onDblClickRow: doDblClickRow//指定数据表格的双击行事件
-                            });*/
+                            });*!/
                         }
                     });
 
                     //校验通过，提交表单
                     $("#lookStaffForm").submit();
-                    /*$('#grid').datagrid({
+                    /!*$('#grid').datagrid({
                         iconCls: 'icon-forward',
                         fit: true,
                         border: false,
@@ -267,10 +268,10 @@
                         idField: 'id',
                         columns: columns,
                         onDblClickRow: doDblClickRow//指定数据表格的双击行事件
-                    });*/
+                    });*!/
                 }
             });
-        })
+        })*/
         //操作提示信息
         $(function () {
             var msg = "${msg}";
@@ -339,34 +340,59 @@
     <div region="north" style="height:31px;overflow:hidden;" split="false" border="false">
         <div class="datagrid-toolbar">
             <a id="find" icon="icon-save" class="easyui-linkbutton" plain="true">查询</a>
+            <script>
+                $(function(){//工具方法，可以将指定的表单中的输入项目序列号为json数据
+                    $.fn.serializeJson=function(){
+                        var serializeObj={};
+                        var array=this.serializeArray();
+                        $(array).each(function(){
+                            if(serializeObj[this.name]){
+                                if($.isArray(serializeObj[this.name])){
+                                    serializeObj[this.name].push(this.value);
+                                }else{
+                                    serializeObj[this.name]=[serializeObj[this.name],this.value];
+                                }
+                            }else{
+                                serializeObj[this.name]=this.value;
+                            }
+                        });
+                        return serializeObj;
+                    };
+                    //绑定事件
+                    $("#find").click(function(){
+                        var p = $("#lookStaffForm").serializeJson();//{id:xx,name:yy,age:zz}
+                        //重新发起ajax请求，提交参数
+                        $("#grid").datagrid("load",p);
+                        //关闭查询窗口
+                        $("#lookStaffWindow").window("close");
+                    });
+                });
+            </script>
         </div>
     </div>
 
     <div region="center" style="overflow:auto;padding:5px;" border="false">
-        <form id="lookStaffForm" action="/sys/findStaffView"
-              method="post">
+        <form id="lookStaffForm">
             <table class="table-edit" width="80%" align="center">
                 <tr class="title">
                     <td colspan="2">查询信息</td>
                 </tr>
                 <!-- 完善收派员查询 table -->
-
                 <tr>
                     <td>工号</td>
-                    <td><input type="text" name="staffNum" class="easyui-validatebox" required="true"/></td>
+                    <td><input type="text" name="staffNum" class="easyui-validatebox" /></td>
                 </tr>
                 <tr>
                     <td>所属定区</td>
-                    <td><input type="text" name="region" class="easyui-validatebox" required="true"
-                    /></td>
+                    <td><input type="text" name="region" class="easyui-validatebox"/></td>
                 </tr>
                 <tr>
                     <td>收派标准</td>
-                    <td><input type="text" name="standard" class="easyui-validatebox" required="true"/></td>
+                    <td><input type="text" name="standard" class="easyui-validatebox" /></td>
                 </tr>
                 <tr>
                     <td>所属单位</td>
-                    <td><input type="text" name="station" class="easyui-validatebox" required="true"/></td>
+                    <td><input type="text" name="station" class="easyui-validatebox"/></td>
                 </tr>
             </table>
         </form>

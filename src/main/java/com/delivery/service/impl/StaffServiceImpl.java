@@ -3,10 +3,12 @@ package com.delivery.service.impl;
 import com.delivery.dao.StaffDao;
 import com.delivery.entity.Staff;
 import com.delivery.service.StaffService;
+import com.delivery.util.PageUtil;
 import com.delivery.utilentity.FindStaff;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,26 +51,24 @@ public class StaffServiceImpl implements StaffService {
     }
 
     /**
-     * 通过 工号，所属定区，收派标准，所属单位查寻
+     * 查询 模糊查询
+     *
      * @param findStaff
      * @return
      */
     @Override
-    public Staff selectStaffByColumns(FindStaff findStaff) {
-        return staffDao.selectStaffByColumns(findStaff);
-    }
-
-    @Override
-    public List<Staff> selectStaffByPage(int page, int rows) {
-        return staffDao.selectStafflimit((page-1)*rows,rows);
-    }
-    /**
-     * 统计未删除的staff总数
-     * @return
-     */
-    @Override
-    public int staffDelIsYTotal() {
-        return staffDao.staffDelIsYCount();
+    public PageUtil selectStaff(FindStaff findStaff) {
+        int total = 0;
+        List<Staff> staffs = new ArrayList<>();
+        if (findStaff.isNull()) {//查询所有
+            staffs = staffDao.selectStafflimit((findStaff.getPage()-1)*findStaff.getRows(),findStaff.getRows());
+            total = staffDao.staffDelIsYCount();
+        }else {
+            findStaff.setPage((findStaff.getPage()-1)*findStaff.getRows());
+            staffs =staffDao.selectStaffDeltagIsYesByBim(findStaff);
+            total =staffDao.staffDelIsYCountByBim(findStaff);
+        }
+        return new PageUtil(total,staffs);
     }
 
 

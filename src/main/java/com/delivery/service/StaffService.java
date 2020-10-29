@@ -1,6 +1,7 @@
 package com.delivery.service;
 
 import com.delivery.entity.Staff;
+import com.delivery.util.PageUtil;
 import com.delivery.utilentity.FindStaff;
 
 import java.util.List;
@@ -48,16 +49,6 @@ public interface StaffService {
      * @param findStaff
      * @return
      */
-    Staff selectStaffByColumns(FindStaff findStaff);
 
-    /**
-     * 分页查询
-     * @param page
-     * @param rows
-     * @return
-     */
-    List<Staff> selectStaffByPage(int page, int rows);
-
-
-    int staffDelIsYTotal();
+    PageUtil selectStaff(FindStaff findStaff);
 }
