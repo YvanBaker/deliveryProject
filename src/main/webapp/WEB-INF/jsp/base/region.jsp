@@ -85,7 +85,7 @@
         // 先将body隐藏，再显示，不会出现页面刷新效果
         $("body").css({visibility: "visible"});
 
-        // 收派标准数据表格
+        // 收区位表格
         $('#grid').datagrid({
             iconCls: 'icon-forward',
             fit: true,
@@ -99,24 +99,9 @@
             url: "/sys/RegionQuery",
             idField: 'id',
             columns: columns,
-            onDblClickRow: doDblClickRow
-        });
-
-        // 添加、修改区域窗口
-        $('#addRegionWindow').window({
-            title: '添加修改区域',
-            width: 400,
-            modal: true,
-            shadow: true,
-            closed: true,
-            height: 400,
-            resizable: false
+            //onDblClickRow: doDblClickRow
         });
     });
-
-    function doDblClickRow() {
-        alert("双击表格数据...");
-    }
 </script>
 <script type="text/javascript">
     $(function () {
