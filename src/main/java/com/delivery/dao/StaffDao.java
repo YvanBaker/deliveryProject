@@ -69,7 +69,12 @@ public interface StaffDao {
 
     int staffDelIsYCount();
 
-    List<Staff> selectStaffDeltagIsYesByBim(FindStaff findStaff);
+
+     /** 模糊查询
+     * @param staff staff
+     * @return list
+     */
+    List<Staff> selectStaffByDimElements(Staff staff);
 
     int staffDelIsYCountByBim(FindStaff findStaff);
 }

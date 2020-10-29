@@ -43,18 +43,20 @@
     <select id="selectStaffByStandard" resultMap="StaffMap" parameterType="Staff">
         select * from staff where standard=#{standard};
     </select>
-    <select id="selectStaffByColumns" resultMap="StaffMap" parameterType="findStaff">
+
+    <select id="selectStaffByColumns" resultMap="StaffMap">
+
         select id,uuid,name,telephone,haspda,deltag,station,standard from staff where
         uuid=#{staffNum}
     </select>
-    <select id="selectStafflimit" resultType="staff" >
+    <select id="selectStafflimit" resultType="Staff" >
         select id,uuid,name,telephone,haspda,deltag,station,standard from staff where deltag='Y' ORDER BY id asc limit #{arg0},#{arg1}
     </select>
-    <select id="staffDelIsYCount" resultType="_int">
+    <select id="staffDelIsYCount" resultType="int">
         select count(*) from staff where deltag='Y'
     </select>
-    <select id="selectStaffDeltagIsYesByBim" resultType="staff" parameterType="findStaff">
-       select id,uuid,name,telephone,haspda,deltag,station,standard from staff
+    <select id="selectStaffByDimElements" resultMap="StaffMap" parameterType="Staff">
+        select * from staff
         <where>
          deltag='Y'
          <if test="staffNum!=null||staffNum!=''">and uuid like #{staffNum}</if>
