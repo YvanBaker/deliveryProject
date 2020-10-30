@@ -33,7 +33,7 @@ public class StaffController {
     }
 
     /**
-     * 查看员工
+     * 查看员工 通过 工号，所属定区，收派标准，所属单位查寻
      *
      * @param findStaff 查询条件
      * @param response  响应
@@ -50,14 +50,7 @@ public class StaffController {
      * 通过 工号，所属定区，收派标准，所属单位查寻 395887b2d9de
      * @return
      *//*
-    @RequestMapping("/findStaffView")
-    public void findStaffView(FindStaff findStaff,HttpServletResponse response) throws IOException {
-        System.out.println("findStaff = " + findStaff);
-        Staff staff= staffService.selectStaffByColumns(findStaff);
-        System.out.println("staff = " + staff);
-        response.getWriter().write(JSONObject.toJSONString(staff));
-//        return "base/staff";
-    }*/
+
 
     /**
      * 添加员工
@@ -78,6 +71,12 @@ public class StaffController {
         return "base/staff";
     }
 
+    /**
+     * 废除
+     * @param ids
+     * @param model
+     * @return
+     */
     @RequestMapping("/staffDelete")
     public String staffDelete(String ids, Model model) {
         System.out.println("ids = " + ids);//选中的id用‘,'分割
@@ -92,6 +91,12 @@ public class StaffController {
         return "base/staff";
     }
 
+    /**
+     * 修改
+     * @param staff
+     * @param model
+     * @return
+     */
     @RequestMapping("/staffEdit")
     public String staffEdit(Staff staff, Model model) {
         if (staff.getHaspda() == null || "".equals(staff.getHaspda())) {

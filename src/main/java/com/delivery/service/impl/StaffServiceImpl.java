@@ -65,8 +65,8 @@ public class StaffServiceImpl implements StaffService {
             total = staffDao.staffDelIsYCount();
         }else {
             findStaff.setPage((findStaff.getPage()-1)*findStaff.getRows());
-            staffs =staffDao.selectStaffDeltagIsYesByBim(findStaff);
-            total =staffDao.staffDelIsYCountByBim(findStaff);
+            staffs =staffDao.selectStaffDeltagIsYByDim(findStaff);
+            total =staffDao.staffDelIsYCountByDim(findStaff);
         }
         return new PageUtil(total,staffs);
     }

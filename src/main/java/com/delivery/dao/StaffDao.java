@@ -77,5 +77,17 @@ public interface StaffDao {
      */
     List<Staff> selectStaffByDimElements(Staff staff);
 
-    int staffDelIsYCountByBim(FindStaff findStaff);
+    /**
+     * 统计模糊查询总数
+     * @param findStaff
+     * @return
+     */
+    int staffDelIsYCountByDim(FindStaff findStaff);
+
+    /**
+     * 模糊查询数据
+     * @param findStaff
+     * @return
+     */
+    List<Staff> selectStaffDeltagIsYByDim(FindStaff findStaff);
 }
