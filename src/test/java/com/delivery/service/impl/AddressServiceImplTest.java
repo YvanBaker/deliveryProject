@@ -1,5 +1,6 @@
 package com.delivery.service.impl;
 
+import com.delivery.entity.CustomerAddress;
 import com.delivery.service.AddressService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,7 +26,11 @@ public class AddressServiceImplTest {
 
     @Test
     public void saveCustomerAddress() {
-        //TODO 测试编写
+        CustomerAddress customerAddress = new CustomerAddress();
+        customerAddress.setUserId(1);
+        customerAddress.setAddressDetail("12345");
+        CustomerAddress customerAddress1 = addressService.saveCustomerAddress(customerAddress);
+        System.out.println(customerAddress1);
         assertTrue(true);
     }
 }

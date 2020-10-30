@@ -1,13 +1,7 @@
 package com.delivery.service.impl;
 
-import com.delivery.dao.AreasDao;
-import com.delivery.dao.CityDao;
-import com.delivery.dao.CustomerAddressDao;
-import com.delivery.dao.ProvincesDao;
-import com.delivery.entity.Areas;
-import com.delivery.entity.City;
-import com.delivery.entity.CustomerAddress;
-import com.delivery.entity.Provinces;
+import com.delivery.dao.*;
+import com.delivery.entity.*;
 import com.delivery.service.AddressService;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +28,9 @@ public class AddressServiceImpl implements AddressService {
 
     @Resource
     private CustomerAddressDao customerAddressDao;
+
+    @Resource
+    private CustomerReceiveAddressDao customerReceiveAddressDao;
 
     @Override
     public List<Provinces> queryProvincesAll() {
@@ -64,10 +61,37 @@ public class AddressServiceImpl implements AddressService {
         }
         for (CustomerAddress item : customerAddressList) {
             if (item.equals(customerAddress)) {
-                return item;
+                return customerAddress;
             }
         }
         customerAddressDao.insertCustomerAddress(customerAddress);
         return customerAddress;
+    }
+
+    @Override
+    public CustomerReceiveAddress saveCustomerReceiveAddress(CustomerReceiveAddress address) {
+        List<CustomerReceiveAddress> resAddressList =
+                customerReceiveAddressDao.selectAddressByCustomerId(address.getCustomerId());
+        if (resAddressList.isEmpty()) {
+            customerReceiveAddressDao.insertAddress(address);
+            return address;
+        }
+        for (CustomerReceiveAddress item : resAddressList) {
+            if (item.equals(address)) {
+                return address;
+            }
+        }
+        customerReceiveAddressDao.insertAddress(address);
+        return address;
+    }
+
+    @Override
+    public List<CustomerReceiveAddress> queryCustomerReceiveAddressesByCustomerId(int customerId) {
+        return customerReceiveAddressDao.selectAddressByCustomerId(customerId);
+    }
+
+    @Override
+    public boolean renewCustomerReceiveAddresses(CustomerReceiveAddress address) {
+        return customerReceiveAddressDao.updateAddress(address) > 0;
     }
 }
