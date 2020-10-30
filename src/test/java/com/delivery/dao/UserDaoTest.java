@@ -30,7 +30,7 @@ public class UserDaoTest {
     private UserDao userDao;
 
     @Test
-    public void insertUserTest(){
+    public void insertUserTest() {
         User user = new User();
         user.setUserName("test");
         user.setUserPassword("test");
@@ -48,7 +48,7 @@ public class UserDaoTest {
     }
 
     @Test
-    public void updateUserTest(){
+    public void updateUserTest() {
         User user = new User();
         user.setId(1);
         user.setUserPassword("123");
@@ -57,10 +57,19 @@ public class UserDaoTest {
     }
 
     @Test
-    public void selectUserAllTest(){
-        PageHelper.startPage(1,2);
+    public void selectUserAllTest() {
+        PageHelper.startPage(1, 2);
         List<User> users = userDao.selectUserAll();
         PageInfo<User> pageInfo = new PageInfo<>(users);
         System.out.println(JSON.toJSONString(pageInfo));
+    }
+
+    @Test
+    public void selectUserByTest() {
+        User user = new User();
+        user.setEmail("test");
+//        user.setUserName("test");
+        List<User> userList = userDao.selectUserBy(user);
+
     }
 }
