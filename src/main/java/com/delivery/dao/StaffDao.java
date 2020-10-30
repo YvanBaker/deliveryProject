@@ -65,17 +65,20 @@ public interface StaffDao {
      */
     Staff selectStaffByColumns(FindStaff findStaff);
 
+    /**
+     * 普通分页查询
+     * @param page
+     * @param rows
+     * @return
+     */
     List<Staff> selectStafflimit(int page, int rows);
 
+    /**
+     * 普通分页总计
+     * @return
+     */
     int staffDelIsYCount();
 
-    /**
-     * 模糊查询
-     *
-     * @param staff staff
-     * @return list
-     */
-    List<Staff> selectStaffByDimElements(Staff staff);
 
     /**
      * 统计模糊查询总数
