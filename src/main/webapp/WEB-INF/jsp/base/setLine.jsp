@@ -254,6 +254,36 @@
             }
         })
 
+
+        //下拉菜单
+        var data=[
+            {"text":"干线(省/直辖市-省/直辖市)",'value':'干线'},
+            {"text":"支线(地级市-地级市)",'value':'支线'},
+            {"text":"分线(地级市市内)",'value':'分线'},
+        ]
+        $(function () {
+            $('#lineType').combobox({
+                valueField:'value',
+                textField:'text',
+                panelHeight : 'auto',
+                data:data,
+            });
+        })
+        var data1=[
+            {"text":"拖挂货车",'value':'拖挂货车'},
+            {"text":"厢式货车",'value':'厢式货车'},
+            {"text":"面包车",'value':'面包车'},
+        ]
+        //下拉菜单测试
+        $(function () {
+            $('#carModel').combobox({
+                valueField:'value',
+                textField:'text',
+                panelHeight : 'auto',
+                data:data1,
+            });
+        })
+
     </script>
 </head>
 <body class="easyui-layout" style="visibility:hidden;">
@@ -280,7 +310,8 @@
                 <!-- 添加派收标准 table -->
                 <tr>
                     <td>线路类型</td>
-                    <td><input type="text" name="lineType" class="easyui-validatebox" required/></td>
+                    <%--<td><input type="text" name="lineType" class="easyui-validatebox" required/></td>--%>
+                    <td><input id="lineType" name="lineType" class="easyui-combobox" required><td>
                 </tr>
                 <tr>
                     <td>线路名称</td>
@@ -292,7 +323,8 @@
                 </tr>
                 <tr>
                     <td>车型</td>
-                    <td><input type="text" name="carModel" class="easyui-validatebox" required/></td>
+                    <%--<td><input type="text" name="carModel" class="easyui-validatebox" required/></td>--%>
+                    <td><input id="carModel" name="carModel" class="easyui-combobox" required><td>
                 </tr>
                 <tr>
                     <td>司机</td>
@@ -314,7 +346,6 @@
     <div region="north" style="height:31px;overflow:hidden;" split="false" border="false">
         <div class="datagrid-toolbar">
             <a id="find" icon="icon-save" class="easyui-linkbutton" plain="true">查询</a>
-
         </div>
     </div>
 
@@ -343,7 +374,6 @@
     </div>
 </div>
 
-
 <!-- 修改窗口 -->
 <div class="easyui-window" title="对收派员进行修改" id="editLineWindow" collapsible="false"
      minimizable="false" maximizable="false" style="top:20px;left:200px">
@@ -367,14 +397,14 @@
     </div>
     <%--编辑表单--%>
     <div region="center" style="overflow:auto;padding:5px;" border="false">
-        <form id="editStaffForm" action="/sys/lineEdit"
+        <form id="editLineForm" action="/sys/lineEdit"
               method="post">
             <input type="hidden" name="id">
             <table class="table-edit" width="80%" align="center">
                 <tr class="title">
                     <td colspan="2">班车信息</td>
                 </tr>
-                <!-- 添加派收标准 table -->
+                <!-- 修改派收标准 table -->
                 <tr>
                     <td>线路类型</td>
                     <td><input type="text" name="lineType" class="easyui-validatebox" required/></td>

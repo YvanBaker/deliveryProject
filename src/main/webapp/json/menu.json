@@ -6,6 +6,7 @@
 		{ "id":"115", "pId":"11", "name":"管理定区/调度排班","page":"/sys/decidedzoneView"},
 		{ "id":"116", "pId":"11", "name":"派送标准","page":"/sys/standardView"},
 		{ "id":"117", "pId":"11", "name":"班车设置","page":"/sys/lineView"},
+		{ "id":"118", "pId":"11", "name":"派收时间","page":"/sys/TimeView"},
 		{ "id":"12", "pId":"0", "name":"受理"},
 		{ "id":"121", "pId":"12", "name":"业务受理" ,"page":"/sys/noticebill_addView"},
 		{ "id":"122", "pId":"12", "name":"工作单快速录入" ,"page":"/sys/quickworkorderView"},

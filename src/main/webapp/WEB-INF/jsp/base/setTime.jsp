@@ -56,7 +56,7 @@
                 }
                 var ids = array.join(",");
                 //发送请求，传递ids参数
-                window.location.href = '/sys/standardDelete?ids=' + ids;
+                window.location.href = '/sys/timeDelete?ids=' + ids;
             }
         }
         //工具栏
@@ -96,20 +96,20 @@
             width: 120,
             align: 'center'
         }, {
-            field:'normalOffTimeTime',
+            field:'normalOffWorkTime',
             title:'平时下班时间',
-            width:120,
+            width: 120,
             align:'center'
         }, {
             field:'weekWorkTime',
             title:'周末上班时间',
-            width:120,
+            width: 120,
             align:'center'
         }, {
-                field:'weekOffWorkTime',
-                title:'周末下班时间',
-                width:120,
-                align:'center'
+            field:'weekOffWorkTime',
+            title:'周末下班时间',
+            width:120,
+            align:'center'
         },{
             field: 'status',
             title: '是否作废',
@@ -199,18 +199,18 @@
                 $("#clock_pda").prop("checked", true);
             }
         }
-        //校验规则
-        $(function () {
-            var reg = /^([1-9]\d*(\.\d*[1-9])?)|(0\.\d*[1-9])$/;
-            $.extend($.fn.validatebox.defaults.rules, {
-                weightAndVolume: {
-                    validator: function (value, param) {
-                        return reg.test(value);
-                    },
-                    message: '输入有误！'
-                }
-            });
-        });
+//        //校验规则
+//        $(function () {
+//            var reg = /^([1-9]\d*(\.\d*[1-9])?)|(0\.\d*[1-9])$/;
+//            $.extend($.fn.validatebox.defaults.rules, {
+//                weightAndVolume: {
+//                    validator: function (value, param) {
+//                        return reg.test(value);
+//                    },
+//                    message: '输入有误！'
+//                }
+//            });
+//        });
 
         //添加表单提交
         $(function () {
@@ -250,6 +250,21 @@
                 $.messager.alert("操作信息", msg, "info");
             }
         })
+
+        //下拉菜单
+        var data=[
+            {"text":"早班",'value':'早班'},
+            {"text":"早中班",'value':'早中班'},
+            {"text":"中班",'value':'中班'}
+        ]
+        $(function () {
+            $('#timeName').combobox({
+                valueField:'value',
+                textField:'text',
+                panelHeight : 'auto',
+                data:data,
+            });
+        })
     </script>
 </head>
 <body class="easyui-layout" style="visibility:hidden;">
@@ -258,7 +273,7 @@
     <table id="grid"></table>
 </div>
 
-<div class="easyui-window" title="对派收标准进行查询" id="lookStandardWindow"
+<div class="easyui-window" title="对派收时间进行查询" id="lookTimeWindow"
      collapsible="false" minimizable="false" maximizable="false" style="top:20px;left:200px">
     <div region="north" style="height:31px;overflow:hidden;" split="false" border="false">
         <div class="datagrid-toolbar">
@@ -267,8 +282,8 @@
     </div>
 
     <div region="center" style="overflow:auto;padding:5px;" border="false">
-        <form id="lookStandardForm" action="/sys/findTimeView"
-              method="post">
+        <form id="lookTimeForm" method="post">
+            <%--action="/sys/findTimeView"--%>
             <table class="table-edit" width="80%" align="center">
                 <tr class="title">
                     <td colspan="2">查询信息</td>
@@ -282,7 +297,111 @@
                     <td>派收单位</td>
                     <td><input type="text" name="station" class="easyui-validatebox" required/></td>
                 </tr>
+            </table>
+        </form>
+    </div>
+</div>
 
+<div class="easyui-window" title="对时间设置添加或者修改" id="addTimeWindow"
+     collapsible="false" minimizable="false" maximizable="false" style="top:20px;left:200px">
+    <div region="north" style="height:31px;overflow:hidden;" split="false" border="false">
+        <div class="datagrid-toolbar">
+            <a id="save" icon="icon-save" class="easyui-linkbutton" plain="true">保存</a>
+        </div>
+    </div>
+    <%--添加标准信息--%>
+    <div region="center" style="overflow:auto;padding:5px;" border="false">
+        <form id="addTimeForm" action="/sys/addTime" method="post">
+            <table class="table-edit" width="80%" align="center">
+                <tr class="title">
+                    <td colspan="2">派收时间信息</td>
+                </tr>
+                <!-- 添加派收标准 table -->
+                <tr>
+                    <td>上班时间名称</td>
+                    <%--<td><input type="text" name="timeName" class="easyui-validatebox" required/></td>--%>
+                    <td><input id="timeName" name="timeName" class="easyui-combobox" required><td>
+                </tr>
+                <tr>
+                    <td>工作单位</td>
+                    <td><input type="text" name="station" class="easyui-validatebox" required/></td>
+                </tr>
+                <tr>
+                    <td>工作日上班时间</td>
+                    <td><input type="time" name="normalWorkTime" class="easyui-validatebox" required/></td>
+                </tr>
+                <tr>
+                    <td>工作日下班时间</td>
+                    <td><input type="time" name="normalOffWorkTime" class="easyui-validatebox" required/></td>
+                </tr>
+                <tr>
+                    <td>双休日上班时间</td>
+                    <td><input type="time" name="weekWorkTime" class="easyui-validatebox" required/></td>
+                </tr>
+                <tr>
+                    <td>双休日下班时间</td>
+                    <td><input type="time" name="weekOffWorkTime" class="easyui-validatebox" required/></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
+<!-- 修改窗口 -->
+<div class="easyui-window" title="对收派员进行修改" id="editTimeWindow" collapsible="false"
+     minimizable="false" maximizable="false" style="top:20px;left:200px">
+    <div region="north" style="height:31px;overflow:hidden;" split="false" border="false">
+        <div class="datagrid-toolbar">
+            <a id="edit" icon="icon-save" href="javascript:void (0);" class="easyui-linkbutton" plain="true">保存</a>
+            <script type="text/javascript">
+                $(function () {
+                    //绑定事件
+                    $("#edit").click(function () {
+                        //校验表单输入项
+                        var v = $("#editTimeForm").form("validate");
+                        if (v) {
+                            //校验通过，提交表单
+                            $("#editTimeForm").submit();
+                        }
+                    });
+                });
+            </script>
+        </div>
+    </div>
+    <%--编辑表单--%>
+    <div region="center" style="overflow:auto;padding:5px;" border="false">
+        <form id="editTimeForm" action="/sys/timeEdit"
+              method="post">
+            <input type="hidden" name="id">
+            <table class="table-edit" width="80%" align="center">
+                <tr class="title">
+                    <td colspan="2">上班时间信息</td>
+                </tr>
+                <!-- 修改上班时间标准 table -->
+                <tr>
+                    <td>上班时间名称</td>
+                    <td><input type="text" name="timeName" class="easyui-validatebox" required/></td>
+                </tr>
+                <tr>
+                    <td>工作单位</td>
+                    <td><input type="text" name="station" class="easyui-validatebox" required/></td>
+                </tr>
+                <tr>
+                    <td>工作日上班时间</td>
+                    <td><input type="time" name="normalWorkTime" class="easyui-validatebox" required/></td>
+                </tr>
+                <tr>
+                    <td>工作日下班时间</td>
+                    <td><input type="time" name="normalOffWorkTime" class="easyui-validatebox" required/></td>
+                </tr>
+                <tr>
+                    <td>双休日上班时间</td>
+                    <td><input type="time" name="weekWorkTime" class="easyui-validatebox" required/></td>
+                </tr>
+                <tr>
+                    <td>双休日下班时间</td>
+                    <td><input type="time" name="weekOffWorkTime" class="easyui-validatebox" required/></td>
+                </tr>
             </table>
         </form>
     </div>
@@ -290,5 +409,29 @@
 
 
 
+
+<script>
+    $.fn.serializeJson = function () {
+        var serializeObj = {};
+        var array = this.serializeArray();
+        $(array).each(function () {
+            if (serializeObj[this.name]) {
+                if ($.isArray(serializeObj[this.name])) {
+                    serializeObj[this.name].push(this.value);
+                } else {
+                    serializeObj[this.name] = [serializeObj[this.name], this.value];
+                }
+            } else {
+                serializeObj[this.name] = this.value;
+            }
+        });
+        return serializeObj;
+    };
+    $("#find").click(function () {
+        var from = $("#lookTimeForm").serializeJson();
+        $("#grid").datagrid("load", from);
+        $("#lookTimeWindow").window("close");
+    })
+</script>
 </body>
 </html>

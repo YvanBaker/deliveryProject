@@ -85,7 +85,7 @@ public class LineController {
         }
     }
 
-    @RequestMapping("/updateLine")
+    @RequestMapping("/lineEdit")
     public String updateLine(Line line, Model model){
         boolean f=false;
         line.setOperator("test");
@@ -95,11 +95,11 @@ public class LineController {
         if (f){
             String msg="修改班车信息成功";
             model.addAttribute("msg",msg);
-            return "base/setStandard";
+            return "base/setLine";
         }else {
             String msg="修改班车失败";
             model.addAttribute("msg",msg);
-            return "base/setStandard";
+            return "base/setLine";
         }
     }
 

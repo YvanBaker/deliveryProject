@@ -1,31 +1,35 @@
-package com.delivery.dao;
+package com.delivery.service;
 
 import com.delivery.entity.TimeManagement;
+import com.delivery.util.PageUtil;
 import com.delivery.utilentity.FindTime;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.text.ParseException;
 import java.util.List;
 
 /**
- * Created by LEO15 on 2020/10/26.
- * @author fujianian
+ * Created by LEO15 on 2020/11/2.
  */
-public interface TimeManagementDao {
+
+public interface TimeManagementService {
     /**
      * 添加时间管理信息
      * @param timeManagement timeManagement
      * @return boolean
      */
-    boolean addTimeManagement(TimeManagement timeManagement);
+    boolean addTimeManagement(TimeManagement timeManagement) throws ParseException;
 
     /**
-     * 更新和删除时间管理信息
+     * 修改时间管理信息
      * @param timeManagement timeManagement
      * @return boolean
      */
     boolean updateTimeManagement(TimeManagement timeManagement);
 
     /**
-     * 更新和删除时间管理信息
+     * 删除时间管理信息
      * @param timeManagement timeManagement
      * @return boolean
      */
@@ -35,18 +39,6 @@ public interface TimeManagementDao {
      * 查询全部上班时间信息
      * @return list
      */
-    List<TimeManagement> selectTimeManagement(FindTime findTime);
+    PageUtil selectTimeManagement(FindTime findTime);
 
-    /**
-     * 时间信息条数
-     * @return
-     */
-    int selectCount();
-
-    /**
-     * 上班时间不重复
-     * @param timeManagement
-     * @return
-     */
-    TimeManagement selectTimeManagementByStationAndTimeName(TimeManagement timeManagement);
 }
