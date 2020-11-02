@@ -76,6 +76,13 @@
             </where>
     </select>
     <select id="selectStaffDeltagIsYByDim" resultType="staff" parameterType="findStaff">
-
+        select * from staff
+        <where>
+            deltag='Y'
+            <if test="staffNum!=null||staffNum!=''">and uuid like #{staffNum}</if>
+            <if test="station!=null||station!=''">or station like #{station}</if>
+            <if test="standard!=null||standard!=''">or standard like #{standard}</if>
+            ORDER BY id asc limit #{page},#{rows}
+        </where>
     </select>
 </mapper>

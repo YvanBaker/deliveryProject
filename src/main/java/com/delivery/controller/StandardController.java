@@ -52,7 +52,7 @@ public class StandardController {
         httpServletResponse.getWriter().write(JSONObject.toJSONString(pageUtil));
     }
 
-    @RequestMapping("/addStandard")
+    @RequestMapping(value = "/addStandard" )
     public String addStandard(Standard standard, Model model) {
         boolean flag = false;
         if (standard.getMinVolume() >= standard.getMaxVolume() || standard.getMinWeight() >= standard.getMaxWeight()) {
