@@ -11,6 +11,20 @@ public interface WorkorderDao {
 
     int getAllWorkorderCount();
 
+    /**
+     * 分单
+     * @param qpWorkorder
+     * @return
+     */
+    boolean updateStaff(QpWorkorder qpWorkorder);
+
+    /**
+     * 分单
+     * @param qpWorkorder
+     * @return
+     */
+    QpWorkorder selectOneWorkord(QpWorkorder qpWorkorder);
+
 
 
 }

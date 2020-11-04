@@ -3,13 +3,19 @@
 <mapper namespace="com.delivery.dao.WorkorderDao">
 
     <insert id="addWorkorder" parameterType="qpWorkorder">
-        insert into workor_dermanage (workor_id,arrivecity,product,num,weight,floadreqr)values (#{workorId},#{arrivecity},#{product},#{num},#{weight},#{floadreqr});
+        insert into workor_dermanage (uuid,arrivecity,product,num,weight,floadreqr)values (#{uuid},#{arrivecity},#{product},#{num},#{weight},#{floadreqr});
     </insert>
+    <update id="updateStaff">
+        UPDATE workor_dermanage SET staff=#{staff} where uuid=#{uuid}
+    </update>
     <select id="getAllWorkorder" resultType="qpWorkorder">
         select * from workor_dermanage  limit #{arg0},#{arg1}
     </select>
     <select id="getAllWorkorderCount" resultType="java.lang.Integer">
         select count(*) from workor_dermanage
+    </select>
+    <select id="selectOneWorkord" resultType="com.delivery.entity.QpWorkorder">
+        SELECT * FROM workor_dermanage where uuid=#{uuid}
     </select>
 
 

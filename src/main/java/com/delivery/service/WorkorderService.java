@@ -8,4 +8,6 @@ public interface WorkorderService {
 
     PageUtil workorderAll(int page, int rows);
 
+    boolean autoDistribution(QpWorkorder qpWorkorder);
+
 }

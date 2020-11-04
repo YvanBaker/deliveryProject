@@ -73,6 +73,7 @@ public class quickworkorder {
             if (null==regionService.selectOneRegion(regionSend)||null==regionService.selectOneRegion(regionRece)){
                 response.getWriter().write("N");
             }else {
+                /*站内已收，直接派送*/
                 boolean b = workorderService.workorderAdd(qpWorkorder);
                 response.getWriter().write("Y");
             }
@@ -80,8 +81,4 @@ public class quickworkorder {
             response.getWriter().write("N");
         }
     }
-
-
-
-
 }
