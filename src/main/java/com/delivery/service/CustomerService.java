@@ -1,6 +1,7 @@
 package com.delivery.service;
 
 import com.delivery.entity.Customer;
+import com.delivery.entity.CustomerWorkOrder;
 import com.delivery.exception.customer.CustomerAttributesNullException;
 import com.delivery.exception.customer.CustomerNameRepeatException;
 import com.delivery.exception.customer.CustomerNullException;
@@ -23,6 +24,15 @@ public interface CustomerService {
      * @throws CustomerAttributesNullException 必要参数为空
      */
     Customer saveCustomer(Customer customer) throws CustomerNameRepeatException, CustomerAttributesNullException;
+
+    /**
+     * 重置 密码
+     *
+     * @param email       邮箱
+     * @param newPassword 新密码
+     * @return true 成功
+     */
+    boolean resetPassword(String email, String newPassword);
 
 
     /**
@@ -118,9 +128,26 @@ public interface CustomerService {
     Customer queryCustomerByNameAndPassword(String name, String password);
 
     /**
-     * 根据 电话
-     * @param telephone
-     * @return
+     * 根据 名字 查询 用户
+     *
+     * @param name 名字
+     * @return Customer
      */
-    Customer findCustomerByTelephone(String telephone);
+    Customer queryCustomerByName(String name);
+
+    /**
+     * 根据 名字 模糊查询
+     *
+     * @param name 名字
+     * @return List<Customer>
+     */
+    List<Customer> fuzzyQueryCustomerByName(String name);
+
+    /**
+     * 保存 订单
+     *
+     * @param customerWorkOrder 订单
+     * @return CustomerWorkOrder
+     */
+    CustomerWorkOrder saveOrder(CustomerWorkOrder customerWorkOrder);
 }
