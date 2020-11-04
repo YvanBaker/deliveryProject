@@ -2,6 +2,8 @@ package com.delivery.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.delivery.entity.Customer;
+import com.delivery.entity.CustomerAddress;
+import com.delivery.entity.CustomerReceiveAddress;
 import com.delivery.entity.CustomerWorkOrder;
 import com.delivery.exception.customer.CustomerAttributesNullException;
 import com.delivery.exception.customer.CustomerNameRepeatException;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -156,7 +159,16 @@ public class CustomerController {
 
     @GetMapping(value = "/addressList", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @CrossOrigin
-    public String getAddressList(int id){
-        return "strs";
+    public String getAddressList(int id) {
+        List<CustomerAddress> customerAddressList = addressService.queryCustomerAddresses(id);
+        return JSON.toJSONString(MsgResponse.buildSuccess(SUCCESS, customerAddressList));
+    }
+
+    @GetMapping(value = "/receiveAddressList", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @CrossOrigin
+    public String getReceiveAddressList(int id){
+        List<CustomerReceiveAddress> customerReceiveAddresses =
+                addressService.queryCustomerReceiveAddressesByCustomerId(id);
+        return JSON.toJSONString(MsgResponse.buildSuccess(SUCCESS, customerReceiveAddresses));
     }
 }
