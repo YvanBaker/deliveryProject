@@ -1,7 +1,10 @@
 package com.delivery.service.impl;
 
+
 import com.delivery.entity.CustomerAddress;
+import com.delivery.entity.Region;
 import com.delivery.service.AddressService;
+import com.delivery.service.RegionService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -9,6 +12,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
 
+import java.util.List;
+
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -22,7 +28,7 @@ import static org.junit.Assert.assertTrue;
 public class AddressServiceImplTest {
 
     @Resource
-    private AddressService addressService;
+    RegionService regionService;
 
     @Test
     public void saveCustomerAddress() {
@@ -32,5 +38,9 @@ public class AddressServiceImplTest {
         CustomerAddress customerAddress1 = addressService.saveCustomerAddress(customerAddress);
         System.out.println(customerAddress1);
         assertTrue(true);
+    }
+
+    @Test
+    public void testA() {
     }
 }

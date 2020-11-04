@@ -32,10 +32,7 @@ public class userIndexController {
         return "system/userlist";
     }
 
-   /* @RequestMapping("/userShow")
-    public void userShow() {
-        PageInfo<User> userAll = userService.findUserAll();
-    }*/
+
     @GetMapping(value = "/userShow", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     public String findUser(){

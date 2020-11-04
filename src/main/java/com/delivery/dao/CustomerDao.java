@@ -118,4 +118,10 @@ public interface CustomerDao {
     @Select("select id, phone, password, name, customer_email, create_time, sex from customer " +
             "where name like concat('%',#{name},'%')")
     List<Customer> likeCustomerByName(@Param("name") String name);
+
+    @Select("select id, phone, password, name, customer_email, create_time, sex  from customer where phone=#{phone}")
+    Customer getCustomerByTelephone(@Param("phone") String phone);
+
+    @Select("select id, phone, password, name, customer_email, create_time, sex, decidedzone_id  from customer where decidedzone_id is null")
+    List<Customer> selectNoAssociationsCustomer();
 }

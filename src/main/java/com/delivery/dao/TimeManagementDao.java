@@ -1,6 +1,7 @@
 package com.delivery.dao;
 
 import com.delivery.entity.TimeManagement;
+import com.delivery.utilentity.FindTime;
 
 import java.util.List;
 
@@ -21,11 +22,31 @@ public interface TimeManagementDao {
      * @param timeManagement timeManagement
      * @return boolean
      */
-    boolean updateAndRemoveTimeManagement(TimeManagement timeManagement);
+    boolean updateTimeManagement(TimeManagement timeManagement);
+
+    /**
+     * 更新和删除时间管理信息
+     * @param timeManagement timeManagement
+     * @return boolean
+     */
+    boolean removeTimeManagement(TimeManagement timeManagement);
 
     /**
      * 查询全部上班时间信息
      * @return list
      */
-    List<TimeManagement> selectTimeManagement();
+    List<TimeManagement> selectTimeManagement(FindTime findTime);
+
+    /**
+     * 时间信息条数
+     * @return
+     */
+    int selectCount();
+
+    /**
+     * 上班时间不重复
+     * @param timeManagement
+     * @return
+     */
+    TimeManagement selectTimeManagementByStationAndTimeName(TimeManagement timeManagement);
 }

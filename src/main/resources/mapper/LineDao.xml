@@ -20,19 +20,32 @@
         INSERT INTO line (lineType, lineName, licensePlate, carModel, driver, status, weightControl, operator, oStation, oTime)
         VALUE (#{lineType},#{lineName},#{licensePlate},#{carModel},#{driver},#{status},#{weightControl},#{operator},#{oStation},#{oTime})
     </insert>
-    <update id="updateAndRemoveLine">
+
+    <update id="updateLine">
         UPDATE line SET
         <if test="lineType!=null and lineType!=''">lineType=#{lineType},</if>
         <if test="lineName!=null and lineName!=''">lineName=#{lineName},</if>
         <if test="driver!=null and driver!=''">driver=#{driver},</if>
-        <if test="status!=null and status!=''">status=#{status},</if>
         <if test="operator!=null and operator!=''">operator=#{operator},</if>
         <if test="oStation!=null and oStation!=''">oStation=#{oStation},</if>
         <if test="oTime!=null and oTime!=''">oTime=#{oTime}</if>
         where id=#{id}
     </update>
 
-    <select id="selectLine" resultMap="lineMap" parameterType="Line">
+    <update id="removeLine">
+        UPDATE line SET status='0' where id=#{id}
+    </update>
+
+    <select id="selectLine" resultMap="lineMap" parameterType="FindLine">
         SELECT * from line
+        <where>
+            status='1'
+        <if test="lineType!=null and lineType!=''">AND lineType like '${lineType}'</if>
+        <if test="driver!=null and driver!=''">or driver like '${driver}'</if>
+        <if test="weightControl!=null and weightControl!=''">or weightControl like '${weightControl}'</if>
+    </where>
+    </select>
+    <select id="selectLineCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) from line
     </select>
 </mapper>

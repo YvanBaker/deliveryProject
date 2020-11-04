@@ -52,6 +52,7 @@ public interface AddressService {
     CustomerAddress saveCustomerAddress(CustomerAddress customerAddress);
 
     /**
+
      * 用户id
      *
      * @param customerId 用户 id
@@ -82,4 +83,11 @@ public interface AddressService {
      * @return true 成功
      */
     boolean renewCustomerReceiveAddresses(CustomerReceiveAddress address);
+
+    /**
+     * 根据客户Id查询地址
+     * @param id
+     * @return
+     */
+    List<CustomerAddress> getAddressByUserId(Integer id);
 }

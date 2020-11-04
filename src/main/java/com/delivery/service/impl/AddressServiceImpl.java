@@ -69,6 +69,7 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
+
     public List<CustomerAddress> queryCustomerAddresses(int customerId) {
         return customerAddressDao.selectCustomerAddressByIdUserId(customerId);
     }
@@ -98,5 +99,10 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public boolean renewCustomerReceiveAddresses(CustomerReceiveAddress address) {
         return customerReceiveAddressDao.updateAddress(address) > 0;
+    }
+  
+    @Override
+    public List<CustomerAddress> getAddressByUserId(Integer id) {
+        return customerAddressDao.selectCustomerAddressByIdUserId(id);
     }
 }

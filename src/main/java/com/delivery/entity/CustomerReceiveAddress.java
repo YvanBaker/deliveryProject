@@ -1,5 +1,6 @@
 package com.delivery.entity;
 
+
 import lombok.Data;
 
 import javax.persistence.*;

@@ -18,17 +18,24 @@
     <update id="removeStaff">
         UPDATE staff SET deltag='N' where id=#{id}
     </update>
+
     <update id="updateStaff">
         UPDATE staff SET id=#{id}
         <if test="telephone!=null and telephone!=''">,telephone=#{telephone}</if>
-        <if test="haspda!=null and haspda!=''"> ,haspda=#{haspda}</if>
+        <if test="haspda!=null and haspda!=''">,haspda=#{haspda}</if>
         <if test="station!=null and station!=''">,station=#{station}</if>
-        <if test="standard!=null and station!=''"> ,standard=#{standard}</if>
+        <if test="standard!=null and station!=''">,standard=#{standard}</if>
         where id=#{id}
     </update>
+    <!--恢复作废取派员-->
+    <update id="staffRenew" parameterType="staff">
+        UPDATE staff SET deltag=#{deltag} where id=#{id}
+    </update>
+    <!--查询未作废-->
     <select id="selectStaffDeltagIsYes" resultMap="StaffMap" parameterType="Staff">
         select id,uuid,name,telephone,haspda,deltag,station,standard FROM staff where deltag='Y'
     </select>
+    <!--查询所有-->
     <select id="selectAllStaff" resultMap="StaffMap" parameterType="Staff">
         select id,uuid,name,telephone,haspda,deltag,station,standard from staff
     </select>
@@ -36,7 +43,7 @@
         SELECT id,uuid,name,telephone,haspda,deltag,station,standard from staff
         where 1=1
         <if test="name!=null and name!=''">and name=#{name}</if>
-        <if test="station!=null and station!=''"> and station=#{station}</if>
+        <if test="station!=null and station!=''">and station=#{station}</if>
         <if test="uuid!=null and uuid!=''">and uuid=#{uuid}</if>
 
     </select>
@@ -45,27 +52,25 @@
     </select>
 
     <select id="selectStaffByColumns" resultMap="StaffMap">
-
         select id,uuid,name,telephone,haspda,deltag,station,standard from staff where
         uuid=#{staffNum}
     </select>
-    <select id="selectStafflimit" resultType="Staff" >
-        select id,uuid,name,telephone,haspda,deltag,station,standard from staff where deltag='Y' ORDER BY id asc limit #{arg0},#{arg1}
+    <select id="selectStafflimit" resultType="Staff">
+        select id,uuid,name,telephone,haspda,deltag,station,standard from staff ORDER BY id asc limit #{arg0},#{arg1}
     </select>
 
-    <select id="staffDelIsYCount" resultType="java.lang.Integer">
-        select count(*) from staff where deltag='Y'
+    <select id="staffCount" resultType="java.lang.Integer">
+        select count(*) from staff
     </select>
-    <select id="selectStaffByDimElements" resultMap="StaffMap" parameterType="Staff">
-        select * from staff
+    <select id="staffCountByDim" resultType="int" parameterType="findStaff">
+        select count(*) from staff
         <where>
-         deltag='Y'
-         <if test="staffNum!=null||staffNum!=''">and uuid like #{staffNum}</if>
-         <if test="station!=null||station!=''">or station like #{station}</if>
-         <if test="standard!=null||standard!=''">or standard like #{standard}</if>
-            ORDER BY id asc limit #{page},#{rows}
+            <if test="staffNum!=null||staffNum!=''">and uuid like #{staffNum}</if>
+            <if test="station!=null||station!=''">or station like #{station}</if>
+            <if test="standard!=null||standard!=''">or standard like #{standard}</if>
         </where>
     </select>
+
     <select id="staffDelIsYCountByDim" resultType="int" parameterType="findStaff">
             select count(*) from staff
             <where>
@@ -76,6 +81,18 @@
             </where>
     </select>
     <select id="selectStaffDeltagIsYByDim" resultType="staff" parameterType="findStaff">
-
+        select * from staff
+        <where>
+            deltag='Y'
+            </where>
+    </select>
+    <select id="selectStaffByDim" resultType="staff" parameterType="findStaff">
+        select id,uuid,name,telephone,haspda,deltag,station,standard from staff
+        <where>
+            <if test="staffNum!=null||staffNum!=''">and uuid like #{staffNum}</if>
+            <if test="station!=null||station!=''">or station like #{station}</if>
+            <if test="standard!=null||standard!=''">or standard like #{standard}</if>
+            ORDER BY id asc limit #{page},#{rows}
+        </where>
     </select>
 </mapper>
