@@ -61,11 +61,16 @@ public class AddressServiceImpl implements AddressService {
         }
         for (CustomerAddress item : customerAddressList) {
             if (item.equals(customerAddress)) {
-                return customerAddress;
+                return item;
             }
         }
         customerAddressDao.insertCustomerAddress(customerAddress);
         return customerAddress;
+    }
+
+    @Override
+    public List<CustomerAddress> queryCustomerAddresses(int customerId) {
+        return customerAddressDao.selectCustomerAddressByIdUserId(customerId);
     }
 
     @Override
@@ -78,7 +83,7 @@ public class AddressServiceImpl implements AddressService {
         }
         for (CustomerReceiveAddress item : resAddressList) {
             if (item.equals(address)) {
-                return address;
+                return item;
             }
         }
         customerReceiveAddressDao.insertAddress(address);
