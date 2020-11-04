@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/sys")
-public class roleController {
+public class RoleController {
     /**
      * 角色管理页面
      * @return
