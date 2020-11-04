@@ -1,6 +1,8 @@
 package com.delivery.service.impl;
 
+import com.delivery.entity.Region;
 import com.delivery.service.AddressService;
+import com.delivery.service.RegionService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -8,6 +10,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
 
+import java.util.List;
+
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -21,11 +26,20 @@ import static org.junit.Assert.assertTrue;
 public class AddressServiceImplTest {
 
     @Resource
-    private AddressService addressService;
+    RegionService regionService;
 
     @Test
     public void saveCustomerAddress() {
-        //TODO 测试编写
-        assertTrue(true);
+        String q = "北";
+        List<Region> regions = regionService.findAllRegionLikP(q);
+        for (Region region : regions) {
+         System.out.println("region = " + region.getName());
+        }
+        assertFalse(regions.isEmpty());
+    }
+
+    @Test
+    public void testA() {
+
     }
 }

@@ -54,5 +54,10 @@ public interface AddressService {
      */
     CustomerAddress saveCustomerAddress(CustomerAddress customerAddress);
 
-
+    /**
+     * 根据客户Id查询地址
+     * @param id
+     * @return
+     */
+    List<CustomerAddress> getAddressByUserId(Integer id);
 }
