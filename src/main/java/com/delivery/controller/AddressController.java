@@ -2,6 +2,7 @@ package com.delivery.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.delivery.entity.*;
+import com.delivery.exception.customer.AddressNumberException;
 import com.delivery.model.MsgResponse;
 import com.delivery.service.AddressService;
 import org.springframework.http.MediaType;
@@ -81,7 +82,12 @@ public class AddressController {
     @ResponseBody
     @CrossOrigin
     public String saveCustomerAddress(CustomerAddress customerAddress) {
-        CustomerAddress res = addressService.saveCustomerAddress(customerAddress);
+        CustomerAddress res = null;
+        try {
+            res = addressService.saveCustomerAddress(customerAddress);
+        } catch (AddressNumberException e) {
+            return JSON.toJSONString(MsgResponse.buildError(e.getMessage()));
+        }
         MsgResponse msgResponse;
         if (customerAddress.getId() == null || customerAddress.getId() == 0) {
             msgResponse = MsgResponse.buildSuccess(REPEAT, res);
