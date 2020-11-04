@@ -22,6 +22,11 @@ public class JwtUtils {
     public static final long EXPIRE = 1000 * 60 * 60 * 24 * 1;
 
     /**
+     * 过期时间 一分钟
+     */
+    public static final long EXPIREMINUTE = 1000 * 60 * 1;
+
+    /**
      * 秘钥
      */
     public static final String APPSECRET = "yvna1314";
@@ -61,8 +66,19 @@ public class JwtUtils {
                 .signWith(SignatureAlgorithm.HS256, APPSECRET).compact();
     }
 
+    public static String geneJsonWebTokeEmail(String email) {
+        if (!TypeUtil.isValidString(email)) {
+            return null;
+        }
+        return Jwts.builder().setSubject(SUBJECT)
+                .claim("email", email)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIREMINUTE * 5))
+                .signWith(SignatureAlgorithm.HS256, APPSECRET).compact();
+    }
 
-    public static Claims checkJWT(String token) {
+
+    public static Claims checkJWT(String token) throws Exception {
         try {
             final Claims claims;
             claims = Jwts.parser().setSigningKey(APPSECRET)
@@ -70,10 +86,7 @@ public class JwtUtils {
             return claims;
 
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new Exception(e.getMessage());
         }
-
-        return null;
     }
-
 }

@@ -1,5 +1,7 @@
 package com.delivery.service.impl;
 
+
+import com.delivery.entity.CustomerAddress;
 import com.delivery.entity.Region;
 import com.delivery.service.AddressService;
 import com.delivery.service.RegionService;
@@ -30,16 +32,15 @@ public class AddressServiceImplTest {
 
     @Test
     public void saveCustomerAddress() {
-        String q = "北";
-        List<Region> regions = regionService.findAllRegionLikP(q);
-        for (Region region : regions) {
-         System.out.println("region = " + region.getName());
-        }
-        assertFalse(regions.isEmpty());
+        CustomerAddress customerAddress = new CustomerAddress();
+        customerAddress.setUserId(1);
+        customerAddress.setAddressDetail("12345");
+        CustomerAddress customerAddress1 = addressService.saveCustomerAddress(customerAddress);
+        System.out.println(customerAddress1);
+        assertTrue(true);
     }
 
     @Test
     public void testA() {
-
     }
 }

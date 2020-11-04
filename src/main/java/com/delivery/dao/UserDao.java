@@ -37,6 +37,9 @@ public interface UserDao {
     @UpdateProvider(type = UserDaoMapper.class, method = "updateUserSql")
     int updateUser(User user);
 
+    @SelectProvider(type = UserDaoMapper.class, method = "selectUserBySql")
+    List<User> selectUserBy(User user);
+
 
     /**
      * 根据用户id查询

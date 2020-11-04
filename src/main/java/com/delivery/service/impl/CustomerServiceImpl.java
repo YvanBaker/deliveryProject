@@ -1,15 +1,19 @@
 package com.delivery.service.impl;
 
 import com.delivery.dao.CustomerDao;
+import com.delivery.dao.CustomerWorkOrderDao;
 import com.delivery.entity.Customer;
+import com.delivery.entity.CustomerWorkOrder;
 import com.delivery.exception.customer.CustomerAttributesNullException;
 import com.delivery.exception.customer.CustomerNameRepeatException;
 import com.delivery.exception.customer.CustomerNullException;
 import com.delivery.service.CustomerService;
 import com.delivery.util.TypeUtil;
+import com.delivery.util.UuidUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,6 +28,9 @@ public class CustomerServiceImpl implements CustomerService {
     @Resource
     private CustomerDao customerDao;
 
+    @Resource
+    private CustomerWorkOrderDao customerWorkOrderDao;
+
     @Override
     public Customer saveCustomer(Customer customer) throws CustomerNameRepeatException, CustomerAttributesNullException {
         if (customer.getName() == null || customer.getPassword() == null || customer.getCustomerEmail() == null) {
@@ -34,6 +41,12 @@ public class CustomerServiceImpl implements CustomerService {
         }
         customerDao.insertCustomer(customer);
         return customer;
+    }
+
+    @Override
+    public boolean resetPassword(String email, String newPassword) {
+        int i = customerDao.updatePasswordByEmail(email, newPassword);
+        return i > 0;
     }
 
     @Override
@@ -112,13 +125,23 @@ public class CustomerServiceImpl implements CustomerService {
         return resData;
     }
 
-    /**
-     * 根据电话
-     * @param telephone
-     * @return
-     */
     @Override
-    public Customer findCustomerByTelephone(String telephone) {
-        return customerDao.getCustomerByTelephone(telephone);
+    public Customer queryCustomerByName(String name) {
+        Customer resData = customerDao.selectCustomerByName(name);
+        return resData;
+    }
+
+    @Override
+    public List<Customer> fuzzyQueryCustomerByName(String name) {
+        List<Customer> resData = customerDao.likeCustomerByName(name);
+        return resData;
+    }
+
+    @Override
+    public CustomerWorkOrder saveOrder(CustomerWorkOrder customerWorkOrder) {
+        customerWorkOrder.setWorkOrderUuid(UuidUtil.getUuid());
+        customerWorkOrder.setCreateTime(new Date(System.currentTimeMillis()));
+        customerWorkOrderDao.insertOrder(customerWorkOrder);
+        return customerWorkOrder;
     }
 }
