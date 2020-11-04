@@ -1,6 +1,7 @@
 package com.delivery.service;
 
 import com.delivery.entity.*;
+import com.delivery.exception.customer.AddressNumberException;
 
 import java.util.List;
 
@@ -48,8 +49,9 @@ public interface AddressService {
      *
      * @param customerAddress 用户地址
      * @return CustomerAddress 地址
+     * @throws AddressNumberException 有效地址已经有10个了
      */
-    CustomerAddress saveCustomerAddress(CustomerAddress customerAddress);
+    CustomerAddress saveCustomerAddress(CustomerAddress customerAddress) throws AddressNumberException;
 
     /**
 

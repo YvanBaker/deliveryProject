@@ -2,6 +2,7 @@ package com.delivery.service.impl;
 
 import com.delivery.dao.*;
 import com.delivery.entity.*;
+import com.delivery.exception.customer.AddressNumberException;
 import com.delivery.service.AddressService;
 import org.springframework.stereotype.Service;
 
@@ -53,13 +54,17 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public CustomerAddress saveCustomerAddress(CustomerAddress customerAddress) {
-        List<CustomerAddress> customerAddressList = customerAddressDao.selectCustomerAddressByIdUserId(customerAddress.getUserId());
-        if (customerAddressList.isEmpty()) {
+    public CustomerAddress saveCustomerAddress(CustomerAddress customerAddress) throws AddressNumberException {
+        List<CustomerAddress> resDataList =
+                customerAddressDao.selectCustomerAddressByUserIdAndDel(customerAddress.getUserId(), 0);
+        if (resDataList.size() > 9) {
+            throw new AddressNumberException("已经存在10个有效地址!!");
+        }
+        if (resDataList.isEmpty()) {
             customerAddressDao.insertCustomerAddress(customerAddress);
             return customerAddress;
         }
-        for (CustomerAddress item : customerAddressList) {
+        for (CustomerAddress item : resDataList) {
             if (item.equals(customerAddress)) {
                 return item;
             }
@@ -100,7 +105,7 @@ public class AddressServiceImpl implements AddressService {
     public boolean renewCustomerReceiveAddresses(CustomerReceiveAddress address) {
         return customerReceiveAddressDao.updateAddress(address) > 0;
     }
-  
+
     @Override
     public List<CustomerAddress> getAddressByUserId(Integer id) {
         return customerAddressDao.selectCustomerAddressByIdUserId(id);
