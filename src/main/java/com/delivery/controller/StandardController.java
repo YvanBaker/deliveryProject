@@ -6,7 +6,6 @@ import com.delivery.service.StandardService;
 import com.delivery.util.PageUtil;
 import com.delivery.util.TimeUtil;
 import com.delivery.utilentity.FindStandard;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,9 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * TODO 尚未从session中获得操作人员等字段;隔离级别

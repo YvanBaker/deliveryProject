@@ -2,7 +2,6 @@ package com.delivery.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.delivery.entity.Customer;
-import com.delivery.entity.WorkBill;
 import com.delivery.service.CustomerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +28,7 @@ public class Noticebill {
      */
     @RequestMapping("/billVerify")
     public void billVerify(String telephone, HttpServletResponse response) throws IOException {
-        Customer customer=customerService.findCustomerByTelephone(telephone);
+        Customer customer=customerService.queryCustomerByPhone(telephone);
         response.getWriter().write(JSONObject.toJSONString(customer));
     }
 }
