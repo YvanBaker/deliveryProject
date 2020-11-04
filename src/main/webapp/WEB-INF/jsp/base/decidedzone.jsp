@@ -386,7 +386,7 @@
         <form id="customerForm" action="/sys/assignCustomersToDecidedzone" method="post">
             <table class="table-edit" width="80%" align="center">
                 <tr class="title">
-                    <td colspan="3">关联客户</td>
+                    <td colspan="3">关联客户订单</td>
                 </tr>
                 <tr>
                     <td>
@@ -445,77 +445,78 @@
             }
         }
     })
-    /*
-<%--<td>
-                        <table id="subareaGrid" class="easyui-datagrid" border="false" style="width:300px;height:300px"
-                               data-options="url:'/sys/decidedzoneSubarea',fitColumns:true,singleSelect:false">
-                            <thead>
-                            <tr>
-                                <th data-options="field:'id',width:30,checkbox:true">编号</th>
-                                <th data-options="field:'addresskey',width:150">关键字</th>
-                                <th data-options="field:'position',width:200,align:'right'">位置</th>
-                            </tr>
-                            </thead>
-                        </table>
-                    </td>--%>
-        $("#addDecidedZoneFrom").form('submit',{
-            url: "/sys/addDecided",
-            /!*onSubmit: function(){
-                var dname=$("#deciname").val();
-                var staffid=$("#staff").val();
-                var area = $("#area").val();
-                if (dname === '' || staffid === '' || area === '') {
-                    alert()
-                }
-                // do some check
-                // return false to prevent submit;
-            },*!/
-            success:function(data){
-                alert(data)
-            }*/
-
-
-    /*var ids = new Array();
-    if (sele.length == 0) {
-        alert("请选则要关联的定区")
-    }
-    if (sele.length != 0) {
-        for (var i = 0; i < sele.length; i++) {
-            ids.push(sele[i].id);
-        }
-        ids.join(",");
-        ids=ids.toString();
-
-        var decname = $("#deciname").val();
-        var staffbox = $("#staffbox").val();
-        if (staffbox == '') {
-            alert("请选则取派员!")
-        } else {
-            $.post({
-                url: "/sys/addDecided",
-                data: {
-                    DecidedId: id,
-                    decidedName: decname,
-                    staff_id:staffbox
-                },
-                success: function (data) {
-                    $.messager.show({
-                        title:'消息',
-                        msg:data,
-                        timeout:3000,
-                        showType:'slide'
-                    });
-                }
-            });
-            $("#addDecidedzoneWindow").window("close");
-            $("#grid").datagrid("loader");
-        }
-    }
-*/
-
-    /*$.post("/sys/addDecidedZone", {}, function () {
-
-    })*/
 </script>
+    <%--/*--%>
+<%--&lt;%&ndash;<td>--%>
+                        <%--<table id="subareaGrid" class="easyui-datagrid" border="false" style="width:300px;height:300px"--%>
+                               <%--data-options="url:'/sys/decidedzoneSubarea',fitColumns:true,singleSelect:false">--%>
+                            <%--<thead>--%>
+                            <%--<tr>--%>
+                                <%--<th data-options="field:'id',width:30,checkbox:true">编号</th>--%>
+                                <%--<th data-options="field:'addresskey',width:150">关键字</th>--%>
+                                <%--<th data-options="field:'position',width:200,align:'right'">位置</th>--%>
+                            <%--</tr>--%>
+                            <%--</thead>--%>
+                        <%--</table>--%>
+                    <%--</td>&ndash;%&gt;--%>
+        <%--$("#addDecidedZoneFrom").form('submit',{--%>
+            <%--url: "/sys/addDecided",--%>
+            <%--/!*onSubmit: function(){--%>
+                <%--var dname=$("#deciname").val();--%>
+                <%--var staffid=$("#staff").val();--%>
+                <%--var area = $("#area").val();--%>
+                <%--if (dname === '' || staffid === '' || area === '') {--%>
+                    <%--alert()--%>
+                <%--}--%>
+                <%--// do some check--%>
+                <%--// return false to prevent submit;--%>
+            <%--},*!/--%>
+            <%--success:function(data){--%>
+                <%--alert(data)--%>
+            <%--}*/--%>
+
+
+    <%--/*var ids = new Array();--%>
+    <%--if (sele.length == 0) {--%>
+        <%--alert("请选则要关联的定区")--%>
+    <%--}--%>
+    <%--if (sele.length != 0) {--%>
+        <%--for (var i = 0; i < sele.length; i++) {--%>
+            <%--ids.push(sele[i].id);--%>
+        <%--}--%>
+        <%--ids.join(",");--%>
+        <%--ids=ids.toString();--%>
+
+        <%--var decname = $("#deciname").val();--%>
+        <%--var staffbox = $("#staffbox").val();--%>
+        <%--if (staffbox == '') {--%>
+            <%--alert("请选则取派员!")--%>
+        <%--} else {--%>
+            <%--$.post({--%>
+                <%--url: "/sys/addDecided",--%>
+                <%--data: {--%>
+                    <%--DecidedId: id,--%>
+                    <%--decidedName: decname,--%>
+                    <%--staff_id:staffbox--%>
+                <%--},--%>
+                <%--success: function (data) {--%>
+                    <%--$.messager.show({--%>
+                        <%--title:'消息',--%>
+                        <%--msg:data,--%>
+                        <%--timeout:3000,--%>
+                        <%--showType:'slide'--%>
+                    <%--});--%>
+                <%--}--%>
+            <%--});--%>
+            <%--$("#addDecidedzoneWindow").window("close");--%>
+            <%--$("#grid").datagrid("loader");--%>
+        <%--}--%>
+    <%--}--%>
+<%--*/--%>
+
+    <%--/*$.post("/sys/addDecidedZone", {}, function () {--%>
+
+    <%--})*/--%>
+
 </body>
 </html>

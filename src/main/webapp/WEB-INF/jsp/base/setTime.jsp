@@ -169,7 +169,7 @@
                 resizable: false//是否可以调整大小
             });
             // 添加标准窗口
-            $('#addiTimeWindow').window({
+                $('#addTimeWindow').window({
                 title: '添加标准',
                 width: 400,
                 modal: true,//遮罩效果

@@ -341,7 +341,7 @@
 </div>
 
 <%-- 对line进行查询--%>
-<div class="easyui-window" title="对班车进行查询" id="lookLineWindow"
+<div class="easyui-window" title="对班车进行查询" id="lookLinedWindow"
      collapsible="false" minimizable="false" maximizable="false" style="top:20px;left:200px">
     <div region="north" style="height:31px;overflow:hidden;" split="false" border="false">
         <div class="datagrid-toolbar">
