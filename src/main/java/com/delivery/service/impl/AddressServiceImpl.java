@@ -80,6 +80,11 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
+    public List<CustomerAddress> queryEffectiveCustomerAddress(int customerId) {
+        return customerAddressDao.selectCustomerAddressByUserIdAndDel(customerId, 0);
+    }
+
+    @Override
     public CustomerReceiveAddress saveCustomerReceiveAddress(CustomerReceiveAddress address) {
         List<CustomerReceiveAddress> resAddressList =
                 customerReceiveAddressDao.selectAddressByCustomerId(address.getCustomerId());

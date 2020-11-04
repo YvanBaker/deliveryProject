@@ -63,6 +63,13 @@ public interface AddressService {
     List<CustomerAddress> queryCustomerAddresses(int customerId);
 
     /**
+     * 查询有效的用户地址
+     * @param customerId 用户 id
+     * @return List<CustomerAddress>
+     */
+    List<CustomerAddress> queryEffectiveCustomerAddress(int customerId);
+
+    /**
      * 保存 用户送达地址
      *
      * @param address 地址
