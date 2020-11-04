@@ -70,6 +70,10 @@ public class CustomerAddressDaoMapper {
                         TypeUtil.isValidString(customerAddress.getAddressDetail())) {
                     SET("address_detail = #{addressDetail}");
                 }
+                if (customerAddress.getDel() != null) {
+                    SET("del = #{del}");
+                }
+                WHERE("id = #{id}");
             }
         }.toString();
     }

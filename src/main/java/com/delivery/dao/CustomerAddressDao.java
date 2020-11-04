@@ -33,7 +33,8 @@ public interface CustomerAddressDao {
      * @param userId userid
      * @return List<UserAddress>
      */
-    @Select("select id, province_id, city_id, area_id, address_detail, user_id from customer_address where user_id = #{userId}")
+    @Select("select id, province_id, city_id, area_id, address_detail, user_id, del " +
+            "from customer_address where user_id = #{userId}")
     List<CustomerAddress> selectCustomerAddressByIdUserId(@Param("userId") int userId);
 
     /**
@@ -44,4 +45,15 @@ public interface CustomerAddressDao {
      */
     @UpdateProvider(type = CustomerAddressDaoMapper.class, method = "updateCustomerAddressSql")
     int updateCustomerAddress(CustomerAddress customerAddress);
+
+    /**
+     * 根据 id del 查询
+     *
+     * @param userId  id
+     * @param del del
+     * @return List<CustomerAddress>
+     */
+    @Select("select id, province_id, city_id, area_id, address_detail, user_id, del " +
+            "from customer_address where user_id = #{id} and del = #{del}")
+    List<CustomerAddress> selectCustomerAddressByUserIdAndDel(@Param("id") int userId, @Param("del") int del);
 }
