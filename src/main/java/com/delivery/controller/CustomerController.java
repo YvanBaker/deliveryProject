@@ -7,6 +7,7 @@ import com.delivery.exception.customer.CustomerAttributesNullException;
 import com.delivery.exception.customer.CustomerNameRepeatException;
 import com.delivery.exception.customer.CustomerNullException;
 import com.delivery.model.MsgResponse;
+import com.delivery.service.AddressService;
 import com.delivery.service.CustomerService;
 import com.delivery.util.JwtUtils;
 import com.delivery.util.MailUtils;
@@ -32,6 +33,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @Date 2020/10/26 11:14
  */
 @Controller
+@ResponseBody
 public class CustomerController {
 
     private final String SUCCESS = "success";
@@ -40,8 +42,10 @@ public class CustomerController {
     @Resource
     private CustomerService customerService;
 
+    @Resource
+    private AddressService addressService;
+
     @PostMapping(value = "/register")
-    @ResponseBody
     @CrossOrigin
     public String saveCustomer(Customer customer, HttpSession session) {
         try {
@@ -57,7 +61,6 @@ public class CustomerController {
     }
 
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ResponseBody
     @CrossOrigin
     public String loginCustomer(String name, String password) {
         Customer customer;
@@ -76,7 +79,6 @@ public class CustomerController {
 
 
     @GetMapping(value = "/getCode", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ResponseBody
     @CrossOrigin
     public String getCode(String email) {
         String code = RandomUtils.getCode(6, 10);
@@ -91,7 +93,6 @@ public class CustomerController {
     }
 
     @PostMapping(value = "/resetPassword", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ResponseBody
     @CrossOrigin
     public String resetPassword(String email, String password, HttpServletRequest request) {
         String emailToken = request.getHeader("emailToken");
@@ -114,7 +115,6 @@ public class CustomerController {
     }
 
     @PostMapping(value = "/placeOrder", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ResponseBody
     @CrossOrigin
     public String placeOrder(CustomerWorkOrder order) {
         CustomerWorkOrder customerWorkOrder = customerService.saveOrder(order);
@@ -125,7 +125,6 @@ public class CustomerController {
     }
 
     @GetMapping(value = "/repeatName", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ResponseBody
     @CrossOrigin
     public String nameOfRepeat(String name) {
         Customer customer = customerService.queryCustomerByName(name);
@@ -136,7 +135,6 @@ public class CustomerController {
     }
 
     @GetMapping(value = "/repeatPhone", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ResponseBody
     @CrossOrigin
     public String phoneOfRepeat(String phone) {
         Customer customer = customerService.queryCustomerByPhone(phone);
@@ -147,7 +145,6 @@ public class CustomerController {
     }
 
     @GetMapping(value = "/repeatEmail", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ResponseBody
     @CrossOrigin
     public String emailOfRepeat(String email) {
         Customer customer = customerService.queryCustomerByEmail(email);
@@ -155,5 +152,11 @@ public class CustomerController {
             return JSON.toJSONString(MsgResponse.buildError("邮箱重复！！"));
         }
         return JSON.toJSONString(MsgResponse.buildSuccess(SUCCESS));
+    }
+
+    @GetMapping(value = "/addressList", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @CrossOrigin
+    public String getAddressList(int id){
+        return "strs";
     }
 }
