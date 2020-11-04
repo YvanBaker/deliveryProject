@@ -49,19 +49,51 @@
             } else {
                 var array = new Array();
                 //选中了记录,获取选中行的id
+                var n=0;
                 for (var i = 0; i < rows.length; i++) {
                     var id = rows[i].id;
+                    if (rows[i].deltag === 'N') {
+                        n++;
+                    }
                     array.push(id);
+                }
+                if (n > 0) {
+                    alert("只能废除正常使用的")
                 }
                 var ids = array.join(",");
                 //发送请求，传递ids参数
-                window.location.href = '/sys/staffDelete?ids=' + ids;
+                if (n === 0) {
+                    window.location.href = '/sys/staffDelete?ids=' + ids;
+                }
             }
         }
 
-        //还原方法
+        //批量还原
         function doRestore() {
-            alert("将取派员还原...");
+            var rows=$("#grid").datagrid("getSelections");
+            if (rows.length == 0) {
+                $.messager.alert("提示信息","请选择需要还原的记录","warning")
+            }
+            var n=0;
+            var array = new Array();
+            for (var i = 0; i < rows.length; i++) {
+                var deltag = rows[i].deltag;
+                var id = rows[i].id;
+                array.push(id);
+                if(deltag==='Y'){
+                   n++;
+                }
+            }
+            var ids = array.join(",");
+            if (n > 0) {
+                alert("只能还原已废除的记录")
+            }
+            if (n === 0) {
+                //都是已废除的记录，可以发起还原
+                $.post("/sys/staffRenew",{ids:ids},function (data) {
+                    $("#grid").datagrid("load");
+                },'json')
+            }
         }
 
         //工具栏

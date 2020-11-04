@@ -24,10 +24,6 @@
 	href="/css/default.css">
 <script type="text/javascript"
 	src="/easyui/jquery.easyui.min.js"></script>
-<%--<script type="text/javascript"
-	src="/easyui/ext/jquery.portal.js"></script>--%>
-<%--<script type="text/javascript"
-	src="/easyui/ext/jquery.cookie.js"></script>--%>
 <script type="text/javascript">
 	$(function(){
 		$("#grid").datagrid({
@@ -37,7 +33,7 @@
 					text : '添加权限',
 					iconCls : 'icon-add',
 					handler : function(){
-						location.href='${pageContext.request.contextPath}/page_admin_function_add.action';
+						location.href='/sys/function_addShow';
 					}
 				}           
 			],

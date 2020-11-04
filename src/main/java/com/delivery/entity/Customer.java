@@ -61,4 +61,10 @@ public class Customer implements Serializable {
  	@Column(name = "sex" )
 	private Integer sex;
 
+	/**
+	 * 分区id
+	 * null为未关联到分区
+	 */
+	@Column(name = "decidedzone_id")
+ 	private String decidedzoneId;
 }

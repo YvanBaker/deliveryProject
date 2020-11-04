@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.delivery.dao.DecidedzoneDao">
+
+    <insert id="addDecidedzone" parameterType="Decidedzone">
+        insert into decidedzone (id,decided_name,staff_id,subarea_ids)values (#{id},#{decidedName},#{staff.id},#{subarea_ids})
+    </insert>
+    <insert id="addDecidedzonePuls">
+        insert into decidedzone(decided_name,staff_id,region_id)values (#{decidedName},#{staffId},#{areaId})
+    </insert>
+    <select id="getDecidedZoneAll" resultType="decidedzone" resultMap="decidedZoneMap1">
+            select * from decidedzone,staff where decidedzone.staff_id=staff.id
+    </select>
+    <!--在用-->
+    <select id="getDecidedZonelimit" resultMap="decidedZoneMap1">
+        select * from decidedzone,staff,newRegion where decidedzone.staff_id=staff.id and decidedzone.region_id=newRegion.id  limit #{param1},#{param2}
+    </select>
+    <select id="DecidedzoneCount" resultType="_int">
+        select count(*) from decidedzone
+    </select>
+    <select id="getDecidedZone" resultType="decidedzone">
+        select * from decidedzone where decided_name=#{deciname}
+    </select>
+    <resultMap id="decidedZoneMap0" type="decidedzone">
+        <id property="id" column="id"/>
+        <result property="decidedName" column="decided_name"/>
+    </resultMap>
+    <resultMap id="decidedZoneMap1" type="Decidedzone" extends="decidedZoneMap0">
+        <association property="staff" javaType="staff">
+            <id property="id" column="staff_id"/>
+            <result property="name" column="name"/>
+            <result property="telephone" column="telephone"/>
+            <result property="station" column="station"/>
+        </association>
+        <association property="region"  javaType="Region">
+            <id property="id" column="region_id"/>
+            <result property="provinceName" column="province_name"/>
+            <result property="cityName" column="city_name"/>
+            <result property="areasName" column="areas_name"/>
+        </association>
+    </resultMap>
+</mapper>

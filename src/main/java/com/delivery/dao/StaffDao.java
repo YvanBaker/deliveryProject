@@ -77,7 +77,7 @@ public interface StaffDao {
      * 普通分页总计
      * @return
      */
-    int staffDelIsYCount();
+    int staffCount();
 
 
     /**
@@ -85,12 +85,20 @@ public interface StaffDao {
      * @param findStaff
      * @return
      */
-    int staffDelIsYCountByDim(FindStaff findStaff);
+    int staffCountByDim(FindStaff findStaff);
 
     /**
      * 模糊查询数据
      * @param findStaff
      * @return
      */
-    List<Staff> selectStaffDeltagIsYByDim(FindStaff findStaff);
+    List<Staff> selectStaffByDim(FindStaff findStaff);
+
+    /**
+     * 还原
+     * @param staff
+     * @return
+     */
+    boolean staffRenew(Staff staff);
+
 }

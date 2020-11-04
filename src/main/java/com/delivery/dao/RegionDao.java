@@ -1,6 +1,7 @@
 package com.delivery.dao;
 
 import com.delivery.entity.Region;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public interface RegionDao {
     int regionCount();
 
     List<Region> selectRegionLimit(int page, int rows);
+    List<Region> regionLikP(@Param("q") String q);
     //boolean updateRegion(Region region);
 
 }
