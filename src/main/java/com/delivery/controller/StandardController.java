@@ -1,6 +1,7 @@
 package com.delivery.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.delivery.entity.Admin;
 import com.delivery.entity.Standard;
 import com.delivery.service.StandardService;
 import com.delivery.util.PageUtil;
@@ -14,15 +15,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
- * TODO 尚未从session中获得操作人员等字段;隔离级别
- * Created by LEO15 on 2020/10/28.
  *
+ * Created by LEO15 on 2020/10/28.
  * @author fujianian
  */
 
@@ -41,9 +42,6 @@ public class StandardController {
     @RequestMapping("/standardShow")
     public void findStandardView(int page, int rows, HttpServletResponse httpServletResponse) throws IOException {
         List<Standard> standardList = standardService.selectStandardLimit(page, rows);
-//        for (Standard s: standardList ) {
-//            System.out.println(s);
-//        }
         int count = standardService.standardCount();
         System.out.println(count);
         PageUtil pageUtil = new PageUtil();
@@ -53,7 +51,8 @@ public class StandardController {
     }
 
     @RequestMapping(value = "/addStandard" )
-    public String addStandard(Standard standard, Model model) {
+    public String addStandard(Standard standard, Model model, HttpSession session) {
+        Admin admin= (Admin) session.getAttribute("admin");
         boolean flag = false;
         if (standard.getMinVolume() >= standard.getMaxVolume() || standard.getMinWeight() >= standard.getMaxWeight()) {
             String msg = "添加失败";
@@ -61,10 +60,9 @@ public class StandardController {
             return "base/setStandard";
         } else {
             standard.setStatus(1);
-            standard.setOperator("admin");
-            standard.setoStation("admin");
-            String time = TimeUtil.localtime();
-            standard.setoTime(time);
+            standard.setOperator(admin.getAdminName());
+            standard.setoStation(admin.getStations());
+            standard.setoTime(TimeUtil.localtime());
             flag = standardService.addStandard(standard);
             if (flag) {
                 String msg = "添加成功";
@@ -103,7 +101,8 @@ public class StandardController {
     }
 
     @RequestMapping("/updateStandard")
-    public String updateStandard(Standard standard,Model model) {
+    public String updateStandard(Standard standard,Model model,HttpSession session) {
+        Admin admin= (Admin) session.getAttribute("admin");
         System.out.println(standard);
         boolean flag=false;
         if (standard.getMaxWeight()<=standard.getMinWeight()||standard.getMaxVolume()<=standard.getMinVolume()){
@@ -111,8 +110,8 @@ public class StandardController {
             model.addAttribute("msg",msg);
             return "base/setStandard";
         }else{
-            standard.setOperator("test");
-            standard.setoStation("test");
+            standard.setOperator(admin.getAdminName());
+            standard.setoStation(admin.getStations());
             standard.setoTime(TimeUtil.localtime());
             flag=standardService.updateStandard(standard);
             if (flag){

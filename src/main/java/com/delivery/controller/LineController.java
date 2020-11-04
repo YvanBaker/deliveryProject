@@ -1,6 +1,7 @@
 package com.delivery.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.delivery.entity.Admin;
 import com.delivery.entity.Line;
 import com.delivery.service.LineService;
 import com.delivery.util.PageUtil;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 
@@ -44,13 +46,13 @@ public class LineController {
     }
 
     @RequestMapping(value = "/addLine", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String addStandard(Line line, Model model) {
+    public String addStandard(Line line, Model model, HttpSession session) {
+        Admin admin= (Admin) session.getAttribute("admin");
             boolean flag=false;
             line.setStatus(1);
-            line.setOperator("admin");
-            line.setoStation("admin");
-            String time = TimeUtil.localtime();
-            line.setoTime(time);
+            line.setOperator(admin.getAdminName());
+            line.setoStation(admin.getStations());
+            line.setoTime(TimeUtil.localtime());
             flag = lineService.addLine(line);
             if (flag) {
                 String msg = "添加成功";
@@ -86,10 +88,11 @@ public class LineController {
     }
 
     @RequestMapping("/lineEdit")
-    public String updateLine(Line line, Model model){
+    public String updateLine(Line line, Model model,HttpSession session){
+        Admin admin= (Admin) session.getAttribute("admin");
         boolean f=false;
-        line.setOperator("test");
-        line.setoStation("test");
+        line.setOperator(admin.getAdminName());
+        line.setoStation(admin.getStations());
         line.setoTime(TimeUtil.localtime());
         f=lineService.updateLine(line);
         if (f){

@@ -31,4 +31,10 @@ public class RegionDaoTest {
         }
         assertFalse(list.isEmpty());
     }
+
+    @Test
+    public void selectOneRegion(){
+        Region r=regionDao.selectOneRegion(new Region("北京市","市辖区","东城区"));
+        assertFalse(r==null);
+    }
 }

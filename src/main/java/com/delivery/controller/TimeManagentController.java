@@ -1,6 +1,7 @@
 package com.delivery.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.delivery.entity.Admin;
 import com.delivery.entity.TimeManagement;
 import com.delivery.service.TimeManagementService;
 import com.delivery.util.PageUtil;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 
 /**
@@ -40,10 +42,11 @@ public class TimeManagentController {
     }
 
     @RequestMapping("/addTime")
-    public String addTime(TimeManagement timeManagement,Model model) throws ParseException {
+    public String addTime(TimeManagement timeManagement, Model model, HttpSession session) throws ParseException {
+        Admin admin= (Admin) session.getAttribute("admin");
         timeManagement.setStatus(1);
-        timeManagement.setOperator("admin");
-        timeManagement.setoStation("admin");
+        timeManagement.setOperator(admin.getAdminName());
+        timeManagement.setoStation(admin.getStations());
         timeManagement.setoTime(TimeUtil.localtime());
         boolean flag=timeManagementService.addTimeManagement(timeManagement);
         if (flag) {
@@ -58,15 +61,16 @@ public class TimeManagentController {
     }
 
     @RequestMapping("/timeDelete")
-    public String removeTime(String ids,Model model){
+    public String removeTime(String ids,Model model,HttpSession session){
+        Admin admin= (Admin) session.getAttribute("admin");
         boolean f=false;
         String[] split=ids.split(",");
         for (String id: split) {
             TimeManagement timeManagement=new TimeManagement();
             timeManagement.setId(Integer.parseInt(id));
             timeManagement.setoTime(TimeUtil.localtime());
-            timeManagement.setOperator("admin");
-            timeManagement.setoStation("admin");
+            timeManagement.setOperator(admin.getAdminName());
+            timeManagement.setoStation(admin.getStations());
             f=timeManagementService.removeTimeManagement(timeManagement);
         }
         if (f){
@@ -81,10 +85,11 @@ public class TimeManagentController {
     }
 
     @RequestMapping("/timeEdit")
-    public String updateTime(TimeManagement timeManagement , Model model){
+    public String updateTime(TimeManagement timeManagement ,Model model,HttpSession session){
+        Admin admin= (Admin) session.getAttribute("admin");
         boolean f=false;
-        timeManagement.setoStation("admin");
-        timeManagement.setOperator("admin");
+        timeManagement.setoStation(admin.getStations());
+        timeManagement.setOperator(admin.getUserName());
         timeManagement.setoTime(TimeUtil.localtime());
         f=timeManagementService.updateTimeManagement(timeManagement);
         if (f){

@@ -32,4 +32,12 @@ public interface RegionService {
      * @return list
      */
     List<Region> selectRegionLimit(int page, int rows);
+
+    /**
+     * 查询一条地区，
+     * 用于手动录入订单判断地区
+     * @param region
+     * @return
+     */
+    Region selectOneRegion(Region region);
 }

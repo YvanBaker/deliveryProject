@@ -24,6 +24,13 @@ public class TimeUtil {
         return dateTime.format(formatter);
     }
 
+    /**
+     * @author fujianian
+     * @param offWorkTime
+     * @param startWorkTime
+     * @return
+     * @throws ParseException
+     */
     public static boolean timeReduce(String offWorkTime,String startWorkTime)throws ParseException{
         SimpleDateFormat sdf=new SimpleDateFormat("HH:mm");
         Date offWork=sdf.parse(offWorkTime);

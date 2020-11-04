@@ -36,4 +36,9 @@ public class RegionServiceImpl implements RegionService {
     public List<Region> selectRegionLimit(int page, int rows) {
         return regionDao.selectRegionLimit((page-1)*rows,rows);
     }
+
+    @Override
+    public Region selectOneRegion(Region region) {
+        return regionDao.selectOneRegion(region);
+    }
 }
