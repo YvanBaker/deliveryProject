@@ -4,6 +4,7 @@ import com.delivery.entity.Staff;
 import com.delivery.entity.StaffOrder;
 import com.delivery.mapper.StaffOrderDaoMapper;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
  * @Classname StaffOrderDao
  * @Date 2020/11/3 13:46
  */
+@Repository
 public interface StaffOrderDao {
 
     /**
@@ -70,7 +72,7 @@ public interface StaffOrderDao {
      * @return List<StaffOrder>
      */
     @Select("select id, staff_id, order_id from staff_order where staff_id = #{id}")
-    List<StaffOrder> selectOrderByStaff(@Param("id") int staffId);
+    List<StaffOrder> selectOrderByStaffId(@Param("id") int staffId);
 
     /**
      * 更加 工单 id 查询 数据
