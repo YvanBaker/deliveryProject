@@ -8,7 +8,9 @@
     <select id="getAllWorkorder" resultType="qpWorkorder">
         select * from workor_dermanage  limit #{arg0},#{arg1}
     </select>
-    <select id="getAllWorkorderCount" resultType="_int">
+    <select id="getAllWorkorderCount" resultType="java.lang.Integer">
         select count(*) from workor_dermanage
     </select>
+
+
 </mapper>

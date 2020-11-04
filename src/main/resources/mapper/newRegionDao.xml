@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.delivery.dao.RegionDao">
+
     <select id="selectAllRegion" resultType="Region">
         SELECT id,province_name,city_name,areas_name,areasId
         FROM newRegion
@@ -11,6 +12,11 @@
     <select id="selectRegionLimit" resultType="com.delivery.entity.Region">
         SELECT * from newRegion ORDER BY id asc limit #{arg0},#{arg1}
     </select>
+
+    <select id="selectOneRegion" resultType="Region">
+        SELECT * from newRegion WHERE province_name=#{provinceName} and city_name=#{cityName} and areas_name=#{areasName}
+    </select>
+  
     <select id="regionLikP" resultType="region">
         SELECT * from newRegion
         <where>

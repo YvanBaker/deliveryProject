@@ -32,7 +32,7 @@ public class LineDaoTest {
         line.setLineName("松江—闵行");
         line.setLicensePlate("沪Bxxxxx");
         line.setCarModel("卡车");
-        line.setDriver(1);
+        line.setDriver("1");
         line.setWeightControl(2.3);
         line.setOperator("test");
         line.setoStation("test");
@@ -44,14 +44,14 @@ public class LineDaoTest {
     @Test
     public void testUpdateLine(){
         Line line=new Line();
-        line.setLineType("干线1");
-        line.setLineName("仓库2-仓库3");
-        line.setDriver(2);
-        line.setOperator("test1");
-        line.setoStation("test1");
-        line.setoTime("test1");
+        line.setLineType("干线5");
+        line.setLineName("仓库3-仓库6");
+        line.setDriver("20");
+        line.setOperator("test11");
+        line.setoStation("test11");
+        line.setoTime("test11");
         line.setId(1);
-        boolean i = lineDao.updateAndRemoveLine(line);
+        boolean i = lineDao.updateLine(line);
         assertTrue(i);
     }
 
@@ -59,18 +59,12 @@ public class LineDaoTest {
     public void testRemoveLine(){
         Line line =new Line();
         line.setId(1);
-        line.setStatus(0);
         line.setOperator("test");
         line.setoStation("test");
         line.setoTime("test");
-        boolean i =lineDao.updateAndRemoveLine(line);
+        boolean i =lineDao.removeLine(line);
         assertTrue(i);
     }
 
-    @Test
-    public void testSelectLine(){
-        List<Line> list =lineDao.selectLine();
-        assertTrue(list.size()>0);
-    }
 
 }

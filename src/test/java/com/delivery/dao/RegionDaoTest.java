@@ -38,6 +38,12 @@ public class RegionDaoTest {
     }
 
     @Test
+
+    public void selectOneRegion(){
+        Region r=regionDao.selectOneRegion(new Region("北京市","市辖区","东城区"));
+        assertFalse(r==null);
+    }
+  
     public void findAllRegionLikPtest() {
         String q="";
         List<Region> regions = regionDao.regionLikP(q);
