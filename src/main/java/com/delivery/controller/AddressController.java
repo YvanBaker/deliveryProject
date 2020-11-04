@@ -1,10 +1,7 @@
 package com.delivery.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.delivery.entity.Areas;
-import com.delivery.entity.City;
-import com.delivery.entity.CustomerAddress;
-import com.delivery.entity.Provinces;
+import com.delivery.entity.*;
 import com.delivery.model.MsgResponse;
 import com.delivery.service.AddressService;
 import org.springframework.http.MediaType;
@@ -31,6 +28,11 @@ public class AddressController {
     private AddressService addressService;
 
 
+    /**
+     * 获取 省 json
+     *
+     * @return String
+     */
     @GetMapping(value = "/provinces", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     @CrossOrigin
@@ -40,6 +42,12 @@ public class AddressController {
         return JSON.toJSONString(msgResponse);
     }
 
+    /**
+     * 获取 市 json
+     *
+     * @param provinceId 省 id
+     * @return String
+     */
     @GetMapping(value = "/city", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     public String getCity(String provinceId) {
@@ -48,21 +56,34 @@ public class AddressController {
         return JSON.toJSONString(msgResponse);
     }
 
+    /**
+     * 获取 区 json
+     *
+     * @param cityId 市 id
+     * @return
+     */
     @GetMapping(value = "/areas", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
+    @CrossOrigin
     public String getAreas(String cityId) {
         List<Areas> areasList = addressService.queryAresByCityId(cityId);
         MsgResponse msgResponse = MsgResponse.buildSuccess(SUCCESS, areasList);
         return JSON.toJSONString(msgResponse);
     }
 
+    /**
+     * 保存 寄件 地址接口
+     *
+     * @param customerAddress 用户地址
+     * @return String
+     */
     @PostMapping(value = "/saveSendAddress", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
+    @CrossOrigin
     public String saveCustomerAddress(CustomerAddress customerAddress) {
         CustomerAddress res = addressService.saveCustomerAddress(customerAddress);
         MsgResponse msgResponse;
-        System.out.println(customerAddress.getId());
-        if (customerAddress.getId() == 0) {
+        if (customerAddress.getId() == null || customerAddress.getId() == 0) {
             msgResponse = MsgResponse.buildSuccess(REPEAT, res);
         } else {
             msgResponse = MsgResponse.buildSuccess(SUCCESS, customerAddress);
@@ -70,5 +91,46 @@ public class AddressController {
         return JSON.toJSONString(msgResponse);
     }
 
+    /**
+     * 获取用户地址列表 用户 id
+     *
+     * @param customerId 用户id
+     * @return
+     */
+    @GetMapping(value = "/customerAddress", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    @CrossOrigin
+    public String getCustomerAddress(@RequestParam("id") int customerId) {
+        List<CustomerAddress> customerAddressList = addressService.queryCustomerAddresses(customerId);
+        return JSON.toJSONString(MsgResponse.buildSuccess(SUCCESS, customerAddressList));
+    }
 
+    /**
+     * 保存 收件人 地址接口
+     *
+     * @param address 地址
+     * @return String
+     */
+    @PostMapping(value = "/saveReceiveAddress", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    @CrossOrigin
+    public String saveCustomerReceiveAddress(CustomerReceiveAddress address) {
+        CustomerReceiveAddress res = addressService.saveCustomerReceiveAddress(address);
+        MsgResponse msgResponse;
+        if (address.getId() == null || address.getId() == 0) {
+            msgResponse = MsgResponse.buildSuccess(REPEAT, res);
+        } else {
+            msgResponse = MsgResponse.buildSuccess(SUCCESS, address);
+        }
+        return JSON.toJSONString(msgResponse);
+    }
+
+    @GetMapping(value = "/receiveAddress", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    @CrossOrigin
+    public String getCustomerReceiveAddress(@RequestParam("id") int customerId) {
+        List<CustomerReceiveAddress> customerReceiveAddresses =
+                addressService.queryCustomerReceiveAddressesByCustomerId(customerId);
+        return JSON.toJSONString(MsgResponse.buildSuccess(SUCCESS, customerReceiveAddresses));
+    }
 }

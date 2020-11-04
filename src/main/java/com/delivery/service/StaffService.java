@@ -51,4 +51,11 @@ public interface StaffService {
      */
 
     PageUtil selectStaff(FindStaff findStaff);
+
+    /**
+     * 还原废除
+     * @param staff
+     * @return
+     */
+    boolean renewStaff(Staff staff);
 }

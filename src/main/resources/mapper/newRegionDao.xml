@@ -12,7 +12,15 @@
     <select id="selectRegionLimit" resultType="com.delivery.entity.Region">
         SELECT * from newRegion ORDER BY id asc limit #{arg0},#{arg1}
     </select>
+
     <select id="selectOneRegion" resultType="Region">
         SELECT * from newRegion WHERE province_name=#{provinceName} and city_name=#{cityName} and areas_name=#{areasName}
+    </select>
+  
+    <select id="regionLikP" resultType="region">
+        SELECT * from newRegion
+        <where>
+            <if test="q!=null and q!=''"> province_name like #{q} or city_name like #{q} or areas_name like #{q}</if>
+        </where>
     </select>
 </mapper>

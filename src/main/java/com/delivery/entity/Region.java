@@ -1,6 +1,8 @@
 package com.delivery.entity;
 
 import lombok.Data;
+import lombok.ToString;
+import org.junit.Test;
 
 import javax.persistence.Entity;
 
@@ -13,6 +15,9 @@ public class Region {
     private String cityName;
     private String areasName;
     private String areasId;
+    public String getName() {
+        return provinceName + "-" + cityName + "-" + areasName;
+    }
 
     public Region() {
     }

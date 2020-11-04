@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.delivery.dao.BusinessNoteDao">
+
+    <insert id="businessNoteAdd" parameterType="businessNote">
+        insert into business_note (client_num,client_name,client_phone,address,arrive_city,product,pro_date,number,weight,volume,remark,single_type,receiver)
+        values (#{clientNum},#{clientName},#{clientPhone},#{address},#{arriveCity},#{product},#{proDate},#{number},#{weight},#{volume},#{remark},#{singleType},#{receiver})
+    </insert>
+</mapper>

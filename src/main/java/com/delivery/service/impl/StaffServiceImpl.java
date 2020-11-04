@@ -62,13 +62,23 @@ public class StaffServiceImpl implements StaffService {
         List<Staff> staffs = new ArrayList<>();
         if (findStaff.isNull()) {//查询所有
             staffs = staffDao.selectStafflimit((findStaff.getPage()-1)*findStaff.getRows(),findStaff.getRows());
-            total = staffDao.staffDelIsYCount();
+            total = staffDao.staffCount();
         }else {
             findStaff.setPage((findStaff.getPage()-1)*findStaff.getRows());
-            staffs =staffDao.selectStaffDeltagIsYByDim(findStaff);
-            total =staffDao.staffDelIsYCountByDim(findStaff);
+            staffs =staffDao.selectStaffByDim(findStaff);
+            total =staffDao.staffCountByDim(findStaff);
         }
         return new PageUtil(total,staffs);
+    }
+
+    /**
+     * 恢复取派员
+     * @param staff
+     * @return
+     */
+    @Override
+    public boolean renewStaff(Staff staff) {
+        return staffDao.staffRenew(staff);
     }
 
 

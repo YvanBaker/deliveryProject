@@ -2,6 +2,9 @@ package com.delivery.service;
 
 
 import com.delivery.entity.Region;
+import com.delivery.entity.Subarea;
+import com.delivery.util.PageUtil;
+import com.delivery.utilentity.ShowSubarea;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
@@ -40,4 +43,25 @@ public interface RegionService {
      * @return
      */
     Region selectOneRegion(Region region);
+
+    /**
+     * 区域下拉框信息ajax查询
+     * @param q
+     * @return
+     */
+    List<Region> findAllRegionLikP(String q);
+
+    /**
+     * 分区
+     * @param subarea
+     * @return
+     */
+    boolean insertSubarea(Subarea subarea);
+
+    /**
+     * 分页展示分区
+     * @param showSubarea
+     * @return
+     */
+    PageUtil selectSubarealimit(ShowSubarea showSubarea);
 }
