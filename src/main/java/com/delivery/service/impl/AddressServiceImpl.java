@@ -70,4 +70,9 @@ public class AddressServiceImpl implements AddressService {
         customerAddressDao.insertCustomerAddress(customerAddress);
         return customerAddress;
     }
+
+    @Override
+    public List<CustomerAddress> getAddressByUserId(Integer id) {
+        return customerAddressDao.selectCustomerAddressByIdUserId(id);
+    }
 }

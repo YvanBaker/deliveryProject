@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.delivery.dao.SubareaDao">
+    <insert id="insertSubarea"   parameterType="Subarea">
+        insert into subarea (decidedzone_id,region_id,addresskey,startnum,endnum,single,position) values
+        (#{decidedzoneId},#{region.id},#{addresskey},#{startnum},#{endnum},#{single},#{position});
+    </insert>
+    <select id="getSubareaLimit" resultType="Subarea"  resultMap="subareaMap1">
+        select * from subarea,newRegion where  subarea.region_id=newRegion.id limit #{page},#{rows}
+
+    </select>
+    <resultMap id="subareaMap" type="subarea">
+        <id column="id" property="id"/>
+        <result property="addresskey" column="addresskey"/>
+        <result property="decidedzoneId" column="decidedzone_id"/>
+        <result property="startnum" column="startnum"/>
+        <result property="endnum" column="endnum"/>
+        <result property="single" column="single"/>
+        <result property="position" column="position"/>
+    </resultMap>
+
+    <resultMap id="subareaMap1" type="Subarea" extends="subareaMap" >
+        <association property="region" javaType="region">
+            <id property="id" column="region_id"/>
+            <result property="provinceName" column="province_name"/>
+            <result property="cityName" column="city_name"/>
+            <result property="areasName" column="areas_name"/>
+        </association>
+    </resultMap>
+    <select id="getSubareaTotal" resultType="_int">
+        select count(*) from subarea
+    </select>
+    <!-- 模糊查询-->
+    <select id="getSubareaLimitDim" resultMap="subareaMap1" parameterType="showSubarea" >
+        select * from subarea,newRegion
+        <where>
+            subarea.region_id=newRegion.id having
+            <if test="region.provinceName!=null and region.provinceName!=''"> newRegion.province_name like #{region.provinceName}</if>
+            <if test="region.cityName!=null and region.cityName!=''">or newRegion.city_name like #{region.cityName}</if>
+            <if test="region.areasName!=null and region.areasName!=''">or newRegion.areas_name like #{region.areasName}</if>
+            <if test="addresskey!=null and addresskey!=''">or addresskey like #{addresskey}</if>
+            ORDER BY subarea.id asc limit #{page},#{rows}
+        </where>
+    </select>
+    <!-- 模糊查询统计-->
+    <select id="getSubareaTotalDim" resultType="_int">
+        select count(*) from subarea,newRegion
+        <where>
+            subarea.region_id=newRegion.id
+            <if test="region.provinceName!=null and region.provinceName!=''">and newRegion.province_name like #{region.provinceName}</if>
+            <if test="region.cityName!=null and region.cityName!=''">or newRegion.city_name like #{region.cityName}</if>
+            <if test="region.areasName!=null and region.areasName!=''">or newRegion.areas_name like #{region.areasName}</if>
+            <if test="addresskey!=null and addresskey!=''">or addresskey like #{addresskey}</if>
+        </where>
+    </select>
+    <select id="getSubareaAll" resultType="subarea">
+        select * from subarea
+    </select>
+
+</mapper>
