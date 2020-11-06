@@ -23,7 +23,7 @@
     <select id="DecidedzoneCount" resultType="java.lang.Integer">
         select count(*) from decidedzone WHERE del='Y'
     </select>
-    <select id="getDecidedZone" resultType="decidedzone">
+    <select id="getDecidedZone" resultType="com.delivery.entity.Decidedzone">
         select * from decidedzone where decided_name=#{deciname} and del='Y'
     </select>
     <select id="getDecidedZonelimitDim" resultMap="decidedZoneMap1">
@@ -35,7 +35,7 @@
         </where>
         limit #{page},#{rows}
     </select>
-    <select id="getDecidedZoneConutDim" resultType="_int">
+    <select id="getDecidedZoneConutDim" resultType="java.lang.Integer">
         select count(*) from decidedzone,staff,newRegion
         <where>
             del='Y' and decidedzone.staff_id=staff.id and decidedzone.region_id=newRegion.id

@@ -21,7 +21,7 @@ public interface DecidedzoneDao {
 
     int DecidedzoneCount();
 
-    Decidedzone getDecidedZone(String deciname);
+//    Decidedzone getDecidedZone(String deciname);
 
     List<Decidedzone> getDecidedZonelimitDim(@Param("page") int page,@Param("rows") int rows,@Param("id") int id,@Param("station") String station);
 
