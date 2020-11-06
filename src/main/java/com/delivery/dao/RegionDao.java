@@ -27,11 +27,20 @@ public interface RegionDao {
     //boolean updateRegion(Region region);
 
     /**
+     * 自动分单调用
      * 查询一条地区，
-     * 用于手动录入订单判断地区
+     * 用于判断手动录入订单的地区
      * @param region
      * @return
      */
     Region selectOneRegion(Region region);
+
+    /**
+     *自动分单调用
+     *
+     * @param areaId
+     * @return
+     */
+    Region selectOneRegionByAreaId(String areaId);
 
 }

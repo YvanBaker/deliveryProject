@@ -1,6 +1,7 @@
 package com.delivery.mapper;
 
 import com.delivery.entity.StaffOrder;
+import com.delivery.util.TypeUtil;
 import org.apache.ibatis.jdbc.SQL;
 
 /**
@@ -20,8 +21,14 @@ public class StaffOrderDaoMapper {
                 if (order.getStaffId() != null) {
                     VALUES("staff_id", "#{staffId}");
                 }
-                if (order.getOrderId() != null) {
+                if (TypeUtil.isValidString(order.getOrderId())) {
                     VALUES("order_id", "#{orderId}");
+                }
+                if(TypeUtil.isValidString(order.getAreaId())){
+                    VALUES("area_id","#{areaId}");
+                }
+                if (order.getDel()!=null){
+                    VALUES("del","#{del}");
                 }
             }
         }.toString();
@@ -34,8 +41,11 @@ public class StaffOrderDaoMapper {
                 if (order.getStaffId() != null) {
                     SET("staff_id = #{staffId}");
                 }
-                if (order.getOrderId() != null) {
+                if (TypeUtil.isValidString(order.getOrderId())) {
                     SET("order_id = #{orderId}");
+                }
+                if (TypeUtil.isValidString(order.getAreaId())){
+                    SET("area_id=#{areaId}");
                 }
                 if (order.getDel() != null) {
                     SET("del = #{del}");

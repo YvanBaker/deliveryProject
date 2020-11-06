@@ -44,4 +44,7 @@ public interface CustomerAddressDao {
      */
     @UpdateProvider(type = CustomerAddressDaoMapper.class, method = "updateCustomerAddressSql")
     int updateCustomerAddress(CustomerAddress customerAddress);
+
+    @Select("select id,province_id,city_id,area_id,address_detail,user_id from customer_address where id = #{id} and del='0'")
+   CustomerAddress selectOneCustomerAddressById(int id);
 }

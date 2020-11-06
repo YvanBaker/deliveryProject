@@ -15,11 +15,14 @@
     <select id="getDecidedZonelimit" resultMap="decidedZoneMap1">
         select * from decidedzone,staff,newRegion where decidedzone.staff_id=staff.id and decidedzone.region_id=newRegion.id  limit #{param1},#{param2}
     </select>
-    <select id="DecidedzoneCount" resultType="_int">
-        select count(*) from decidedzone
+    <select id="DecidedzoneCount" resultType="java.lang.Integer">
+        select count(*) from decidedzone WHERE del='Y'
     </select>
     <select id="getDecidedZone" resultType="decidedzone">
         select * from decidedzone where decided_name=#{deciname}
+    </select>
+    <select id="selectOneDecidedzone" resultType="com.delivery.entity.Decidedzone">
+        SELECT * from decidedzone where region_id=#{regionId} and del='Y'
     </select>
     <resultMap id="decidedZoneMap0" type="decidedzone">
         <id property="id" column="id"/>
