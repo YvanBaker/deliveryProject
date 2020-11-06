@@ -68,8 +68,7 @@ public class CustomerReceiveAddress implements Serializable {
 	private String receiveDetailedAddress;
 
 	/**
-	 * 状态
-
+	 * 状态 0 未删除 1 删除
 	 */
  	@Column(name = "del" )
 	private Integer del;

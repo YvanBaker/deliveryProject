@@ -44,17 +44,6 @@ public class DecidedzoneServiceImpl implements DecidedzoneService {
     }
 
     /**
-     * 添加定区
-     *
-     * @param decidedzone
-     * @return
-     */
-    @Override
-    public boolean addDecidedzone(Decidedzone decidedzone) {
-        return decidedzoneDao.addDecidedzone(decidedzone);
-    }
-
-    /**
      * 显示定区
      *
      * @return
@@ -90,9 +79,62 @@ public class DecidedzoneServiceImpl implements DecidedzoneService {
         return decidedzoneDao.addDecidedzonePuls(areaId,staffId,decidedName);
     }
 
+
     @Override
     public List<Decidedzone> selectOneDecidedzone(String regionId) {
         return decidedzoneDao.selectOneDecidedzone(regionId);
+    }
+    /**
+     * 模糊查询定区
+     *
+     * @param page
+     * @param rows
+     * @param id
+     * @param station
+     * @return
+     */
+    @Override
+    public PageUtil getDecidedZoneDim(int page, int rows, int id, String station) {
+        page = (page - 1) * rows;
+        List<Decidedzone> decidedzones = decidedzoneDao.getDecidedZonelimitDim(page, rows, id, station);
+        int total=decidedzoneDao.getDecidedZoneConutDim(id,station);
+        return new PageUtil(total,decidedzones);
+    }
+
+    /**
+     * 删除
+     * @param s
+     * @return
+     */
+    @Override
+    public boolean delectDecidedzone(String s) {
+        int id = Integer.valueOf(s);
+        return decidedzoneDao.delectDecidedzone(id);
+    }
+
+    /**
+     * 修改
+     *
+     * @param areaId
+     * @param staffId
+     * @param decidedName
+     * @param selectId
+     * @return
+     */
+    @Override
+    public boolean changDecidedzone(String areaId, String staffId, String decidedName, String selectId) {
+        int id = Integer.parseInt(selectId);
+        return decidedzoneDao.updateDecidedZone(areaId, staffId, decidedName, id);
+    }
+
+    /**
+     * 去重
+     * @param decidedName
+     * @return
+     */
+    @Override
+    public Decidedzone getDecidedZone(String decidedName) {
+        return decidedzoneDao.getDecidedZone(decidedName);
     }
 
 

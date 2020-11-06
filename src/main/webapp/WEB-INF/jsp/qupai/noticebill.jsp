@@ -103,10 +103,11 @@
 			border : true,
 			rownumbers : true,
 			striped : true,
+			pageSize:30,
 			pageList: [30,50,100],
 			pagination : true,
 			toolbar : toolbar,
-			url :  "",
+			url :  "/sys/noticebillAllShow",
 			idField : 'id',
 			columns : columns,
 			onDblClickRow : doDblClickRow

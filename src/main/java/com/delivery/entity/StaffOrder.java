@@ -35,11 +35,21 @@ public class StaffOrder implements Serializable {
      */
     @Column(name = "order_id")
     private String orderId;
+
     /**
      * 关联地区id
      */
     @Column(name = "area_id")
     private String areaId;
+
+
+    /**
+     * 区域area_id
+     */
+    @Column(name = "area_id")
+    private String areaId;
+
+
     /**
      * 状态 1 正在进行 0 完成
      */

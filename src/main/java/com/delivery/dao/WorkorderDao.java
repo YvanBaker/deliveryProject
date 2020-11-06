@@ -26,5 +26,8 @@ public interface WorkorderDao {
     QpWorkorder selectOneWorkord(QpWorkorder qpWorkorder);
 
 
+    List<QpWorkorder> getAssociationsWorkorder();
+
+    List<QpWorkorder> getHasAssociationsWorkorder();
 
 }

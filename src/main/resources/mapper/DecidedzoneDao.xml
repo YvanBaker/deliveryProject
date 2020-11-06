@@ -2,24 +2,49 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.delivery.dao.DecidedzoneDao">
 
-    <insert id="addDecidedzone" parameterType="Decidedzone">
-        insert into decidedzone (id,decided_name,staff_id,subarea_ids)values (#{id},#{decidedName},#{staff.id},#{subarea_ids})
-    </insert>
     <insert id="addDecidedzonePuls">
-        insert into decidedzone(decided_name,staff_id,region_id)values (#{decidedName},#{staffId},#{areaId})
+        insert into decidedzone(decided_name,staff_id,region_id,del)values (#{decidedName},#{staffId},#{areaId},'Y')
     </insert>
+    <update id="delectDecidedzone">
+        update decidedzone set del='N' where id=#{id}
+    </update>
+    <update id="updateDecidedZone">
+        update decidedzone set decided_name=#{decidedName},staff_id=#{staffId},region_id=#{areaId} where id=#{id}
+    </update>
+
     <select id="getDecidedZoneAll" resultType="decidedzone" resultMap="decidedZoneMap1">
             select * from decidedzone,staff where decidedzone.staff_id=staff.id
     </select>
     <!--在用-->
     <select id="getDecidedZonelimit" resultMap="decidedZoneMap1">
-        select * from decidedzone,staff,newRegion where decidedzone.staff_id=staff.id and decidedzone.region_id=newRegion.id  limit #{param1},#{param2}
+        select * from decidedzone,staff,newRegion where del='Y' and decidedzone.staff_id=staff.id and decidedzone.region_id=newRegion.id  limit #{param1},#{param2}
     </select>
+
     <select id="DecidedzoneCount" resultType="java.lang.Integer">
         select count(*) from decidedzone WHERE del='Y'
     </select>
     <select id="getDecidedZone" resultType="decidedzone">
-        select * from decidedzone where decided_name=#{deciname}
+        select * from decidedzone where decided_name=#{deciname} and del='Y'
+    </select>
+    <select id="getDecidedZonelimitDim" resultMap="decidedZoneMap1">
+        select * from decidedzone,staff,newRegion
+        <where>
+           del='Y' and decidedzone.staff_id=staff.id and decidedzone.region_id=newRegion.id having
+            <if test="id!=0"> decidedzone.id = #{id}</if>
+            <if test="station!=null and station!=''">or staff.station like #{station}</if>
+        </where>
+        limit #{page},#{rows}
+    </select>
+    <select id="getDecidedZoneConutDim" resultType="_int">
+        select count(*) from decidedzone,staff,newRegion
+        <where>
+            del='Y' and decidedzone.staff_id=staff.id and decidedzone.region_id=newRegion.id
+            <if test="id!=0">and decidedzone.id = #{id}</if>
+            <if test="station!=null and station!=''">or staff.station like #{station}</if>
+        </where>
+    </select>
+    <select id="getDecidedZoneById" resultMap="decidedZoneMap1">
+        select * from decidedzone,staff,newRegion where decidedzone.staff_id=staff.id and decidedzone.region_id=newRegion.id and decidedzone.id=${id}
     </select>
     <select id="selectOneDecidedzone" resultType="com.delivery.entity.Decidedzone">
         SELECT * from decidedzone where region_id=#{regionId} and del='Y'
@@ -31,6 +56,7 @@
     <resultMap id="decidedZoneMap1" type="Decidedzone" extends="decidedZoneMap0">
         <association property="staff" javaType="staff">
             <id property="id" column="staff_id"/>
+            <result property="uuid" column="uuid"/>
             <result property="name" column="name"/>
             <result property="telephone" column="telephone"/>
             <result property="station" column="station"/>
@@ -40,6 +66,7 @@
             <result property="provinceName" column="province_name"/>
             <result property="cityName" column="city_name"/>
             <result property="areasName" column="areas_name"/>
+            <result property="areasId" column="areasId"/>
         </association>
     </resultMap>
 </mapper>
