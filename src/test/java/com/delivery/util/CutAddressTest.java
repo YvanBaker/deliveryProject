@@ -17,9 +17,8 @@ import java.util.Map;
 public class CutAddressTest {
     @Test
     public void CutAddress(){
-        String address="上海市闵行区";
+        String address="北京市北京市东城区";
         Map<String,String > map=CutAddressUtil.addressResolution(address);
-        System.out.println(map.get("prov"));
-
+        System.out.println(map.get("prov")+""+map.get("city")+""+map.get("areas"));
     }
 }

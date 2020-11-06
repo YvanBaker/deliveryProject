@@ -1,9 +1,16 @@
 package com.delivery.service.impl;
 
 import com.delivery.dao.WorkorderDao;
+import com.delivery.entity.Decidedzone;
 import com.delivery.entity.Customer;
 import com.delivery.entity.QpWorkorder;
+import com.delivery.entity.Region;
+import com.delivery.entity.StaffOrder;
+import com.delivery.service.DecidedzoneService;
+import com.delivery.service.RegionService;
+import com.delivery.service.StaffOrderService;
 import com.delivery.service.WorkorderService;
+import com.delivery.util.CutAddressUtil;
 import com.delivery.util.PageUtil;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +21,9 @@ import java.util.List;
 public class WorkorderServiceImpl implements WorkorderService {
     @Resource
     WorkorderDao workorderDao;
+    RegionService regionService;
+    DecidedzoneService decidedzoneService;
+    StaffOrderService staffOrderService;
 
     @Override
     public boolean workorderAdd(QpWorkorder qpWorkorder) {
@@ -32,7 +42,7 @@ public class WorkorderServiceImpl implements WorkorderService {
         int total=workorderDao.getAllWorkorderCount();
         return new PageUtil(total,allWorkorder);
     }
-
+  
     /**
      * 查询可关联的订单
      * @return
@@ -51,4 +61,5 @@ public class WorkorderServiceImpl implements WorkorderService {
         return workorderDao.getHasAssociationsWorkorder();
 
     }
+
 }

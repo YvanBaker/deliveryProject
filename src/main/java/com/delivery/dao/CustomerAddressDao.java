@@ -48,6 +48,10 @@ public interface CustomerAddressDao {
     @UpdateProvider(type = CustomerAddressDaoMapper.class, method = "updateCustomerAddressSql")
     int updateCustomerAddress(CustomerAddress customerAddress);
 
+
+    @Select("select id,province_id,city_id,area_id,address_detail,user_id from customer_address where id = #{id} and del='0'")
+   CustomerAddress selectOneCustomerAddressById(int id);
+
     /**
      * 根据 id del 查询
      *
@@ -87,4 +91,5 @@ public interface CustomerAddressDao {
     @Select("select id, city_name, name, areas_name, province_name, province_id, area_id, city_id, address_detail, user_id, del " +
             "from receive_address_view where user_id = #{id} and del =0")
     List<PickupAddress> selectEffectiveReceiveAddressByUserId(@Param("id") int userId);
+
 }

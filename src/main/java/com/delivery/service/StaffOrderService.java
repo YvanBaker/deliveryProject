@@ -1,11 +1,14 @@
 package com.delivery.service;
 
+
+import com.delivery.entity.StaffOrder;
+
 /**
- * @author wenJ
- * @Description
- * @Classname StaffOrderService
- * @Date 2020/11/5 10:41
+ * Created by LEO15 on 2020/11/4.
  */
 public interface StaffOrderService {
+    boolean addStaffOrder(StaffOrder staffOrder);
+
     boolean addAssignOrders(String id, String orderIds);
+
 }
