@@ -96,7 +96,7 @@
                 dataType: "json",
                 success: function (data) {
                     $.each(data, function (index, item) {
-                        $("#noassociationSelect").append("<option value='" + item.id + "'>" + item.clientName +"-"+item.arriveCity +"</option>");
+                        $("#noassociationSelect").append("<option value='" + item.uuid + "'>" + item.clientName +"-"+item.arriveCity +"</option>");
                     })
                 }
             });
@@ -106,9 +106,8 @@
                 dataType: 'json',
                 data: {id: did},
                 success: function (data) {
-                    console.log(data)
                     $.each(data, function (index, item) {
-                        $("#associationSelect").append("<option value='" + item.id + "'>" + item.clientName +"-"+item.arriveCity +"</option>");
+                        $("#associationSelect").append("<option value='" + item.uuid + "'>" + item.clientName +"-"+item.arriveCity +"</option>");
                     });
                 }
             })
@@ -117,6 +116,7 @@
         }
     }
 
+    var RightSelect;
     /*关联顾客订单*/
     $(function () {
         //为左右移动按钮绑定事件
@@ -129,7 +129,7 @@
         //为关联客户按钮绑定事件
         $("#associationBtn").click(function () {
             //在提交表单之前，选中右侧框中所有的选项
-            $("#associationSelect option").attr("selected", "selected");
+            $("#associationSelect option").prop("selected", "selected");
             //在提交表单之前设置隐藏域的值（定区id）
             $("input[name=id]").val(did);
             $("#associationForm").submit();
@@ -266,7 +266,7 @@
             queryParams: {id:rowData.id},
             url: "/sys/findAssociationsOrderOnDbl",
             columns: [[{
-                field: 'id',
+                field: 'uuid',
                 title: '订单编号',
                 width: 120,
                 align: 'center'
@@ -316,18 +316,31 @@
                 width: 120,
                 align: 'center'
             }, {
-                field: 'product',
-                title: '物品名',
-                width: 120,
-                align: 'center'
-            }, {
                 field: 'staff.name',
                 title: '派送人',
                 width: 120,
-                align: 'center'
+                align: 'center',
+                formatter: function (data, row, index) {
+                    return row.staff.name;
+                }
+            }, {
+                field: 'telephone',
+                title: '派送人电话',
+                width: 120,
+                align: 'center',
+                formatter: function (data, row, index) {
+                    return row.staff.telephone;
+                }
             }]]
         });
     }
+    //操作提示信息
+    $(function () {
+        var msg = "${msg}";
+        if (msg != "") {
+            $.messager.alert("操作信息", msg, "info");
+        }
+    })
 </script>
 </head>
 <body class="easyui-layout" style="visibility:hidden;">
@@ -337,10 +350,10 @@
 
 <div region="south" border="false" style="height:150px">
     <div id="tabs" fit="true" class="easyui-tabs">
-        <div title="关联分区" id="subArea"
+        <%--<div title="关联分区" id="subArea"
              style="width:100%;height:100%;overflow:hidden">
             <table id="association_subarea"></table>
-        </div>
+        </div>--%>
         <div title="关联订单" id="order"
              style="width:100%;height:100%;overflow:hidden">
             <table id="association_order"></table>
@@ -382,7 +395,6 @@
                         <input id="area" class="easyui-combobox" name="areaId" mode="remote" required="true"
                                data-options="valueField:'id',textField:'name',url:'sys/regionAjax'"/>
                     </td>
-
                 </tr>
             </table>
         </form>
@@ -416,12 +428,12 @@
 </div>
 <!-- 关联客户窗口 -->
 <div class="easyui-window" title="关联客户订单窗口" id="customerWindow" collapsible="false" closed="true" minimizable="false"
-     maximizable="false" style="top:20px;left:200px;width: 400px;height: 300px;">
+     maximizable="false" style="top:20px;left:200px;width: 614px;height: 300px;">
     <div style="overflow:auto;padding:5px;" border="false">
         <form id="associationForm" action="/sys/assignOrderToDecidedzone" method="post">
             <table class="table-edit" width="80%" align="center">
                 <tr class="title">
-                    <td colspan="3">关联客户订单</td>
+                    <td colspan="1">可关联客户订单</td> <td></td> <td>已关联订单</td>
                 </tr>
                 <tr>
                     <td>

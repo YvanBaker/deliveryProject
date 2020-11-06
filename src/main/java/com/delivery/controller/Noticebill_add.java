@@ -93,9 +93,9 @@ public class Noticebill_add {
      */
     @RequestMapping(value = "/findHasAssociationsOrder", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public String findHasAssociationsOrder() {
-        List<BusinessNote> workorOrder = businessNoteService.getHasAssociationsOrder();
-        return JSON.toJSONString(workorOrder);
+    public String findHasAssociationsOrder(String id) {
+        List<BusinessNote> businessNotes = businessNoteService.getHasAssociationsOrder(id);
+        return JSON.toJSONString(businessNotes);
     }
 
     /**
@@ -103,10 +103,10 @@ public class Noticebill_add {
      *
      * @param clientPhone
      */
-    @RequestMapping("/billVerify")
+   /* @RequestMapping("/billVerify")
     public void billVerify(String clientPhone, HttpServletResponse response) throws IOException {
         Customer customer = customerService.findCustomerByTelephone(clientPhone);
         List<CustomerAddress> customerAddress = customerAddressService.getAddressByUserId(customer.getId());
         response.getWriter().write(JSONObject.toJSONString(new CustomerAndAddress(customer, customerAddress)));
-    }
+    }*/
 }

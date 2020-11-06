@@ -13,7 +13,7 @@ import java.util.Date;
  * @author Yvan
  */
 
-@Data
+/*@Data
 @Entity
 @Table ( name ="workor_dermanage" )
 public class WorkorDermanage implements Serializable {
@@ -28,114 +28,114 @@ public class WorkorDermanage implements Serializable {
  	@Column(name = "workor_id" )
 	private String workorId;
 
-	/**
+	*//**
 	 * 到达地
-	 */
+	 *//*
  	@Column(name = "arrivecity" )
 	private String arrivecity;
 
-	/**
+	*//**
 	 * 产品
-	 */
+	 *//*
  	@Column(name = "product" )
 	private String product;
 
-	/**
+	*//**
 	 * 件数
 
-	 */
+	 *//*
  	@Column(name = "num" )
 	private Integer num;
 
-	/**
+	*//**
 	 * 重量
-	 */
+	 *//*
  	@Column(name = "weight" )
 	private Double weight;
 
-	/**
+	*//**
 	 * 配载要求
-	 */
+	 *//*
  	@Column(name = "floadreqr" )
 	private String floadreqr;
 
-	/**
+	*//**
 	 * 产品时限
-	 */
+	 *//*
  	@Column(name = "prodtimelimit" )
 	private String prodtimelimit;
 
-	/**
+	*//**
 	 * 产品类型
-	 */
+	 *//*
  	@Column(name = "prodtype" )
 	private String prodtype;
 
-	/**
+	*//**
 	 * 寄件人姓名
-	 */
+	 *//*
  	@Column(name = "sendername" )
 	private String sendername;
 
-	/**
+	*//**
 	 * 寄件人电话
-	 */
+	 *//*
  	@Column(name = "senderphone" )
 	private String senderphone;
 
-	/**
+	*//**
 	 * 寄件人地址
-	 */
+	 *//*
  	@Column(name = "senderaddr" )
 	private String senderaddr;
 
-	/**
+	*//**
 	 * 收件人姓名
-	 */
+	 *//*
  	@Column(name = "receivername" )
 	private String receivername;
 
-	/**
+	*//**
 	 * 收件人电话
-	 */
+	 *//*
  	@Column(name = "receiverphone" )
 	private String receiverphone;
 
-	/**
+	*//**
 	 * 收货人地址
-	 */
+	 *//*
  	@Column(name = "receiveraddr" )
 	private String receiveraddr;
 
-	/**
+	*//**
 	 * 计费件数
-	 */
+	 *//*
  	@Column(name = "feeitemnum" )
 	private Integer feeitemnum;
 
-	/**
+	*//**
 	 * 实际重量
-	 */
+	 *//*
  	@Column(name = "actlweit" )
 	private Double actlweit;
 
-	/**
+	*//**
 	 * 体积
-	 */
+	 *//*
  	@Column(name = "vol" )
 	private String vol;
 
-	/**
+	*//**
 	 * 是否审核配送
-	 */
+	 *//*
  	@Column(name = "managerCheck" )
 	private String managerCheck;
 
-	/**
+	*//**
 	 * 更新时间
-	 */
+	 *//*
  	@Column(name = "updatetime" )
-	private Date updatetime;
+	private Date updatetime;*/
 public class WorkorDermanage {
 
   private Integer id;

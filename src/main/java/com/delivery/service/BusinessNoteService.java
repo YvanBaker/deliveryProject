@@ -21,6 +21,6 @@ public interface BusinessNoteService {
 
     List<BusinessNote> getNoAssociationsOrder();
 
-    List<BusinessNote> getHasAssociationsOrder();
+    List<BusinessNote> getHasAssociationsOrder(String did);
 
 }

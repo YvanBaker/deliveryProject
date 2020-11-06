@@ -43,7 +43,7 @@
         </where>
     </select>
     <select id="getDecidedZoneById" resultMap="decidedZoneMap1">
-        select * from decidedzone,staff  where decidedzone.staff_id=staff.id and decidedzone.id=${id}
+        select * from decidedzone,staff,newRegion where decidedzone.staff_id=staff.id and decidedzone.region_id=newRegion.id and decidedzone.id=${id}
     </select>
     <resultMap id="decidedZoneMap0" type="decidedzone">
         <id property="id" column="id"/>
@@ -52,6 +52,7 @@
     <resultMap id="decidedZoneMap1" type="Decidedzone" extends="decidedZoneMap0">
         <association property="staff" javaType="staff">
             <id property="id" column="staff_id"/>
+            <result property="uuid" column="uuid"/>
             <result property="name" column="name"/>
             <result property="telephone" column="telephone"/>
             <result property="station" column="station"/>
@@ -61,6 +62,7 @@
             <result property="provinceName" column="province_name"/>
             <result property="cityName" column="city_name"/>
             <result property="areasName" column="areas_name"/>
+            <result property="areasId" column="areasId"/>
         </association>
     </resultMap>
 </mapper>

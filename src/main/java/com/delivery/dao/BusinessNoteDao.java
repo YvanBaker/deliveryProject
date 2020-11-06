@@ -1,6 +1,7 @@
 package com.delivery.dao;
 
 import com.delivery.entity.BusinessNote;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,10 +18,15 @@ public interface BusinessNoteDao {
 
     List<BusinessNote> getBusinessNotes();
 
-    List<BusinessNote> AssociationsOrderOnDbl(int id);
+    BusinessNote AssociationsOrderOnDbl(int id);
 
     List<BusinessNote> getNoAssociationsOrder();
 
     List<BusinessNote> getHasAssociationsOrder();
 
+    boolean setStaffById(@Param("uuid") String uuid,@Param("id1") int id1);
+
+    BusinessNote getBusinessNotesByUuid(@Param("orderUuid") String orderUuid);
+
+    boolean setBusinessNoteStaffIsNull();
 }

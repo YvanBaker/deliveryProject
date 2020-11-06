@@ -168,11 +168,12 @@ public class DecidedZoneController {
      * @param OrderIds
      * @return
      */
-    @RequestMapping(value = "/assignOrderToDecidedzone", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ResponseBody
-    public String assignOrdersToDecidedzone(String id, String OrderIds) {
+    @RequestMapping("/assignOrderToDecidedzone")
+    public String assignOrdersToDecidedzone(String id, String OrderIds,Model model) {
         //分区id----订单ids
+        System.out.println("OrderIds = " + OrderIds);
         boolean flog = staffOrderService.addAssignOrders(id, OrderIds);
-        return JSON.toJSONString("添加成功");
+        model.addAttribute("msg","关联成功");
+        return "base/decidedzone";
     }
 }

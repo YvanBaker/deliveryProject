@@ -4,10 +4,12 @@ import com.delivery.dao.BusinessNoteDao;
 import com.delivery.dao.DecidedzoneDao;
 import com.delivery.dao.StaffOrderDao;
 import com.delivery.entity.Decidedzone;
+import com.delivery.entity.StaffOrder;
 import com.delivery.service.StaffOrderService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author wenJ
@@ -33,14 +35,17 @@ public class StaffOrderServiceImpl implements StaffOrderService {
      */
     @Override
     public boolean addAssignOrders(String did, String orderIds) {
-      /*  int id = Integer.parseInt(did);
-        //为订单分取派员
-        Decidedzone decidedzone= businessNoteDao.getDecidedZoneById(id);*/
         int id = Integer.parseInt(did);
         Decidedzone decidedzone=decidedzoneDao.getDecidedZoneById(id);
-        String[] ids = orderIds.split(",");
-        for (int i = 0; i < ids.length; i++) {
-            staffOrderDao.addAssignOrders(did,decidedzone.getStaff().getId(),ids[i]);
+        /*List<StaffOrder> staffOrders= staffOrderDao.getStaffOrderAll();*/
+        businessNoteDao.setBusinessNoteStaffIsNull();
+        staffOrderDao.deleThisAssignOrders(decidedzone.getRegion().getAreasId(),decidedzone.getStaff().getId());
+        if (orderIds != null && orderIds != "") {
+            String[] ids = orderIds.split(",");
+            for (int i = 0; i < ids.length; i++) {
+                businessNoteDao.setStaffById(ids[i],decidedzone.getStaff().getId());
+                staffOrderDao.addAssignOrders(decidedzone.getRegion().getAreasId(),decidedzone.getStaff().getId(),ids[i],0);
+            }
         }
         return true;
     }

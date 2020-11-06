@@ -3,16 +3,22 @@
 <mapper namespace="com.delivery.dao.BusinessNoteDao">
 
     <insert id="businessNoteAdd" parameterType="businessNote">
-        insert into business_note (client_num,client_name,client_phone,contacts,con_phone,address,arrive_city,product,number,weight,volume,remark,single_type,receiver,build_time)
-        values (#{clientNum},#{clientName},#{clientPhone},#{contacts},#{conPhone},#{address},#{arriveCity},#{product},#{number},#{weight},#{volume},#{remark},#{singleType},#{receiver},#{buildTime})
+        insert into business_note (uuid,client_name,client_phone,contacts,con_phone,address,arrive_city,product,number,weight,volume,remark,single_type,receiver,build_time)
+        values (#{uuid},#{clientName},#{clientPhone},#{contacts},#{conPhone},#{address},#{arriveCity},#{product},#{number},#{weight},#{volume},#{remark},#{singleType},#{receiver},#{buildTime})
     </insert>
+    <update id="setStaffById">
+        update business_note set staff_num=#{id1} where uuid=#{uuid}
+    </update>
+    <update id="setBusinessNoteStaffIsNull">
+        update business_note set staff_num=null
+    </update>
     <select id="getBusinessNotes" resultType="businessNote">
         select * from business_note;
     </select>
     <select id="AssociationsOrderOnDbl" resultMap="businessNoteMap">
         select * from business_note,staff where business_note.staff_num=staff.id and business_note.id=#{id}
     </select>
-    <resultMap id="businessNoteMap" type="businessNote">
+    <resultMap id="businessNoteMap" type="businessNote" extends="businessNoteMap1">
         <id column="id" property="id"/>
         <result column="address" property="address"/>
         <result column="arrive_city" property="arriveCity"/>
@@ -43,5 +49,8 @@
     </select>
     <select id="getHasAssociationsOrder" resultType="businessNote">
         select * from  business_note where staff_num is not null
+    </select>
+    <select id="getBusinessNotesByUuid" resultMap="businessNoteMap" >
+        select * from business_note,staff where business_note.staff_num=staff.id and business_note.uuid=#{orderUuid}
     </select>
 </mapper>

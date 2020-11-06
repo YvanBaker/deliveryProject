@@ -3,6 +3,15 @@
 <mapper namespace="com.delivery.dao.StaffOrderDao">
 
     <insert id="addAssignOrders">
-        insert into staff_order order_id=#{orderIds}, staff_id=#{staffId} , area_id=#{id}
+        insert into staff_order (order_id,staff_id,area_id,del)values (#{orderId},#{staffId},#{areaId},#{del})
     </insert>
+    <delete id="deleThisAssignOrders">
+        delete from staff_order where staff_id=#{staffId} and area_id=#{areaId}
+    </delete>
+    <select id="getStaffOrderAll" resultType="staffOrder">
+        select * from staff_order
+    </select>
+    <select id="findAssociationsOrder" resultType="staffOrder">
+        select * from staff_order where staff_id=#{staffId} and area_id=#{areasId}
+    </select>
 </mapper>

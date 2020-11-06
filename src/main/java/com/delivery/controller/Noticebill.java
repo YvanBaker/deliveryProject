@@ -54,11 +54,11 @@ public class Noticebill {
         response.getWriter().write(JSONObject.toJSONString(new CustomerAndAddress(customer, customerAddress)));
     }
 
-    @RequestMapping("/noticebillAdd")
+    /*@RequestMapping("/noticebillAdd")
     public String noticebillAdd(@ModelAttribute BusinessNote businessNote, Model model) {
         businessNoteService.addbusinessNote(businessNote);
         model.addAttribute("添加成功");
-        return "qupai/noticebill_add";
-    }
+            return "qupai/noticebill_add";
+    }*/
 
 }
