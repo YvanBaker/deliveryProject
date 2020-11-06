@@ -11,4 +11,8 @@ public interface WorkorderDao {
 
     int getAllWorkorderCount();
 
+    List<QpWorkorder> getAssociationsWorkorder();
+
+    List<QpWorkorder> getHasAssociationsWorkorder();
+
 }

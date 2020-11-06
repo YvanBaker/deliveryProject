@@ -1,12 +1,10 @@
 package com.delivery.entity;
 
-public class QpWorkorder {
-
-
+public class WorkorDermanage {
 
   private Integer id;
   private String uuid;
-  private String workorId;
+  private String staff;
   private String arrivecity;
   private String product;
   private Integer num;
@@ -26,38 +24,15 @@ public class QpWorkorder {
   private String managerCheck;
   private java.sql.Date updatetime;
 
-  @Override
-  public String toString() {
-    return "QpWorkorder{" +
-            "id=" + id +
-            ", workorId='" + workorId + '\'' +
-            ", arrivecity='" + arrivecity + '\'' +
-            ", product='" + product + '\'' +
-            ", num=" + num +
-            ", weight=" + weight +
-            ", floadreqr='" + floadreqr + '\'' +
-            ", prodtimelimit='" + prodtimelimit + '\'' +
-            ", prodtype='" + prodtype + '\'' +
-            ", sendername='" + sendername + '\'' +
-            ", senderphone='" + senderphone + '\'' +
-            ", senderaddr='" + senderaddr + '\'' +
-            ", receivername='" + receivername + '\'' +
-            ", receiverphone='" + receiverphone + '\'' +
-            ", receiveraddr='" + receiveraddr + '\'' +
-            ", feeitemnum=" + feeitemnum +
-            ", actlweit=" + actlweit +
-            ", vol='" + vol + '\'' +
-            ", managerCheck='" + managerCheck + '\'' +
-            ", updatetime=" + updatetime +
-            '}';
+
+  public Integer getId() {
+    return id;
   }
 
   public void setId(Integer id) {
     this.id = id;
   }
-  public Integer getId() {
-    return id;
-  }
+
 
   public String getUuid() {
     return uuid;
@@ -67,13 +42,16 @@ public class QpWorkorder {
     this.uuid = uuid;
   }
 
-  public String getWorkorId() {
-    return workorId;
+
+  public String getStaff() {
+    return staff;
   }
 
-  public void setWorkorId(String workorId) {
-    this.workorId = workorId;
+  public void setStaff(String staff) {
+    this.staff = staff;
   }
+
+
   public String getArrivecity() {
     return arrivecity;
   }

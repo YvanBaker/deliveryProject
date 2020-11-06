@@ -24,17 +24,53 @@
     /*添加*/
     function doAdd() {
         $('#addDecidedzoneWindow').window("open");
+        $('#addDecidedZoneFrom').form('clear');
     }
-
 
     /*修改*/
     function doEdit() {
-        alert("修改...");
+        var selectrow = $('#grid').datagrid('getSelections');
+        if (selectrow.length == 0) {
+            //没有选中，提示
+            $.messager.alert("提示信息", "请选择需要修改的记录！", "warning");
+        }
+        if (selectrow.length > 1) {
+            //选中多个，提示
+            $.messager.alert("提示信息", "请一条一条修改！", "warning");
+        }
+        if (selectrow.length == 1) {//这里有bug********虽然正确重现记录******但是如果不改变表单内容就不会正确修改
+            $('#addDecidedzoneWindow').window({title: "修改定区信息"})
+            $('#addDecidedzoneWindow').window("open");//打开修改窗口
+            $("#addDecidedZoneFrom").form("load", {
+                selectId: selectrow[0].id,
+                decidedName: selectrow[0].decidedName,
+                staffId: selectrow[0].staff.name,
+                areaId: selectrow[0].region.name
+            });
+        }
     }
 
     /*删除*/
     function doDelete() {
-        alert("删除...");
+        var selectrow = $('#grid').datagrid('getSelections');
+        if (selectrow.length == 0) {
+            //没有选中，提示
+            $.messager.alert("提示信息", "请选择需要删除的记录！", "warning");
+        } else {
+            var array = new Array();
+            //选中了记录,获取选中行的id
+            var n = 0;
+            for (var i = 0; i < selectrow.length; i++) {
+                var id = selectrow[i].id;
+                array.push(id);
+            }
+            var ids = array.join(",");
+            //发送请求，传递ids参数
+            $.post("/sys/delecte", {ids: ids}, function (data) {
+                alert(data)
+                $("#grid").datagrid("reload");
+            }, 'json')
+        }
     }
 
     /*查询*/
@@ -49,27 +85,30 @@
         if (rows.length == 1) {
             did = rows[0].id;
             $('#customerWindow').window('open');
+            //请求前清空
             $("#noassociationSelect").empty();
+            $("#associationSelect").empty();
             //发送请求
-            var url = "/sys/findAssociationsCustomer";
-            $.ajax({
+            var url = "/sys/findAssociationsOrder";
+            $.ajax({//左边加载
                 url: url,
                 method: 'post',
                 dataType: "json",
                 success: function (data) {
                     $.each(data, function (index, item) {
-                        $("#noassociationSelect").append("<option value='" + item.id + "'>" + item.name + "</option>");
+                        $("#noassociationSelect").append("<option value='" + item.id + "'>" + item.clientName +"-"+item.arriveCity +"</option>");
                     })
                 }
             });
-            $.ajax({
-                url: "/sys/findHasAssociationsCustomer",
+            $.ajax({//右边加载
+                url: "/sys/findHasAssociationsOrder",
                 method: 'post',
                 dataType: 'json',
                 data: {id: did},
                 success: function (data) {
+                    console.log(data)
                     $.each(data, function (index, item) {
-                        $("#associationSelect").append("<option value='" + item.id + "'>" + item.name + "</option>");
+                        $("#associationSelect").append("<option value='" + item.id + "'>" + item.clientName +"-"+item.arriveCity +"</option>");
                     });
                 }
             })
@@ -93,7 +132,7 @@
             $("#associationSelect option").attr("selected", "selected");
             //在提交表单之前设置隐藏域的值（定区id）
             $("input[name=id]").val(did);
-            $("#customerForm").submit();
+            $("#associationForm").submit();
         });
     })
     //工具栏
@@ -209,99 +248,81 @@
             height: 400,
             resizable: false
         });
-        $("#btn").click(function () {
-            alert("执行查询...");
-        });
+
 
     });
 
     /**
      * 关联定区
      */
-    function doDblClickRow() {
-        alert("双击表格数据...");
-        $('#association_subarea').datagrid({
+    function doDblClickRow(rowIndex, rowData) {
+        //alert("双击表格数据...");
+        /*关联订单*/
+        $('#association_order').datagrid({
             fit: true,
             border: true,
             rownumbers: true,
             striped: true,
-            url: "/sys/associationSubarea",
+            queryParams: {id:rowData.id},
+            url: "/sys/findAssociationsOrderOnDbl",
             columns: [[{
                 field: 'id',
-                title: '分拣编号',
+                title: '订单编号',
                 width: 120,
                 align: 'center'
             }, {
-                field: 'province',
-                title: '省',
-                width: 120,
-                align: 'center',
-                formatter: function (data, row, index) {
-                    return row.region.province;
-                }
-            }, {
-                field: 'city',
-                title: '市',
-                width: 120,
-                align: 'center',
-                formatter: function (data, row, index) {
-                    return row.region.city;
-                }
-            }, {
-                field: 'district',
-                title: '区',
-                width: 120,
-                align: 'center',
-                formatter: function (data, row, index) {
-                    return row.region.district;
-                }
-            }, {
-                field: 'addresskey',
-                title: '关键字',
-                width: 120,
-                align: 'center'
-            }, {
-                field: 'startnum',
-                title: '起始号',
-                width: 100,
-                align: 'center'
-            }, {
-                field: 'endnum',
-                title: '终止号',
-                width: 100,
-                align: 'center'
-            }, {
-                field: 'single',
-                title: '单双号',
-                width: 100,
-                align: 'center'
-            }, {
-                field: 'position',
-                title: '位置',
-                width: 200,
-                align: 'center'
-            }]]
-        });
-        /*关联客户*/
-        $('#association_customer').datagrid({
-            fit: true,
-            border: true,
-            rownumbers: true,
-            striped: true,
-            url: "/sys/findAssociationsCustomer",
-            columns: [[{
-                field: 'id',
-                title: '客户编号',
-                width: 120,
-                align: 'center'
-            }, {
-                field: 'name',
+                field: 'clientName',
                 title: '客户名称',
                 width: 120,
                 align: 'center'
             }, {
-                field: 'station',
-                title: '所属单位',
+                field: 'clientPhone',
+                title: '客户电话',
+                width: 120,
+                align: 'center'
+            }, {
+                field: 'address',
+                title: '取件地址',
+                width: 120,
+                align: 'center'
+            }, {
+                field: 'contacts',
+                title: '收件人名称',
+                width: 120,
+                align: 'center'
+            }, {
+                field: 'conPhone',
+                title: '收件人电话',
+                width: 120,
+                align: 'center'
+            }, {
+                field: 'arriveCity',
+                title: '送达地址',
+                width: 120,
+                align: 'center'
+            }, {
+                field: 'remark',
+                title: '顾客留言',
+                width: 120,
+                align: 'center'
+            }, {
+                field: 'product',
+                title: '物品名',
+                width: 120,
+                align: 'center'
+            }, {
+                field: 'buildTime',
+                title: '创建时间',
+                width: 120,
+                align: 'center'
+            }, {
+                field: 'product',
+                title: '物品名',
+                width: 120,
+                align: 'center'
+            }, {
+                field: 'staff.name',
+                title: '派送人',
                 width: 120,
                 align: 'center'
             }]]
@@ -312,6 +333,19 @@
 <body class="easyui-layout" style="visibility:hidden;">
 <div region="center" border="false">
     <table id="grid"></table>
+</div>
+
+<div region="south" border="false" style="height:150px">
+    <div id="tabs" fit="true" class="easyui-tabs">
+        <div title="关联分区" id="subArea"
+             style="width:100%;height:100%;overflow:hidden">
+            <table id="association_subarea"></table>
+        </div>
+        <div title="关联订单" id="order"
+             style="width:100%;height:100%;overflow:hidden">
+            <table id="association_order"></table>
+        </div>
+    </div>
 </div>
 
 
@@ -328,6 +362,7 @@
             <table class="table-edit" width="80%" align="center">
                 <tr class="title">
                     <td colspan="2">定区信息</td>
+                    <input type="hidden" name="selectId" value="-1"/>
                 </tr>
                 <tr>
                     <td>定区名称</td>
@@ -357,18 +392,18 @@
 <div class="easyui-window" title="查询定区窗口" id="searchWindow" collapsible="false" minimizable="false" maximizable="false"
      style="top:20px;left:200px">
     <div style="overflow:auto;padding:5px;" border="false">
-        <form>
+        <form id="searchFrom" method="post" action="/sys/decidedZoneShow">
             <table class="table-edit" width="80%" align="center">
                 <tr class="title">
                     <td colspan="2">查询条件</td>
                 </tr>
                 <tr>
                     <td>定区编码</td>
-                    <td><input type="text" name="id" class="easyui-validatebox" required="true"/></td>
+                    <td><input type="text" name="id" class="easyui-numberbox"/></td>
                 </tr>
                 <tr>
                     <td>所属单位</td>
-                    <td><input type="text" name="staff.station" class="easyui-validatebox" required="true"/></td>
+                    <td><input type="text" name="station" class="easyui-validatebox"/></td>
                 </tr>
                 <tr>
                     <td colspan="2"><a id="btn" href="javascript:void(0);" class="easyui-linkbutton"
@@ -383,10 +418,10 @@
 <div class="easyui-window" title="关联客户订单窗口" id="customerWindow" collapsible="false" closed="true" minimizable="false"
      maximizable="false" style="top:20px;left:200px;width: 400px;height: 300px;">
     <div style="overflow:auto;padding:5px;" border="false">
-        <form id="customerForm" action="/sys/assignCustomersToDecidedzone" method="post">
+        <form id="associationForm" action="/sys/assignOrderToDecidedzone" method="post">
             <table class="table-edit" width="80%" align="center">
                 <tr class="title">
-                    <td colspan="3">关联客户</td>
+                    <td colspan="3">关联客户订单</td>
                 </tr>
                 <tr>
                     <td>
@@ -398,51 +433,70 @@
                         <input type="button" value="《《" id="toLeft">
                     </td>
                     <td>
-                        <select id="associationSelect" name="customerIds" multiple="multiple" size="10"></select>
+                        <select id="associationSelect" name="OrderIds" multiple="multiple" size="10"></select>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="3"><a id="associationBtn" href="javascript:void(0);" class="easyui-linkbutton"
-                                       data-options="iconCls:'icon-save'">关联客户</a></td>
+                                       data-options="iconCls:'icon-save'">关联订单</a></td>
                 </tr>
             </table>
         </form>
     </div>
 </div>
-
+<%-- 提交关联--%>
 <script type="text/javascript">
-    var flog = -1;
-    /*验证名字判重*/
-    $("#deciname").blur(function () {
-        var deciname = $(this).val();
-        $.post("/verify/deciname", {deciName: deciname}, function (data) {
-            if (data != 'Y') {
-                flog = 1
-            } else {
-                flog = 0;
-            }
-        }, 'json')
+    $(function () {//工具方法，可以将指定的表单中的输入项目序列号为json数据
+        $.fn.serializeJson = function () {
+            var serializeObj = {};
+            var array = this.serializeArray();
+            $(array).each(function () {
+                if (serializeObj[this.name]) {
+                    if ($.isArray(serializeObj[this.name])) {
+                        serializeObj[this.name].push(this.value);
+                    } else {
+                        serializeObj[this.name] = [serializeObj[this.name], this.value];
+                    }
+                } else {
+                    serializeObj[this.name] = this.value;
+                }
+            });
+            return serializeObj;
+        };
+        //绑定事件
+        $("#btn").click(function () {
+            var p = $('#searchFrom').serializeJson();
+            $("#grid").datagrid("load", p);
+            $('#searchWindow').window('close');
+        })
     })
-    /*提交定区*/
+
+    /*添加定区*/
     $("#save").click(function () {
         var v = $("#addDecidedZoneFrom").form("validate");
         if (v) {
             //校验通过，提交表单
-            if (flog === 1) {
-                alert("定区名已存在!!");
-            }
-            if (flog === 0) {
-                //判重通过
-                $("#addDecidedZoneFrom").form('submit', {
-                    url: "/sys/addDecided",
-                    method: "post",
-                    success: function (data) {
-                        $.messager.alert("提示", data, "info");
+            $("#addDecidedZoneFrom").form('submit', {
+                url: "/sys/addDecided",
+                method: "post",
+                success: function (data) {
+                    if (data === "0") {//判重
+                        alert("定区名已存在!!");
+                        $("#deciname").focus();
+                    }
+                    if (data === "1") {//添加
+                        $.messager.alert("提示", "添加成功", "info");
                         $("#grid").datagrid("reload");
                         $("#addDecidedzoneWindow").window('close');
                     }
-                });
-            }
+                    if (data === "2") {//修改
+                        $.messager.alert("提示", "修改成功", "info");
+                        $("#grid").datagrid("reload");
+                        $("#addDecidedzoneWindow").window('close');
+                    }
+
+                }
+            });
         }
     })
     /*

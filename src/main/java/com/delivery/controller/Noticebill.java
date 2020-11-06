@@ -1,5 +1,6 @@
 package com.delivery.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.delivery.entity.BusinessNote;
 import com.delivery.entity.Customer;
@@ -26,14 +27,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/sys")
 public class Noticebill {
-    @Resource
-    CustomerService customerService;
 
-    @Resource
-    AddressService customerAddressService;
-    /**
-     *
-     */
     @Resource
     BusinessNoteService businessNoteService;
 
@@ -42,23 +36,13 @@ public class Noticebill {
         return "qupai/noticebill";
     }
 
-    /**
-     * 手机号输入查询客户
-     *
-     * @param clientPhone
-     */
-    @RequestMapping("/billVerify")
-    public void billVerify(String clientPhone, HttpServletResponse response) throws IOException {
-        Customer customer = customerService.findCustomerByTelephone(clientPhone);
-        List<CustomerAddress> customerAddress = customerAddressService.getAddressByUserId(customer.getId());
-        response.getWriter().write(JSONObject.toJSONString(new CustomerAndAddress(customer, customerAddress)));
+    @RequestMapping(value = "/noticebillAllShow",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    public String noticebillAll() {
+        List<BusinessNote> businessNote = businessNoteService.getBusinessNote();
+        return JSON.toJSONString(businessNote);
     }
 
-    @RequestMapping("/noticebillAdd")
-    public String noticebillAdd(@ModelAttribute BusinessNote businessNote, Model model) {
-        businessNoteService.addbusinessNote(businessNote);
-        model.addAttribute("添加成功");
-        return "qupai/noticebill_add";
-    }
+
 
 }

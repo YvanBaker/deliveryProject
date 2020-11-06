@@ -1,6 +1,9 @@
 package com.delivery.service;
 
 import com.delivery.entity.BusinessNote;
+import com.delivery.entity.QpWorkorder;
+
+import java.util.List;
 
 /**
  * @author wenJ
@@ -11,4 +14,13 @@ import com.delivery.entity.BusinessNote;
 
 public interface BusinessNoteService {
     boolean addbusinessNote(BusinessNote businessNote);
+
+    List<BusinessNote> getBusinessNote();
+
+    List<BusinessNote> AssociationsOrderOnDbl(String id);
+
+    List<BusinessNote> getNoAssociationsOrder();
+
+    List<BusinessNote> getHasAssociationsOrder();
+
 }
