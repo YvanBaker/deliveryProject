@@ -85,9 +85,12 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public CustomerReceiveAddress saveCustomerReceiveAddress(CustomerReceiveAddress address) {
+    public CustomerReceiveAddress saveCustomerReceiveAddress(CustomerReceiveAddress address) throws AddressNumberException {
         List<CustomerReceiveAddress> resAddressList =
-                customerReceiveAddressDao.selectAddressByCustomerId(address.getCustomerId());
+                customerReceiveAddressDao.selectAddressesByDel(address.getCustomerId(), 0);
+        if (resAddressList.size() > 9){
+            throw new AddressNumberException("已经存在10个有效地址!!");
+        }
         if (resAddressList.isEmpty()) {
             customerReceiveAddressDao.insertAddress(address);
             return address;

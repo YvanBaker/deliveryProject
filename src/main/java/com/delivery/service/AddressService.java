@@ -54,7 +54,6 @@ public interface AddressService {
     CustomerAddress saveCustomerAddress(CustomerAddress customerAddress) throws AddressNumberException;
 
     /**
-
      * 用户id
      *
      * @param customerId 用户 id
@@ -64,6 +63,7 @@ public interface AddressService {
 
     /**
      * 查询有效的用户地址
+     *
      * @param customerId 用户 id
      * @return List<CustomerAddress>
      */
@@ -74,8 +74,9 @@ public interface AddressService {
      *
      * @param address 地址
      * @return CustomerReceiveAddress
+     * @throws AddressNumberException 地址已存在10个
      */
-    CustomerReceiveAddress saveCustomerReceiveAddress(CustomerReceiveAddress address);
+    CustomerReceiveAddress saveCustomerReceiveAddress(CustomerReceiveAddress address) throws AddressNumberException;
 
     /**
      * 根据 关联 用户 id 查询 送达地址
@@ -95,6 +96,7 @@ public interface AddressService {
 
     /**
      * 根据客户Id查询地址
+     *
      * @param id
      * @return
      */
