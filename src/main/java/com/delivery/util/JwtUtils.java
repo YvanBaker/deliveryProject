@@ -3,6 +3,7 @@ package com.delivery.util;
 
 import com.delivery.entity.Customer;
 import com.delivery.entity.User;
+import com.delivery.exception.utils.CheckJWTException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -55,10 +56,13 @@ public class JwtUtils {
      * @return token
      */
     public static String geneJsonWebToken(Customer customer) {
-        if (customer == null || customer.getName() == null || customer.getCustomerEmail() == null) {
+        if (customer == null || customer.getId() == null || customer.getPhone() == null
+                || customer.getName() == null || customer.getCustomerEmail() == null) {
             return null;
         }
         return Jwts.builder().setSubject(SUBJECT)
+                .claim("id", customer.getId())
+                .claim("phone", customer.getPhone())
                 .claim("name", customer.getName())
                 .claim("customerEmail", customer.getCustomerEmail())
                 .setIssuedAt(new Date())
@@ -78,15 +82,16 @@ public class JwtUtils {
     }
 
 
-    public static Claims checkJWT(String token) throws Exception {
+    public static Claims checkJWT(String token) throws CheckJWTException {
         try {
             final Claims claims;
             claims = Jwts.parser().setSigningKey(APPSECRET)
                     .parseClaimsJws(token).getBody();
             return claims;
-
         } catch (Exception e) {
-            throw new Exception(e.getMessage());
+            throw new CheckJWTException(e.getMessage());
         }
     }
+
+
 }

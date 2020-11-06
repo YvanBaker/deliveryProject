@@ -1,12 +1,15 @@
 package com.delivery.service.impl;
 
+import com.delivery.dao.CustomerAddressDao;
 import com.delivery.dao.CustomerDao;
+import com.delivery.dao.CustomerReceiveAddressDao;
 import com.delivery.dao.CustomerWorkOrderDao;
 import com.delivery.entity.Customer;
 import com.delivery.entity.CustomerWorkOrder;
 import com.delivery.exception.customer.CustomerAttributesNullException;
 import com.delivery.exception.customer.CustomerNameRepeatException;
 import com.delivery.exception.customer.CustomerNullException;
+import com.delivery.model.PickupAddress;
 import com.delivery.service.CustomerService;
 import com.delivery.util.TypeUtil;
 import com.delivery.util.UuidUtil;
@@ -30,6 +33,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Resource
     private CustomerWorkOrderDao customerWorkOrderDao;
+
+    @Resource
+    private CustomerAddressDao customerAddressDao;
+
+    @Resource
+    private CustomerReceiveAddressDao customerReceiveAddressDao;
 
     @Override
     public Customer saveCustomer(Customer customer) throws CustomerNameRepeatException, CustomerAttributesNullException {
@@ -116,6 +125,18 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer queryCustomerByNameAndPassword(Customer customer) {
         Customer resData = customerDao.selectCustomerByNameAndPassword(customer.getName(), customer.getPassword());
+        return resData;
+    }
+
+    @Override
+    public List<PickupAddress> queryPickupsByUserId(int userId) {
+        List<PickupAddress> resData = customerAddressDao.selectEffectivePickAddressByUserId(userId);
+        return resData;
+    }
+
+    @Override
+    public List<PickupAddress> queryReceiveByUserId(int userId) {
+        List<PickupAddress> resData = customerAddressDao.selectEffectiveReceiveAddressByUserId(userId);
         return resData;
     }
 
