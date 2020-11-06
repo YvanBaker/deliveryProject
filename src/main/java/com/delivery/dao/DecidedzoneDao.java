@@ -14,7 +14,6 @@ import java.util.List;
  */
 @Repository
 public interface DecidedzoneDao {
-    boolean addDecidedzone(Decidedzone decidedzone);
 
     List<Decidedzone> getDecidedZoneAll();
 
@@ -22,7 +21,17 @@ public interface DecidedzoneDao {
 
     int DecidedzoneCount();
 
+    Decidedzone getDecidedZone(String deciname);
+
+    List<Decidedzone> getDecidedZonelimitDim(@Param("page") int page,@Param("rows") int rows,@Param("id") int id,@Param("station") String station);
+
+    int getDecidedZoneConutDim(@Param("id") int id,@Param("station") String station);
+
+    boolean delectDecidedzone(@Param("id") int id);
+
     boolean addDecidedzonePuls(@Param("areaId") String areaId,@Param("staffId") String staffId,@Param("decidedName") String decidedName);
 
-    Decidedzone getDecidedZone(String deciname);
+    boolean updateDecidedZone(@Param("areaId") String areaId,@Param("staffId") String staffId,@Param("decidedName") String decidedName,@Param("id") int id);
+
+    Decidedzone getDecidedZoneById(@Param("id") int id);
 }

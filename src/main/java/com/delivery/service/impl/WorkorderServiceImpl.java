@@ -1,6 +1,7 @@
 package com.delivery.service.impl;
 
 import com.delivery.dao.WorkorderDao;
+import com.delivery.entity.Customer;
 import com.delivery.entity.QpWorkorder;
 import com.delivery.service.WorkorderService;
 import com.delivery.util.PageUtil;
@@ -30,5 +31,24 @@ public class WorkorderServiceImpl implements WorkorderService {
         List<QpWorkorder> allWorkorder = workorderDao.getAllWorkorder((page-1)*rows,rows);
         int total=workorderDao.getAllWorkorderCount();
         return new PageUtil(total,allWorkorder);
+    }
+
+    /**
+     * 查询可关联的订单
+     * @return
+     */
+    @Override
+    public List<QpWorkorder> getNoAssociationsOrder() {
+        return workorderDao.getAssociationsWorkorder();
+    }
+
+    /**
+     * 查找已关联订单
+     * @return
+     */
+    @Override
+    public List<QpWorkorder> getHasAssociationsOrder() {
+        return workorderDao.getHasAssociationsWorkorder();
+
     }
 }

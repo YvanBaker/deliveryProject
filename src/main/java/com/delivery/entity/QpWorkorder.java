@@ -5,6 +5,7 @@ public class QpWorkorder {
 
 
   private Integer id;
+  private String uuid;
   private String workorId;
   private String arrivecity;
   private String product;
@@ -56,6 +57,14 @@ public class QpWorkorder {
   }
   public Integer getId() {
     return id;
+  }
+
+  public String getUuid() {
+    return uuid;
+  }
+
+  public void setUuid(String uuid) {
+    this.uuid = uuid;
   }
 
   public String getWorkorId() {

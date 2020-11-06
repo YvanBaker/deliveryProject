@@ -28,12 +28,6 @@ public interface DecidedzoneService {
      */
     List<Subarea> findAllSubarea();
 
-    /**
-     * 添加定区
-     * @param decidedzone
-     * @return
-     */
-    boolean addDecidedzone(Decidedzone decidedzone);
 
     /**
      * 显示定区
@@ -57,4 +51,37 @@ public interface DecidedzoneService {
     boolean addDecidedzone(String areaId, String staffId, String decidedName);
 
 
+    /**
+     * 模糊查询
+     * @param page
+     * @param rows
+     * @param id
+     * @param station
+     * @return
+     */
+    PageUtil getDecidedZoneDim(int page, int rows, int id, String station);
+
+    /**
+     * 删除
+     * @param s
+     * @return
+     */
+    boolean delectDecidedzone(String s);
+
+    /**
+     * 修改
+     * @param areaId
+     * @param staffId
+     * @param decidedName
+     * @param selectId
+     * @return
+     */
+    boolean changDecidedzone(String areaId, String staffId, String decidedName, String selectId);
+
+    /**
+     * 验证名字去重  查到不为null
+     * @param decidedName
+     * @return
+     */
+    Decidedzone getDecidedZone(String decidedName);
 }

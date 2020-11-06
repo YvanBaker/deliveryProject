@@ -150,4 +150,12 @@ public interface CustomerService {
      * @return CustomerWorkOrder
      */
     CustomerWorkOrder saveOrder(CustomerWorkOrder customerWorkOrder);
+
+    /**
+     * 根据手机号查询用户
+     * @param clientPhone
+     * @return
+     */
+    Customer findCustomerByTelephone(String clientPhone);
+
 }

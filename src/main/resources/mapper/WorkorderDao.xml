@@ -13,4 +13,10 @@
     </select>
 
 
+    <select id="getAssociationsWorkorder" resultType="qpWorkorder">
+        select * from  workor_dermanage where staff is null
+    </select>
+    <select id="getHasAssociationsWorkorder" resultType="qpWorkorder">
+        select * from  workor_dermanage where staff is not null
+    </select>
 </mapper>

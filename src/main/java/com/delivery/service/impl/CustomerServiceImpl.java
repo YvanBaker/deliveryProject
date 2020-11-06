@@ -144,4 +144,9 @@ public class CustomerServiceImpl implements CustomerService {
         customerWorkOrderDao.insertOrder(customerWorkOrder);
         return customerWorkOrder;
     }
+
+    @Override
+    public Customer findCustomerByTelephone(String clientPhone) {
+        return customerDao.selectCustomerByPhone(clientPhone);
+    }
 }
