@@ -40,6 +40,9 @@ public class CustomerAddressDaoMapper {
                 if (customerAddress.getUserId() != null) {
                     VALUES("user_id", "#{userId}");
                 }
+                if (TypeUtil.isValidString(customerAddress.getName())){
+                    VALUES("name", "#{name}");
+                }
             }
         }.toString();
     }
@@ -72,6 +75,9 @@ public class CustomerAddressDaoMapper {
                 }
                 if (customerAddress.getDel() != null) {
                     SET("del = #{del}");
+                }
+                if (TypeUtil.isValidString(customerAddress.getName())){
+                    SET("name = #{name}");
                 }
                 WHERE("id = #{id}");
             }
