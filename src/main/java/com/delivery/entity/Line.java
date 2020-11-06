@@ -9,7 +9,7 @@ public class Line {
     private String lineName;
     private String licensePlate;
     private String carModel;
-    private int driver;
+    private String driver;
     private int status;
     private double weightControl;
     private String operator;
@@ -19,7 +19,7 @@ public class Line {
     public Line() {
     }
 
-    public Line(int id, String lineType, String lineName, String licensePlate, String carModel, int driver, int status, double weightControl, String operator, String oStation, String oTime) {
+    public Line(int id, String lineType, String lineName, String licensePlate, String carModel, String driver, int status, double weightControl, String operator, String oStation, String oTime) {
         this.id = id;
         this.lineType = lineType;
         this.lineName = lineName;
@@ -73,11 +73,11 @@ public class Line {
         this.carModel = carModel;
     }
 
-    public int getDriver() {
+    public String getDriver() {
         return driver;
     }
 
-    public void setDriver(int driver) {
+    public void setDriver(String driver) {
         this.driver = driver;
     }
 
@@ -105,7 +105,7 @@ public class Line {
         this.operator = operator;
     }
 
-    public String getoStation() {
+    public String getOStation() {
         return oStation;
     }
 
@@ -113,7 +113,7 @@ public class Line {
         this.oStation = oStation;
     }
 
-    public String getoTime() {
+    public String getOTime() {
         return oTime;
     }
 
@@ -129,12 +129,13 @@ public class Line {
                 ", lineName='" + lineName + '\'' +
                 ", licensePlate='" + licensePlate + '\'' +
                 ", carModel='" + carModel + '\'' +
-                ", driver=" + driver +
+                ", driver='" + driver + '\'' +
                 ", status=" + status +
                 ", weightControl=" + weightControl +
                 ", operator='" + operator + '\'' +
                 ", oStation='" + oStation + '\'' +
                 ", oTime='" + oTime + '\'' +
+
                 '}';
     }
 }

@@ -99,7 +99,19 @@ public class UserDaoMapper {
      * @param user user
      * @return sql
      */
-    public String selectUserByOneColumnSql(User user) {
-        return "";
+    public String selectUserBySql(User user) {
+        return new SQL() {
+            {
+                SELECT("*");
+                FROM("user");
+                if (user.getUserName() != null) {
+                    WHERE("user_name = #{userName}");
+                }
+                OR();
+                if (user.getEmail() != null) {
+                    WHERE("email = #{email}");
+                }
+            }
+        }.toString();
     }
 }

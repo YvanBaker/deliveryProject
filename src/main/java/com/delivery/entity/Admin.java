@@ -6,6 +6,7 @@ public class Admin {
   private String userName;
   private String password;
   private String adminName;
+  private String stations;
 
   @Override
   public String toString() {
@@ -14,6 +15,7 @@ public class Admin {
             ", userName='" + userName + '\'' +
             ", password='" + password + '\'' +
             ", adminName='" + adminName + '\'' +
+            ", stations='" + stations + '\'' +
             '}';
   }
 
@@ -52,4 +54,10 @@ public class Admin {
     this.adminName = adminName;
   }
 
+  public String getStations() {
+    return stations;
+  }
+  public void setStations(String stations) {
+    this.stations = stations;
+  }
 }

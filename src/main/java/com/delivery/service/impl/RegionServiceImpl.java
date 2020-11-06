@@ -50,6 +50,12 @@ public class RegionServiceImpl implements RegionService {
         return regionDao.selectRegionLimit((page-1)*rows,rows);
     }
 
+
+    @Override
+    public Region selectOneRegion(Region region) {
+        return regionDao.selectOneRegion(region);
+    }
+  
     /**
      * 分区动态查询
      * @param q

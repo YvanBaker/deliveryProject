@@ -96,6 +96,10 @@ public class MsgResponse implements Serializable {
         return new MsgResponse("400", msg, null);
     }
 
+    public static MsgResponse buildError(String msg, Object data) {
+        return new MsgResponse("400", msg, data);
+    }
+
     public String getCode() {
         return code;
     }

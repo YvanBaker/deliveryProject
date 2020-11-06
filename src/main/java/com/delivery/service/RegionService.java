@@ -37,6 +37,14 @@ public interface RegionService {
     List<Region> selectRegionLimit(int page, int rows);
 
     /**
+     * 查询一条地区，
+     * 用于手动录入订单判断地区
+     * @param region
+     * @return
+     */
+    Region selectOneRegion(Region region);
+
+    /**
      * 区域下拉框信息ajax查询
      * @param q
      * @return

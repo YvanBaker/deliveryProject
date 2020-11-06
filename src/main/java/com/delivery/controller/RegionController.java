@@ -8,7 +8,6 @@ import com.delivery.service.RegionService;
 import com.delivery.util.PageUtil;
 import com.delivery.util.UuidUtil;
 import com.delivery.utilentity.ShowSubarea;
-import com.github.pagehelper.PageInfo;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,9 +19,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/sys")

@@ -107,7 +107,7 @@ public class TimeManagement {
         this.operator = operator;
     }
 
-    public String getoStation() {
+    public String getOStation() {
         return oStation;
     }
 
@@ -115,7 +115,7 @@ public class TimeManagement {
         this.oStation = oStation;
     }
 
-    public String getoTime() {
+    public String getOTime() {
         return oTime;
     }
 

@@ -2,6 +2,7 @@ package com.delivery.dao;
 
 import com.delivery.entity.TimeManagement;
 import com.delivery.util.TimeUtil;
+import com.delivery.utilentity.FindTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +24,7 @@ import static org.junit.Assert.assertTrue;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext.xml")
-@Transactional
+//@Transactional
 public class TimeManagementTest {
 
     private TimeManagement t;
@@ -31,44 +32,73 @@ public class TimeManagementTest {
     @Resource
     private TimeManagementDao timeManagementDao;
 
-    @Before
-    public void init(){
+//    @Before
+//    public void init(){
+//        t=new TimeManagement();
+//        t.setTimeName("时间管理1");
+//        t.setStation("aaa");
+//        t.setNormalWorkTime(TimeUtil.localtime());
+//        t.setNormalOffWorkTime(TimeUtil.localtime());
+//        t.setWeekWorkTime(TimeUtil.localtime());
+//        t.setWeekOffWorkTime(TimeUtil.localtime());
+//        t.setStatus(1);
+//        t.setOperator("Test");
+//        t.setoStation("test");
+//        t.setoTime("ttesst");
+//        timeManagementDao.addTimeManagement(t);
+//    }
+
+    @Test
+    public void testAdd(){
         t=new TimeManagement();
         t.setTimeName("时间管理1");
         t.setStation("aaa");
         t.setNormalWorkTime(TimeUtil.localtime());
-        t.setNormalOffWorkTime(TimeUtil.localtime()+1);
+        t.setNormalOffWorkTime(TimeUtil.localtime());
         t.setWeekWorkTime(TimeUtil.localtime());
         t.setWeekOffWorkTime(TimeUtil.localtime());
         t.setStatus(1);
         t.setOperator("Test");
         t.setoStation("test");
         t.setoTime("ttesst");
-        timeManagementDao.addTimeManagement(t);
+        boolean f=timeManagementDao.addTimeManagement(t);
+        assertTrue(f);
     }
 
     @Test
     @Rollback
     public void testSelect(){
-        List list=timeManagementDao.selectTimeManagement();
+        FindTime findTime= new FindTime();
+        findTime.setTimeName("时间管理1");
+        List list=timeManagementDao.selectTimeManagement(findTime);
         assertFalse(list.isEmpty());
     }
 
     @Test
     @Rollback
-    public void testUpdateAndRemove(){
+    public void testUpdate(){
         TimeManagement i=new TimeManagement();
-        i.setId(1);
-        i.setTimeName("aa");
-        i.setNormalWorkTime("aa");
-      //  i.setNormalOffWorkTime("bbc");
-        i.setWeekWorkTime("vvv");
-        i.setWeekOffWorkTime("ttt");
-        i.setStatus(2);
+        i.setId(10);
+        i.setTimeName("aab");
+        i.setNormalWorkTime("aab");
+        i.setNormalOffWorkTime("bbcb");
+        i.setWeekWorkTime("vvva");
+        i.setWeekOffWorkTime("tttb");
+        i.setOperator("xaxb");
+        i.setoStation("ppb");
+        i.setoTime("ggb");
+        boolean f=timeManagementDao.updateTimeManagement(i);
+        assertTrue(f);
+    }
+    @Test
+    @Rollback
+    public void testRemove(){
+        TimeManagement i=new TimeManagement();
+        i.setId(10);
         i.setOperator("xax");
         i.setoStation("pp");
         i.setoTime("gg");
-        boolean f=timeManagementDao.updateAndRemoveTimeManagement(i);
+        boolean f=timeManagementDao.updateTimeManagement(i);
         assertTrue(f);
     }
 

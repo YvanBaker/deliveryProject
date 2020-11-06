@@ -1,9 +1,6 @@
 package com.delivery.service;
 
-import com.delivery.entity.Areas;
-import com.delivery.entity.City;
-import com.delivery.entity.CustomerAddress;
-import com.delivery.entity.Provinces;
+import com.delivery.entity.*;
 
 import java.util.List;
 
@@ -53,6 +50,39 @@ public interface AddressService {
      * @return CustomerAddress 地址
      */
     CustomerAddress saveCustomerAddress(CustomerAddress customerAddress);
+
+    /**
+
+     * 用户id
+     *
+     * @param customerId 用户 id
+     * @return List<CustomerAddress>
+     */
+    List<CustomerAddress> queryCustomerAddresses(int customerId);
+
+    /**
+     * 保存 用户送达地址
+     *
+     * @param address 地址
+     * @return CustomerReceiveAddress
+     */
+    CustomerReceiveAddress saveCustomerReceiveAddress(CustomerReceiveAddress address);
+
+    /**
+     * 根据 关联 用户 id 查询 送达地址
+     *
+     * @param customerId 用户 id
+     * @return List<CustomerReceiveAddress>
+     */
+    List<CustomerReceiveAddress> queryCustomerReceiveAddressesByCustomerId(int customerId);
+
+    /**
+     * 更新 关联 用户id 的 送达地址
+     *
+     * @param address 地址
+     * @return true 成功
+     */
+    boolean renewCustomerReceiveAddresses(CustomerReceiveAddress address);
 
     /**
      * 根据客户Id查询地址

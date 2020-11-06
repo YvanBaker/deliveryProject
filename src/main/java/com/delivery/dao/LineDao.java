@@ -1,6 +1,8 @@
 package com.delivery.dao;
 
 import com.delivery.entity.Line;
+import com.delivery.utilentity.FindLine;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -20,16 +22,19 @@ public interface LineDao {
     boolean addLine(Line line);
 
     /**
-     *修改路线和删除路线
+     *修改路线
      * @param line line
      * @return boolean
      */
-    boolean updateAndRemoveLine(Line line);
+    boolean updateLine(Line line);
 
+    boolean removeLine(Line line);
     /**
-     *查询全部路线
+     *查询全部路线，分页
      * @return list
      */
-    List<Line> selectLine();
+    List<Line> selectLine(FindLine findLine);
+
+    int selectLineCount();
 
 }

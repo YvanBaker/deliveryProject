@@ -22,6 +22,12 @@ public class Region {
     public Region() {
     }
 
+    public Region(String provinceName, String cityName, String areasName) {
+        this.provinceName = provinceName;
+        this.cityName = cityName;
+        this.areasName = areasName;
+    }
+
     public Region(int id, String provinceName, String cityName, String areasName, String areasId) {
         this.id = id;
         this.provinceName = provinceName;

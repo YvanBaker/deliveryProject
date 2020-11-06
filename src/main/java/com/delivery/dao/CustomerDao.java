@@ -35,6 +35,16 @@ public interface CustomerDao {
     int updateCustomer(Customer customer);
 
     /**
+     * 根据 邮箱 重置 密码
+     *
+     * @param email    邮箱
+     * @param password 新密码
+     * @return 条数
+     */
+    @Update("update customer set password = #{password} where customer_email = #{email}")
+    int updatePasswordByEmail(@Param("email") String email, @Param("password") String password);
+
+    /**
      * 根据 id 查询
      *
      * @param id id
@@ -100,14 +110,18 @@ public interface CustomerDao {
     List<Customer> selectCustomerBySex(@Param("sex") int sex);
 
     /**
-     * 根据 电话
-     * @param phone
-     * @return
+     * 根据 名字 模糊 查询
+     *
+     * @param name 名字
+     * @return List<Customer>
      */
+    @Select("select id, phone, password, name, customer_email, create_time, sex from customer " +
+            "where name like concat('%',#{name},'%')")
+    List<Customer> likeCustomerByName(@Param("name") String name);
+
     @Select("select id, phone, password, name, customer_email, create_time, sex  from customer where phone=#{phone}")
     Customer getCustomerByTelephone(@Param("phone") String phone);
 
     @Select("select id, phone, password, name, customer_email, create_time, sex, decidedzone_id  from customer where decidedzone_id is null")
     List<Customer> selectNoAssociationsCustomer();
-
 }
