@@ -1,5 +1,6 @@
 package com.delivery.dao;
 
+import com.delivery.entity.BusinessNote;
 import com.delivery.entity.Staff;
 import com.delivery.entity.StaffOrder;
 import com.delivery.mapper.StaffOrderDaoMapper;
@@ -81,5 +82,55 @@ public interface StaffOrderDao {
      * @return StaffOrder
      */
     @Select("select id, staff_id, order_id from staff_order where order_id = #{id}")
-    StaffOrder selectOrderByOrderId(@Param("id") int orderId);
+    StaffOrder selectOrderByOrderId(@Param("id") String orderId);
+
+    /**
+     * 更加 工单 id 查询 数据
+     * 测试类使用
+     * @param id
+     * @return StaffOrder
+     */
+    @Select("select id, staff_id, order_id ，area_id ,del from staff_order where id = #{id}")
+    StaffOrder selectOneOrderByOrderIdForTest(@Param("id") int id);
+
+    /**
+     * 更加 工单 id 查询 数据
+     *
+     * @param id
+     * @return StaffOrder
+     */
+    @Select("select id, staff_id, order_id from staff_order where staff_id = #{id} and del!='2'")
+    List<StaffOrder> selectOrderForRemoveStaff(@Param("id") int id);
+
+
+     /* 添加关联
+     * @param id
+     * @param i
+     * @param orderIds
+     * @return
+     */
+    boolean addAssignOrders(@Param("areaId") String areaId,@Param("staffId") int i, @Param("orderId") String orderIds,@Param("del") int del);
+
+    /**
+     * 获得所有订单
+     * @return
+     */
+    List<StaffOrder> getStaffOrderAll();
+
+    /**
+     *  找到所有关联order
+     * @param id
+     * @param areasId
+     * @return
+     */
+    List<StaffOrder> findAssociationsOrder(@Param("staffId") int id,@Param("areasId") String areasId);
+
+    /**
+     * 添加前的清空
+     * @param areasId
+     * @param id
+     * @return
+     */
+    boolean deleThisAssignOrders(@Param("areaId") String areasId, @Param("staffId") int id);
+
 }

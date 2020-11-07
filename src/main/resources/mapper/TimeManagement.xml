@@ -50,7 +50,7 @@
         </where>
     </select>
     <select id="selectCount" resultType="java.lang.Integer">
-        SELECT count(*) from timeManagement
+        SELECT count(*) from timeManagement WHERE status='1'
     </select>
     <select id="selectTimeManagementByStationAndTimeName" resultMap="timeManagementMap" parameterType="TimeManagement">
         SELECT * from timeManagement WHERE timeName=#{timeName} and station=#{station}

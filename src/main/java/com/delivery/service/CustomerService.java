@@ -5,6 +5,7 @@ import com.delivery.entity.CustomerWorkOrder;
 import com.delivery.exception.customer.CustomerAttributesNullException;
 import com.delivery.exception.customer.CustomerNameRepeatException;
 import com.delivery.exception.customer.CustomerNullException;
+import com.delivery.model.PickupAddress;
 
 import java.util.List;
 
@@ -119,6 +120,20 @@ public interface CustomerService {
     Customer queryCustomerByNameAndPassword(Customer customer);
 
     /**
+     * 根据 用户 id 查询 取货地址
+     * @param userId 用户id
+     * @return List<PickupAddress>
+     */
+    List<PickupAddress> queryPickupsByUserId(int userId);
+
+    /**
+     * 根据 用户 id 查询 送货地址
+     * @param userId 用户id
+     * @return List<PickupAddress>
+     */
+    List<PickupAddress> queryReceiveByUserId(int userId);
+
+    /**
      * 根据 账号 和 密码 查询 用户
      *
      * @param name     名字
@@ -150,4 +165,12 @@ public interface CustomerService {
      * @return CustomerWorkOrder
      */
     CustomerWorkOrder saveOrder(CustomerWorkOrder customerWorkOrder);
+
+    /**
+     * 根据手机号查询用户
+     * @param clientPhone
+     * @return
+     */
+    Customer findCustomerByTelephone(String clientPhone);
+
 }

@@ -46,6 +46,9 @@
     </where>
     </select>
     <select id="selectLineCount" resultType="java.lang.Integer">
-        SELECT COUNT(*) from line
+        SELECT COUNT(*) from line WHERE status='1'
+    </select>
+    <select id="selectLineForRemoveStaff" resultType="com.delivery.entity.Line">
+        select * from line where driver=#{driver}
     </select>
 </mapper>

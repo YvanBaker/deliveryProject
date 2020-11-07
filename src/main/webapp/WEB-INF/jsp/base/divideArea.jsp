@@ -42,15 +42,15 @@
             document.getElementById("searchForm").reset();
         }
 
-        //导出文件
+        /*//导出文件
         function doExport() {
             window.location.href = "subareaAction_exportXls.action";
         }
 
-        /*导入*/
+        /!*导入*!/
         function doImport() {
             alert("导入");
-        }
+        }*/
 
         //工具栏
         var toolbar = [{
@@ -131,9 +131,6 @@
             width: 100,
             align: 'center',
             formatter: function (data, row, index) {
-                /*if (data == 0) {
-                    return "单双号";
-                }*/
                 if (data == 0) {
                     return "单号";
                 }
