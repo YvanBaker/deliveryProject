@@ -65,6 +65,12 @@ public class CustomerWorkOrderServiceImpl implements CustomerWorkOrderService {
     }
 
     @Override
+    public int deleteOrder(int id) {
+        customerWorkOrderDao.deleteOrder(id);
+        return 0;
+    }
+
+    @Override
     public boolean renewOrder(CustomerWorkOrder order) {
         int i = customerWorkOrderDao.updateOrder(order);
         return i > 0;

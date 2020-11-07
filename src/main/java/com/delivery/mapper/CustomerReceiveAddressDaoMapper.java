@@ -27,7 +27,7 @@ public class CustomerReceiveAddressDaoMapper {
                 if (address.getCustomerId() != null) {
                     VALUES("customer_id", "#{customerId}");
                 }
-                if (TypeUtil.isValidString(address.getPhone())){
+                if (TypeUtil.isValidString(address.getPhone())) {
                     VALUES("phone", "#{phone}");
                 }
                 if (address.getReceiveName() != null &&
@@ -48,7 +48,10 @@ public class CustomerReceiveAddressDaoMapper {
                 }
                 if (address.getReceiveDetailedAddress() != null &&
                         TypeUtil.isValidString(address.getReceiveDetailedAddress())) {
-                    VALUES("receive_derailed_address", "#{receiveDetailedAddress}");
+                    VALUES("receive_detailed_address", "#{receiveDetailedAddress}");
+                }
+                if (address.getDel() != null) {
+                    VALUES("del", "#{del}");
                 }
             }
         }.toString();

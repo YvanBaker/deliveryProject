@@ -211,7 +211,11 @@ public class CustomerController {
         if (order.getId() == null || order.getId() == 0) {
             return JSON.toJSONString(MsgResponse.buildError("下单失败！！"));
         }
-        autoDistributionService.autoDistributionForGetGoodsAboutStaffOrder(order);
+        int flag = autoDistributionService.autoDistributionForGetGoodsAboutStaffOrder(order);
+        if (flag < 0) {
+            customerWorkOrderService.delOrder(order.getId());
+            return JSON.toJSONString(MsgResponse.buildError("下单失败，该区域在没有开放网点！！"));
+        }
         return JSON.toJSONString(MsgResponse.buildSuccess("下单成功！！"));
     }
 

@@ -50,7 +50,7 @@ public interface CustomerAddressDao {
 
 
     @Select("select id,phone,province_id,city_id,area_id,address_detail,user_id from customer_address where id = #{id} and del='0'")
-   CustomerAddress selectOneCustomerAddressById(int id);
+    CustomerAddress selectOneCustomerAddressById(int id);
 
     /**
      * 根据 id del 查询
@@ -85,6 +85,7 @@ public interface CustomerAddressDao {
 
     /**
      * 查询 有效的收货地址 详细地址
+     *
      * @param userId 用户id
      * @return List<PickupAddress>
      */
