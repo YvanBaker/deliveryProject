@@ -25,6 +25,7 @@ public static Map<String, String> addressResolution(String address){
         row.put("city", city==null?"":city.trim());
         province=m.group("province");
         row.put("prov", province==null?"":province.trim());
+
     }
     return row;
 }

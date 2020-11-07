@@ -28,14 +28,14 @@
             // 对form 进行校验
             if ($('#noticebillForm').form('validate')) {
                 $('#noticebillForm').submit();
-            }else {
+            } else {
                 alert("请正确填写表单!");
             }
         });
     });
     $(function () {
-            var message="${msg}";
-        if (message!="") {
+        var message = "${msg}";
+        if (message != "") {
             $.messager.alert("提示信息", message, "info");
         }
     })
@@ -65,7 +65,8 @@
             </tr>
             <tr>
                 <td>客户电话:</td>
-                <td><input type="text" class="easyui-validatebox" name="clientPhone" required="true" data-options="validType:'length[11]'"/></td>
+                <td><input type="text" class="easyui-validatebox" name="clientPhone" required="true"
+                           data-options="validType:'length[11,11]'"/></td>
                 <td>客户编号:</td>
                 <td><input type="text" class="easyui-validatebox" name="clientNum"/></td>
                 <td>客户姓名:</td>
@@ -107,7 +108,43 @@
             <tr>
                 <td>取件地址</td>
                 <td colspan="1">
-                    <input type="text" class="easyui-validatebox" name="address" placeholder="详细地址" required="true" size="80"/></td>
+                    <input id="povinces1" class="easyui-combobox" required="true"
+                           data-options="{
+                            url:'/sys/RegionOne',
+                            valueField:'regionID',
+                            textField:'regionName',
+                            onSelect:function(region)
+                            {
+                                //alert('选择了省id='+region.regionID);
+                                $('#city1').combobox('clear');// 清除原有项目
+                                $('#area1').combobox('clear');// 清除原有显示项目
+                                // 重新加载
+                                $('#city1').combobox('reload','/sys/RegionTow?parentid='+region.regionID);
+                            }
+                            }"/>
+                    <input id="city1" type="text" class="easyui-combobox" placeholder="**市" required="true"
+                           placeholder="**市" data-options="{
+                                url:'/sys/RegionTow ',
+                                valueField:'regionID',
+                                textField:'regionName',
+                                onSelect:function(region)
+                                {
+                                    $('#area1').combobox('clear');// 清除原有项目
+                                    // 重新加载
+                                    $('#area1').combobox('reload','/sys/RegionTree?parentid='+region.regionID);
+                                }
+
+                                }"/>
+                    <input id="area1" type="text" class="easyui-combobox" name="addressArea" placeholder="**区"
+                           required="true"
+                           data-options="{
+                                url:'/sys/RegionTree',
+                                valueField:'regionID',
+                                textField:'regionName'
+                                }">
+                    <input type="text" class="easyui-validatebox" name="addressSuffix" placeholder="**小区名/**栋/**号/**室"
+                           required="true"/>
+                </td>
                 <%--<td>预约取件时间:</td>
                 <td><input type="text" class="easyui-datetimebox" name="proDate"
                            data-options="required:true, editable:false"/></td>--%>
@@ -123,10 +160,46 @@
             </tr>
             <tr>
                 <td>到达地址:</td>
-                <td><input type="text" class="easyui-validatebox" name="arriveCity" placeholder="**省/**市/**区/小区名/**栋/**号/**室"
-                           required="true" size="80"/></td>
+                <td><input id="povinces2" type="text" class="easyui-combobox" placeholder="**省"
+                           data-options="{
+                            url:'/sys/RegionOne',
+                            valueField:'regionID',
+                            textField:'regionName',
+                            onSelect:function(region)
+                            {
+                                //alert('选择了省id='+region.regionID);
+                                $('#city2').combobox('clear');// 清除原有项目
+                                $('#area2').combobox('clear');// 清除原有显示项目
+                                // 重新加载
+                                $('#city2').combobox('reload','/sys/RegionTow?parentid='+region.regionID);
+                            }
+                            }"
+                           required="true"/>
+                    <input id="city2" type="text" class="easyui-combobox" placeholder="**市"
+                           data-options="{url:'/sys/RegionTow ',
+                                valueField:'regionID',
+                                textField:'regionName',
+                                onSelect:function(region)
+                                {
+                                    $('#area2').combobox('clear');// 清除原有项目
+                                    // 重新加载
+                                    $('#area2').combobox('reload','/sys/RegionTree?parentid='+region.regionID);
+                                }
+                                }"
+                           required="true"/>
+                    <input id="area2" type="text" class="easyui-combobox" placeholder="**区" name="arriveCityArea"
+                           data-options="{
+                                url:'/sys/RegionTree',
+                                valueField:'regionID',
+                                textField:'regionName'
+                                }"
+                           required="true"/>
+                    <input type="text" class="easyui-validatebox" name="arriveCitySuffix" placeholder="**小区名/**栋/**号/**室"
+                           required="true"/>
+                </td>
                 <td>联系人电话</td>
-                <td><input type="text" class="easyui-validatebox" name="conPhone" required="true" data-options="validType:'length[11]'"/></td>
+                <td><input type="text" class="easyui-validatebox" name="conPhone" required="true"
+                           data-options="validType:'length[11,11]'"/></td>
                 <td>联系人姓名</td>
                 <td><input type="text" class="easyui-validatebox" name="contacts"/></td>
             </tr>

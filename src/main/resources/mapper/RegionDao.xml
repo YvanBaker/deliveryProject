@@ -8,4 +8,5 @@
     <select id="getRegionsByDim" resultType="region">
         select * from region where  province like #{q} or city like #{q} or district like #{q}
     </select>
+
 </mapper>

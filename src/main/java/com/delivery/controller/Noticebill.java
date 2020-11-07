@@ -50,8 +50,12 @@ public class Noticebill {
     @RequestMapping("/billVerify")
     public void billVerify(String clientPhone, HttpServletResponse response) throws IOException {
         Customer customer = customerService.queryCustomerByPhone(clientPhone);
-        List<CustomerAddress> customerAddress = customerAddressService.getAddressByUserId(customer.getId());
-        response.getWriter().write(JSONObject.toJSONString(new CustomerAndAddress(customer, customerAddress)));
+        if (customer == null) {
+            response.getWriter().write("");
+        }else {
+            List<CustomerAddress> customerAddress = customerAddressService.getAddressByUserId(customer.getId());
+            response.getWriter().write(JSONObject.toJSONString(new CustomerAndAddress(customer, customerAddress)));
+        }
     }
 
 

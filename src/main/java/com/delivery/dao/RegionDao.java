@@ -43,4 +43,5 @@ public interface RegionDao {
      */
     Region selectOneRegionByAreaId(String areaId);
 
+    Region findRegionByAreaId(String areaId);
 }

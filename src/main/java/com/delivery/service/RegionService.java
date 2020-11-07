@@ -64,4 +64,6 @@ public interface RegionService {
      * @return
      */
     PageUtil selectSubarealimit(ShowSubarea showSubarea);
+
+    Region findRegionByAreaId(String addressArea);
 }

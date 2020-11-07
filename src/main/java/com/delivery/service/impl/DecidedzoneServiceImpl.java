@@ -130,6 +130,9 @@ public class DecidedzoneServiceImpl implements DecidedzoneService {
     public boolean assignOrdersIsNo(String did) {
         Decidedzone decidedZone = decidedzoneDao.getDecidedZoneById(Integer.parseInt(did));
         List<StaffOrder> associationsOrder = staffOrderDao.findAssociationsOrder(decidedZone.getStaff().getId(), decidedZone.getRegion().getAreasId());
+        for (StaffOrder staffOrder : associationsOrder) {
+            System.out.println("staffOrder = " + staffOrder);
+        }
         if (associationsOrder.isEmpty()) {//没有关联
             return true;
         }else {
