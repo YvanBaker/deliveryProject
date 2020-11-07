@@ -29,6 +29,10 @@
         </mvc:interceptor>
         <mvc:interceptor>
             <mvc:mapping path="/*"/>
+            <bean class="com.delivery.interceptor.CustomerTokenInterceptor"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/*"/>
             <bean class="com.delivery.interceptor.StaffInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>

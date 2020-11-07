@@ -58,4 +58,11 @@ public interface StaffService {
      * @return
      */
     boolean renewStaff(Staff staff);
+
+    /**
+     * 判断重名
+     * @param name
+     * @return
+     */
+    Staff selectStaffByName(String name);
 }

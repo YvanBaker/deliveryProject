@@ -1,7 +1,9 @@
 package com.delivery.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.delivery.entity.*;
+import com.delivery.exception.customer.AddressNumberException;
 import com.delivery.model.MsgResponse;
 import com.delivery.service.AddressService;
 import org.springframework.http.MediaType;
@@ -39,7 +41,7 @@ public class AddressController {
     public String getProvince() {
         List<Provinces> provincesList = addressService.queryProvincesAll();
         MsgResponse msgResponse = MsgResponse.buildSuccess(SUCCESS, provincesList);
-        return JSON.toJSONString(msgResponse);
+        return JSON.toJSONString(msgResponse, SerializerFeature.DisableCircularReferenceDetect);
     }
 
     /**
@@ -53,7 +55,7 @@ public class AddressController {
     public String getCity(String provinceId) {
         List<City> cityList = addressService.queryCityByProvinceId(provinceId);
         MsgResponse msgResponse = MsgResponse.buildSuccess(SUCCESS, cityList);
-        return JSON.toJSONString(msgResponse);
+        return JSON.toJSONString(msgResponse, SerializerFeature.DisableCircularReferenceDetect);
     }
 
     /**
@@ -68,7 +70,7 @@ public class AddressController {
     public String getAreas(String cityId) {
         List<Areas> areasList = addressService.queryAresByCityId(cityId);
         MsgResponse msgResponse = MsgResponse.buildSuccess(SUCCESS, areasList);
-        return JSON.toJSONString(msgResponse);
+        return JSON.toJSONString(msgResponse, SerializerFeature.DisableCircularReferenceDetect);
     }
 
     /**
@@ -81,7 +83,12 @@ public class AddressController {
     @ResponseBody
     @CrossOrigin
     public String saveCustomerAddress(CustomerAddress customerAddress) {
-        CustomerAddress res = addressService.saveCustomerAddress(customerAddress);
+        CustomerAddress res = null;
+        try {
+            res = addressService.saveCustomerAddress(customerAddress);
+        } catch (AddressNumberException e) {
+            return JSON.toJSONString(MsgResponse.buildError(e.getMessage()));
+        }
         MsgResponse msgResponse;
         if (customerAddress.getId() == null || customerAddress.getId() == 0) {
             msgResponse = MsgResponse.buildSuccess(REPEAT, res);
@@ -102,7 +109,8 @@ public class AddressController {
     @CrossOrigin
     public String getCustomerAddress(@RequestParam("id") int customerId) {
         List<CustomerAddress> customerAddressList = addressService.queryCustomerAddresses(customerId);
-        return JSON.toJSONString(MsgResponse.buildSuccess(SUCCESS, customerAddressList));
+        return JSON.toJSONString(MsgResponse.buildSuccess(SUCCESS, customerAddressList),
+                SerializerFeature.DisableCircularReferenceDetect);
     }
 
     /**
@@ -115,7 +123,12 @@ public class AddressController {
     @ResponseBody
     @CrossOrigin
     public String saveCustomerReceiveAddress(CustomerReceiveAddress address) {
-        CustomerReceiveAddress res = addressService.saveCustomerReceiveAddress(address);
+        CustomerReceiveAddress res = null;
+        try {
+            res = addressService.saveCustomerReceiveAddress(address);
+        } catch (AddressNumberException e) {
+            return JSON.toJSONString(MsgResponse.buildError(e.getMessage()));
+        }
         MsgResponse msgResponse;
         if (address.getId() == null || address.getId() == 0) {
             msgResponse = MsgResponse.buildSuccess(REPEAT, res);
@@ -131,6 +144,7 @@ public class AddressController {
     public String getCustomerReceiveAddress(@RequestParam("id") int customerId) {
         List<CustomerReceiveAddress> customerReceiveAddresses =
                 addressService.queryCustomerReceiveAddressesByCustomerId(customerId);
-        return JSON.toJSONString(MsgResponse.buildSuccess(SUCCESS, customerReceiveAddresses));
+        return JSON.toJSONString(MsgResponse.buildSuccess(SUCCESS, customerReceiveAddresses),
+                SerializerFeature.DisableCircularReferenceDetect);
     }
 }

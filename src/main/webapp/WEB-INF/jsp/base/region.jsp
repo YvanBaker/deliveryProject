@@ -19,8 +19,7 @@
     <script type="text/javascript" src="/js/jquery-1.8.3.js"></script>
     <script type="text/javascript" src="/easyui/jquery.min.js"></script>
     <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
-    <script type="text/javascript" src="/js/ocupload/jquery.ocupload-1.1.2.js"></script>
-</head>
+    </head>
 <script type="text/javascript">
 //    function doAdd() {
 //        $('#addRegionWindow').window("open");
@@ -35,26 +34,26 @@
 //    }
 
     //工具栏
-    var toolbar = [{
-//        id: 'button-edit',
-//        text: '修改',
-//        iconCls: 'icon-edit',
-//        handler: doView
-//    }, {
-//        id: 'button-add',
-//        text: '增加',
-//        iconCls: 'icon-add',
-//        handler: doAdd
-//    }, {
-//        id: 'button-delete',
-//        text: '删除',
-//        iconCls: 'icon-cancel',
-//        handler: doDelete
-//    }, {
+    var toolbar = [/*{
+       id: 'button-edit',
+       text: '修改',
+       iconCls: 'icon-edit',
+       handler: doView
+   }, {
+       id: 'button-add',
+       text: '增加',
+       iconCls: 'icon-add',
+       handler: doAdd
+   }, {
+       id: 'button-delete',
+       text: '删除',
+       iconCls: 'icon-cancel',
+       handler: doDelete
+   }, {
         id: 'button-import',
         text: '导入',
         iconCls: 'icon-redo'
-    }];
+    }*/];
     // 定义列
     var columns = [[{
         field: 'id',
@@ -103,23 +102,7 @@
         });
     });
 </script>
-<script type="text/javascript">
-    $(function () {
-        $("#button-import").upload({
-            action: 'importFile.do',
-            name: 'myFile',
-            onComplete: function (data) {
-                if (data == '1') {
-                    //上传成功
-                    $.messager.alert("提示信息", "区域数据导入成功！", "info");
-                } else {
-                    //失败
-                    $.messager.alert("提示信息", "区域数据导入失败！", "warning");
-                }
-            }
-        });
-    });
-</script>
+
 </head>
 <body class="easyui-layout" style="visibility:hidden;">
 <%-- 表体--%>

@@ -28,6 +28,7 @@ public class StaffController {
 
     /**
      * 查看员工页面
+     *
      * @return
      */
     @RequestMapping("/staffView")
@@ -43,7 +44,7 @@ public class StaffController {
      * @throws IOException
      */
     @RequestMapping("/staffShow")
-    public void staffShow( FindStaff findStaff,HttpServletResponse response) throws IOException {
+    public void staffShow(FindStaff findStaff, HttpServletResponse response) throws IOException {
         PageUtil pageUtil = staffService.selectStaff(findStaff);
         response.getWriter().write(JSONObject.toJSONString(pageUtil));
     }
@@ -57,9 +58,10 @@ public class StaffController {
 
     /**
      * 查询未作废的取派员
+     *
      * @return
      */
-    @RequestMapping(value = "/staffIsY",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/staffIsY", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     public String staffIsY() {
         List<Staff> staff = staffService.selectStaffDeltagIsYes();
@@ -69,6 +71,7 @@ public class StaffController {
 
     /**
      * 添加员工
+     *
      * @param staff
      * @param model
      * @return
@@ -76,18 +79,25 @@ public class StaffController {
      */
     @RequestMapping("/staffAdd")
     public String staffAdd(Staff staff, Model model) throws IOException {
-        staff.setUuid(UuidUtil.getUuid());
-        if ("".equals(staff.getHaspda())||null==staff.getHaspda()){
+        staff.setUuid(UuidUtil.getUuid().substring(20));
+        String msg = "";
+        if ("".equals(staff.getHaspda()) || null == staff.getHaspda()) {
             staff.setHaspda("N");
         }
-        boolean flog = staffService.addStaff(staff);
-        String msg = "添加成功";
+        Staff staff1 = staffService.selectStaffByName(staff.getName());
+        if (staff1 != null) {
+            msg = "添加失败！名字不能重复";
+        } else {
+            boolean flog = staffService.addStaff(staff);
+            msg = "添加成功";
+        }
         model.addAttribute("msg", msg);
         return "base/staff";
     }
 
     /**
      * 废除
+     *
      * @param ids
      * @param model
      * @return
@@ -95,7 +105,7 @@ public class StaffController {
     @RequestMapping("/staffDelete")
     public String staffDelete(String ids, Model model) {
         String[] split = ids.split(",");//选中的id用‘,'分割
-        for (String id:split) {
+        for (String id : split) {
             Staff staff = new Staff();
             staff.setId(Integer.parseInt(id));
             staffService.removeStaff(staff);
@@ -107,15 +117,16 @@ public class StaffController {
 
     /**
      * 恢复作废的取派员
+     *
      * @param ids
      * @return
      */
-    @RequestMapping(value = "/staffRenew",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/staffRenew", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     public String staffRenew(String ids) {
         System.out.println("ids = " + ids);
         String[] split = ids.split(",");
-        for (String id:split) {
+        for (String id : split) {
             Staff staff = new Staff();
             staff.setId(Integer.parseInt(id));
             staff.setDeltag("Y");
@@ -126,6 +137,7 @@ public class StaffController {
 
     /**
      * 修改取派员
+     *
      * @param staff
      * @param model
      * @return

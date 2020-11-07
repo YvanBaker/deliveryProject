@@ -3,7 +3,57 @@
 <mapper namespace="com.delivery.dao.BusinessNoteDao">
 
     <insert id="businessNoteAdd" parameterType="businessNote">
-        insert into business_note (client_num,client_name,client_phone,address,arrive_city,product,pro_date,number,weight,volume,remark,single_type,receiver)
-        values (#{clientNum},#{clientName},#{clientPhone},#{address},#{arriveCity},#{product},#{proDate},#{number},#{weight},#{volume},#{remark},#{singleType},#{receiver})
+        insert into business_note (uuid,client_name,client_phone,contacts,con_phone,address,arrive_city,product,number,weight,volume,remark,single_type,receiver,build_time)
+        values (#{uuid},#{clientName},#{clientPhone},#{contacts},#{conPhone},#{address},#{arriveCity},#{product},#{number},#{weight},#{volume},#{remark},#{singleType},#{receiver},#{buildTime})
     </insert>
+    <update id="setStaffById">
+        update business_note set staff_num=#{id1} where uuid=#{uuid}
+    </update>
+    <update id="setBusinessNoteStaffIsNull">
+        update business_note set staff_num=null where staff_num=#{staffNum}
+    </update>
+    <update id="diaoduOrderAssociationsStaff">
+        update  business_note set staff_num=#{staffId} where id=#{oid}
+    </update>
+    <select id="getBusinessNotes" resultType="businessNote">
+        select * from business_note where staff_num is null ;
+    </select>
+    <select id="AssociationsOrderOnDbl" resultMap="businessNoteMap">
+        select * from business_note,staff where business_note.staff_num=staff.id and business_note.id=#{id}
+    </select>
+    <resultMap id="businessNoteMap" type="businessNote" extends="businessNoteMap1">
+        <id column="id" property="id"/>
+        <result column="address" property="address"/>
+        <result column="arrive_city" property="arriveCity"/>
+        <result column="build_time" property="buildTime"/>
+        <result column="client_name" property="clientName"/>
+        <result column="client_num" property="clientNum"/>
+        <result column="client_phone" property="clientPhone"/>
+        <result column="con_phone" property="conPhone"/>
+        <result column="contacts" property="contacts"/>
+        <result column="product" property="product"/>
+        <result column="number" property="number"/>
+        <result column="receiver" property="receiver"/>
+        <result column="remark" property="remark"/>
+        <result column="single_type" property="singleType"/>
+        <result column="uuid" property="uuid"/>
+     </resultMap>
+    <resultMap id="businessNoteMap1" type="businessNote">
+        <association property="staff" javaType="staff">
+            <id property="id" column="staff_id"/>
+            <result property="name" column="name"/>
+            <result property="telephone" column="telephone"/>
+            <result property="station" column="station"/>
+        </association>
+    </resultMap>
+
+    <select id="getNoAssociationsOrder" resultType="businessNote">
+        select * from  business_note where staff_num is null
+    </select>
+    <select id="getHasAssociationsOrder" resultType="businessNote">
+        select * from  business_note where staff_num is not null
+    </select>
+    <select id="getBusinessNotesByUuid" resultMap="businessNoteMap" >
+        select * from business_note,staff where business_note.staff_num=staff.id and business_note.uuid=#{orderUuid}
+    </select>
 </mapper>

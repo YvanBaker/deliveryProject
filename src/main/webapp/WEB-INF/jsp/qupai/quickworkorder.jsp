@@ -27,13 +27,12 @@
 	* 增行
 	* */
 	function doAdd(){
-		console.log(editIndex);
-		if(editIndex != undefined){
-			$("#grid").datagrid('endEdit',editIndex);
+		if(editIndex != undefined){//当前正在编辑一行
+			$("#grid").datagrid('endEdit',editIndex);//结束编辑状态
 		}
-		if(editIndex==undefined){
+		if(editIndex==undefined){//编辑
 			//快速添加单
-			$("#grid").datagrid('insertRow',{
+			$("#grid").datagrid('insertRow',{//开始编辑
 				index : 0,
 				row : {}
 			});
@@ -81,17 +80,25 @@
 	}];
 	// 定义列
 	var columns = [ [ {
-		field : 'workorId',
+		field : 'uuid',
 		title : '工作单号',
 		width : 120,
 		align : 'center',
-		editor :{
-			type : 'validatebox',
-			options : {
+	}, {
+		field: 'senderphone',
+		title: '客户电话',
+		width: 120,
+		align: 'center',
+		editor: {
+			type: 'validatebox',
+			/*validator: function(value,param){
+				return /^1[3-8]+\d{9}$/.test(value);
+			},*/
+			options: {
 				required: true
 			}
 		}
-	}, {
+	},{
 		field : 'arrivecity',
 		title : '到达地',
 		width : 120,
@@ -169,15 +176,17 @@
 			onAfterEdit : function(rowIndex, rowData, changes){
 				editIndex = undefined;
 				//发送ajax请求，提交当前结束编辑行的数据到服务器，完成保存操作
-				var url = "/sys/workorderAdd";
+				var url = "/sys/workOrderAddOne";
 				$.post(url,rowData,function(data){
-					console.log(data)
 					if(data === "Y"){
 						//录入成功
 						$.messager.alert("提示信息","工作单信息录入成功！","info");
+						$("#grid").datagrid('reload');
 					}else{
 						//录入失败
-						$.messager.alert("提示信息","工作单信息录入失败！","warning");
+						$.messager.alert("提示信息", "工作单信息录入失败！手机号有误!", "warning");
+						$("#grid").datagrid('beginEdit',0);//编辑第0行
+						editIndex = 0;
 					}
 				});
 			}

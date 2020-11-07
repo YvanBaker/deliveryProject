@@ -33,8 +33,12 @@
             }
         });
     });
-
-
+    $(function () {
+            var message="${msg}";
+        if (message!="") {
+            $.messager.alert("提示信息", message, "info");
+        }
+    })
 </script>
 </head>
 <body class="easyui-layout">
@@ -43,8 +47,8 @@
     <div class="datagrid-toolbar">
         <a id="save" icon="icon-save" href="javascript:void(0);" class="easyui-linkbutton"
            plain="true">保存新单</a>
-        <a id="edit" icon="icon-edit" href="/sys/noticebillView" class="easyui-linkbutton"
-           plain="true">工单操作</a>
+        <%--<a id="edit" icon="icon-edit" href="/sys/noticebillView" class="easyui-linkbutton"
+           plain="true">工单操作</a>--%>
     </div>
 </div>
 <div region="center" style="overflow:auto;padding:5px;" border="false">
@@ -61,7 +65,7 @@
             </tr>
             <tr>
                 <td>客户电话:</td>
-                <td><input type="text" class="easyui-validatebox" name="clientPhone" required="true"/></td>
+                <td><input type="text" class="easyui-validatebox" name="clientPhone" required="true" data-options="validType:'length[11]'"/></td>
                 <td>客户编号:</td>
                 <td><input type="text" class="easyui-validatebox" name="clientNum"/></td>
                 <td>客户姓名:</td>
@@ -103,10 +107,10 @@
             <tr>
                 <td>取件地址</td>
                 <td colspan="1">
-                    <input type="text" class="easyui-validatebox" name="address" required="true" size="80"/></td>
-                <td>预约取件时间:</td>
+                    <input type="text" class="easyui-validatebox" name="address" placeholder="详细地址" required="true" size="80"/></td>
+                <%--<td>预约取件时间:</td>
                 <td><input type="text" class="easyui-datetimebox" name="proDate"
-                           data-options="required:true, editable:false"/></td>
+                           data-options="required:true, editable:false"/></td>--%>
             </tr>
             <tr></tr>
             <tr class="title">
@@ -119,10 +123,10 @@
             </tr>
             <tr>
                 <td>到达地址:</td>
-                <td><input type="text" class="easyui-validatebox" name="arriveCity"
+                <td><input type="text" class="easyui-validatebox" name="arriveCity" placeholder="**省/**市/**区/小区名/**栋/**号/**室"
                            required="true" size="80"/></td>
                 <td>联系人电话</td>
-                <td><input type="text" class="easyui-validatebox" name="conPhone" required="true"/></td>
+                <td><input type="text" class="easyui-validatebox" name="conPhone" required="true" data-options="validType:'length[11]'"/></td>
                 <td>联系人姓名</td>
                 <td><input type="text" class="easyui-validatebox" name="contacts"/></td>
             </tr>

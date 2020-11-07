@@ -6,7 +6,6 @@ public class QpWorkorder {
 
   private Integer id;
   private String uuid;
-  private String workorId;
   private String arrivecity;
   private String product;
   private Integer num;
@@ -29,10 +28,9 @@ public class QpWorkorder {
   public QpWorkorder() {
   }
 
-  public QpWorkorder(Integer id, String uuid, String workorId, String arrivecity, String product, Integer num, double weight, String floadreqr, String prodtimelimit, String prodtype, String sendername, String senderphone, String senderaddr, String receivername, String receiverphone, String receiveraddr, Integer feeitemnum, double actlweit, String vol, String managerCheck, Date updatetime) {
+  public QpWorkorder(Integer id, String uuid, String arrivecity, String product, Integer num, double weight, String floadreqr, String prodtimelimit, String prodtype, String sendername, String senderphone, String senderaddr, String receivername, String receiverphone, String receiveraddr, Integer feeitemnum, double actlweit, String vol, String managerCheck, Date updatetime) {
     this.id = id;
     this.uuid = uuid;
-    this.workorId = workorId;
     this.arrivecity = arrivecity;
     this.product = product;
     this.num = num;
@@ -58,7 +56,6 @@ public class QpWorkorder {
     return "QpWorkorder{" +
             "id=" + id +
             ", uuid='" + uuid + '\'' +
-            ", workorId='" + workorId + '\'' +
             ", arrivecity='" + arrivecity + '\'' +
             ", product='" + product + '\'' +
             ", num=" + num +
@@ -88,6 +85,7 @@ public class QpWorkorder {
     this.uuid = uuid;
   }
 
+
   public void setId(Integer id) {
     this.id = id;
   }
@@ -95,13 +93,7 @@ public class QpWorkorder {
     return id;
   }
 
-  public String getWorkorId() {
-    return workorId;
-  }
-
-  public void setWorkorId(String workorId) {
-    this.workorId = workorId;
-  }
+  
   public String getArrivecity() {
     return arrivecity;
   }

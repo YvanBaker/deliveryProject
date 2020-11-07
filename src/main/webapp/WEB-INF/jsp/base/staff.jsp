@@ -131,7 +131,7 @@
             field: 'telephone',
             title: '手机号',
             width: 120,
-            align: 'center'
+            align: 'center',
         }, {
             field: 'haspda',
             title: '是否有PDA',

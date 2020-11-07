@@ -31,7 +31,7 @@ public class Businestest {
         BusinessNote businessNote = new BusinessNote();
         //用Date (util)可直接存tatetime类型，String类型的符合"yyyy-MM-dd hh:mm:ss"格式的也可以存入
         //Date parse = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.ENGLISH).parse("2011-11-01 11:33:22");
-        businessNote.setProDate("2011.11.01 11/33/22");//"2011.11.01","2011-11-01"或"2011/11/01"存入datetime值显示时间2011-11-01 00:00:00
+        //businessNote.setProDate("2011.11.01 11/33/22");//"2011.11.01","2011-11-01"或"2011/11/01"存入datetime值显示时间2011-11-01 00:00:00
         businessNoteService.addbusinessNote(businessNote);
     }
 }

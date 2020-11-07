@@ -3,13 +3,13 @@
 <mapper namespace="com.delivery.dao.WorkorderDao">
 
     <insert id="addWorkorder" parameterType="qpWorkorder">
-        insert into workor_dermanage (uuid,arrivecity,product,num,weight,floadreqr)values (#{uuid},#{arrivecity},#{product},#{num},#{weight},#{floadreqr});
+        insert into workor_dermanage (uuid,senderphone,arrivecity,product,num,weight,floadreqr)values (#{uuid},#{senderphone},#{arrivecity},#{product},#{num},#{weight},#{floadreqr})
     </insert>
-    <update id="updateStaff">
-        UPDATE workor_dermanage SET staff=#{staff} where uuid=#{uuid}
+    <update id="updataWorkorder" parameterType="qpWorkorder">
+        update workor_dermanage set uuid=#{uuid},senderphone=#{senderphone} ,arrivecity=#{arrivecity} ,product=#{product},num=#{num},weight=#{weight},floagreqr=#{floadreqr} where id=#{id}
     </update>
     <select id="getAllWorkorder" resultType="qpWorkorder">
-        select * from workor_dermanage  limit #{arg0},#{arg1}
+        select * from workor_dermanage order by id desc limit #{arg0},#{arg1}
     </select>
     <select id="getAllWorkorderCount" resultType="java.lang.Integer">
         select count(*) from workor_dermanage
@@ -19,4 +19,10 @@
     </select>
 
 
+    <select id="getAssociationsWorkorder" resultType="qpWorkorder">
+        select * from  workor_dermanage where staff is null
+    </select>
+    <select id="getHasAssociationsWorkorder" resultType="qpWorkorder">
+        select * from  workor_dermanage where staff is not null
+    </select>
 </mapper>
