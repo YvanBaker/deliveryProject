@@ -21,17 +21,30 @@ public interface DecidedzoneDao {
 
     int DecidedzoneCount();
 
+
     Decidedzone getDecidedZone(String deciname);
 /*查询*/
     List<Decidedzone> getDecidedZonelimitDim(@Param("page") int page,@Param("rows") int rows,@Param("name") String name,@Param("station") String station);
 /*统计*/
     int getDecidedZoneConutDim(@Param("name") String name,@Param("station") String station);
 
+
     boolean delectDecidedzone(@Param("id") int id);
 
     boolean addDecidedzonePuls(@Param("areaId") String areaId,@Param("staffId") String staffId,@Param("decidedName") String decidedName);
 
+
+    Decidedzone getDecidedZone(String deciname);
+
+    /**
+     * 查询单条数据,用于自动分单
+     * @param regionId
+     * @return
+     */
+    List<Decidedzone> selectOneDecidedzone(String regionId);
+
     boolean updateDecidedZone(@Param("areaId") String areaId,@Param("staffId") String staffId,@Param("decidedName") String decidedName,@Param("id") int id);
 
     Decidedzone getDecidedZoneById(@Param("id") int id);
+
 }

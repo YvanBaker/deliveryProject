@@ -56,6 +56,13 @@ public interface DecidedzoneService {
     boolean addDecidedzone(String decidedName , String staffId, String areaId);
 
     /**
+     * 查询单条数据
+     * @param regionId
+     * @return
+     */
+    List<Decidedzone> selectOneDecidedzone(String regionId);
+
+    /**
      * 修改
      *
      * @param areaId

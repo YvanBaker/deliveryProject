@@ -82,6 +82,11 @@ public class DecidedzoneServiceImpl implements DecidedzoneService {
         return decidedzoneDao.addDecidedzonePuls(areaId, staffId, decidedName);
     }
 
+
+    @Override
+    public List<Decidedzone> selectOneDecidedzone(String regionId) {
+        return decidedzoneDao.selectOneDecidedzone(regionId);
+    }
     /**
      * 改进的分页查询并模糊查询定区
      *

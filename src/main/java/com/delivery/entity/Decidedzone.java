@@ -4,6 +4,7 @@ public class Decidedzone {
 
   private Integer id;
   private String decidedName;
+  private String staffId;
   private Staff staff;
   private Region region;
 
@@ -15,6 +16,14 @@ public class Decidedzone {
             ", staff=" + staff +
             ", region=" + region +
             '}';
+  }
+
+  public String getStaffId() {
+    return staffId;
+  }
+
+  public void setStaffId(String staffId) {
+    this.staffId = staffId;
   }
 
   public Integer getId() {

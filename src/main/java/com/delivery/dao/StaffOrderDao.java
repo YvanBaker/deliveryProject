@@ -82,7 +82,17 @@ public interface StaffOrderDao {
      * @return StaffOrder
      */
     @Select("select id, staff_id, order_id from staff_order where order_id = #{id}")
-    StaffOrder selectOrderByOrderId(@Param("id") int orderId);
+    StaffOrder selectOrderByOrderId(@Param("id") String orderId);
+
+    /**
+     * 更加 工单 id 查询 数据
+     *
+     * @param id
+     * @return StaffOrder
+     */
+    @Select("select id, staff_id, order_id from staff_order where id = #{id}")
+    StaffOrder selectOneOrderByOrderIdForTest(@Param("id") int id);
+
      /* 添加关联
      * @param id
      * @param i
@@ -112,6 +122,5 @@ public interface StaffOrderDao {
      * @return
      */
     boolean deleThisAssignOrders(@Param("areaId") String areasId, @Param("staffId") int id);
-
 
 }

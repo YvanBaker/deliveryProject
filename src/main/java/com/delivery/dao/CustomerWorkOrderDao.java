@@ -32,8 +32,16 @@ public interface CustomerWorkOrderDao {
      * @param newOrder 新订单
      * @return int
      */
-    @InsertProvider(type = CustomerWorkOrderDaoMapper.class, method = "updateOrderSql")
+    @UpdateProvider(type = CustomerWorkOrderDaoMapper.class, method = "updateOrderSql")
     int updateOrder(CustomerWorkOrder newOrder);
+
+    /**
+     * 删除订单
+     * @param orderId 订单id
+     * @return int
+     */
+    @Update("update customer_work_order set consummation = 2 where id = #{id}")
+    int deleteOrder(@Param("id")int orderId);
 
     /**
      * 根据 订单类中 的 字段查询 （条件是 and）

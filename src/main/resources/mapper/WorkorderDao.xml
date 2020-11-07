@@ -14,6 +14,9 @@
     <select id="getAllWorkorderCount" resultType="java.lang.Integer">
         select count(*) from workor_dermanage
     </select>
+    <select id="selectOneWorkord" resultType="com.delivery.entity.QpWorkorder">
+        SELECT * FROM workor_dermanage where uuid=#{uuid}
+    </select>
 
 
     <select id="getAssociationsWorkorder" resultType="qpWorkorder">

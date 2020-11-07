@@ -1,5 +1,6 @@
 package com.delivery.service.impl;
 
+
 import com.delivery.dao.BusinessNoteDao;
 import com.delivery.dao.DecidedzoneDao;
 import com.delivery.dao.StaffOrderDao;
@@ -26,6 +27,15 @@ public class StaffOrderServiceImpl implements StaffOrderService {
 
     @Resource
     BusinessNoteDao businessNoteDao;
+    
+     @Override
+    public boolean addStaffOrder(StaffOrder staffOrder) {
+        if (staffOrderDao.insertOrder(staffOrder)>0){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
     /**
      * Order添加到分区关联

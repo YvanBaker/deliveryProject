@@ -14,7 +14,7 @@
     </select>
 
     <select id="selectOneRegion" resultType="Region">
-        SELECT * from newRegion WHERE province_name=#{provinceName} and city_name=#{cityName} and areas_name=#{areasName}
+        SELECT * from newRegion WHERE areas_name=#{areasName} and city_name=#{cityName}
     </select>
   
     <select id="regionLikP" resultType="region">
@@ -22,5 +22,8 @@
         <where>
             <if test="q!=null and q!=''"> province_name like #{q} or city_name like #{q} or areas_name like #{q}</if>
         </where>
+    </select>
+    <select id="selectOneRegionByAreaId" resultType="com.delivery.entity.Region">
+        SELECT * from newRegion where areasId=#{areaId}
     </select>
 </mapper>
