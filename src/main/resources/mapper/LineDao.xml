@@ -51,4 +51,7 @@
     <select id="selectLineForRemoveStaff" resultType="com.delivery.entity.Line">
         select * from line where driver=#{driver}
     </select>
+    <select id="selectLineByID" resultType="com.delivery.entity.Line">
+        select * from line where id=#{id}
+    </select>
 </mapper>

@@ -39,4 +39,6 @@ public interface LineDao {
 
     Line selectLineForRemoveStaff(String driver);
 
+    Line selectLineByID(int id);
+
 }

@@ -1,7 +1,11 @@
 package com.delivery.service.impl;
 
 import com.delivery.dao.LineDao;
+import com.delivery.dao.StaffDao;
+import com.delivery.dao.StaffOrderDao;
 import com.delivery.entity.Line;
+import com.delivery.entity.Staff;
+import com.delivery.entity.StaffOrder;
 import com.delivery.service.LineService;
 import com.delivery.util.PageUtil;
 import com.delivery.utilentity.FindLine;
@@ -18,6 +22,10 @@ import java.util.List;
 public class LineServiceImpl implements LineService {
 @Resource
 private LineDao lineDao;
+@Resource
+private StaffDao staffDao;
+@Resource
+private StaffOrderDao staffOrderDao;
 
     @Override
     public PageUtil selectLine(FindLine findLine) {
@@ -40,8 +48,20 @@ private LineDao lineDao;
     public boolean updateLine(Line line) {
         return lineDao.updateLine(line);
     }
+
     @Override
     public boolean removeLine(Line line) {
+        int lineId=line.getId();
+        Line line1=lineDao.selectLineByID(lineId);
+        String staffName=line1.getDriver();
+        Staff staff=staffDao.selectStaffByName(staffName);
+        int staffId=staff.getId();
+        List<StaffOrder> staffOrders=staffOrderDao.selectOrderByStaffId(staffId);
+        for (int i=0;i<staffOrders.size();i++){
+            if (staffOrders.get(i).getDel()!=2){
+                return false;
+            }
+        }
         return lineDao.removeLine(line);
     }
 

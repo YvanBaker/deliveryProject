@@ -72,7 +72,7 @@ public interface StaffOrderDao {
      * @param staffId 工人id
      * @return List<StaffOrder>
      */
-    @Select("select id, staff_id, order_id from staff_order where staff_id = #{id}")
+    @Select("select id, staff_id, order_id ,del from staff_order where staff_id = #{id}")
     List<StaffOrder> selectOrderByStaffId(@Param("id") int staffId);
 
     /**
