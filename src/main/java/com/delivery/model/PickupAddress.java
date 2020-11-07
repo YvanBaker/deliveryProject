@@ -22,4 +22,5 @@ public class PickupAddress {
     private String addressDetail;
     private Integer userId;
     private Integer del;
+    private String phone;
 }

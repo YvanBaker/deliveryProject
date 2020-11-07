@@ -50,7 +50,7 @@ public interface CustomerReceiveAddressDao {
      * @param customerId id
      * @return List<CustomerReceiveAddress>
      */
-    @Select("select id, customer_id, receive_name, receive_province_id, receive_city_id, receive_area_id, receive_detailed_address, del " +
+    @Select("select id, phone,customer_id, receive_name, receive_province_id, receive_city_id, receive_area_id, receive_detailed_address, del " +
             "from customer_receive_address where customer_id = #{id}")
     List<CustomerReceiveAddress> selectAddressByCustomerId(@Param("id") int customerId);
 
@@ -60,7 +60,7 @@ public interface CustomerReceiveAddressDao {
      * @param id id
      * @return CustomerReceiveAddress
      */
-    @Select("select id, customer_id, receive_name, receive_province_id, receive_city_id, receive_area_id, receive_detailed_address, del " +
+    @Select("select id, phone,customer_id, receive_name, receive_province_id, receive_city_id, receive_area_id, receive_detailed_address, del " +
             "from customer_receive_address where id = #{id}")
     CustomerReceiveAddress selectAddressesById(@Param("id") int id);
 
@@ -68,10 +68,10 @@ public interface CustomerReceiveAddressDao {
      * 根据 状态 查询
      *
      * @param customerId 用户 id
-     * @param del 状态
+     * @param del        状态
      * @return List<CustomerReceiveAddress>
      */
-    @Select("select id, customer_id, receive_name, receive_province_id, receive_city_id, receive_area_id, receive_detailed_address, del " +
+    @Select("select id, phone,customer_id, receive_name, receive_province_id, receive_city_id, receive_area_id, receive_detailed_address, del " +
             "from customer_receive_address where customer_id = #{id} and del = #{del}")
-    List<CustomerReceiveAddress> selectAddressesByDel(@Param("id")int customerId,@Param("del") int del);
+    List<CustomerReceiveAddress> selectAddressesByDel(@Param("id") int customerId, @Param("del") int del);
 }

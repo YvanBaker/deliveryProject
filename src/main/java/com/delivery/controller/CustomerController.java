@@ -23,10 +23,7 @@ import com.delivery.util.RandomUtils;
 import io.jsonwebtoken.Claims;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -258,6 +255,34 @@ public class CustomerController {
             addressService.saveCustomerReceiveAddress(customerReceiveAddress);
         } catch (AddressNumberException e) {
             return JSON.toJSONString(MsgResponse.buildError(e.getMessage()));
+        }
+        return JSON.toJSONString(MsgResponse.buildSuccess(SUCCESS));
+    }
+
+    @DeleteMapping(value = "/delAddress", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @CrossOrigin
+    @CustomerToken
+    public String delAddress(int id){
+        CustomerAddress customerAddress = new CustomerAddress();
+        customerAddress.setId(id);
+        customerAddress.setDel(1);
+        boolean flag = addressService.renewCustomerAddresses(customerAddress);
+        if (!flag){
+            return JSON.toJSONString(MsgResponse.buildError("删除失败"));
+        }
+        return JSON.toJSONString(MsgResponse.buildSuccess(SUCCESS));
+    }
+
+    @DeleteMapping(value = "/delReceiveAddress", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @CrossOrigin
+    @CustomerToken
+    public String delReceiveAddress(int id){
+        CustomerReceiveAddress customerReceiveAddress = new CustomerReceiveAddress();
+        customerReceiveAddress.setId(id);
+        customerReceiveAddress.setDel(1);
+        boolean flag = addressService.renewCustomerReceiveAddresses(customerReceiveAddress);
+        if (!flag){
+            return JSON.toJSONString(MsgResponse.buildError("删除失败"));
         }
         return JSON.toJSONString(MsgResponse.buildSuccess(SUCCESS));
     }

@@ -27,6 +27,9 @@ public class CustomerReceiveAddressDaoMapper {
                 if (address.getCustomerId() != null) {
                     VALUES("customer_id", "#{customerId}");
                 }
+                if (TypeUtil.isValidString(address.getPhone())){
+                    VALUES("phone", "#{phone}");
+                }
                 if (address.getReceiveName() != null &&
                         TypeUtil.isValidString(address.getReceiveName())) {
                     VALUES("receive_name", "#{receiveName}");
