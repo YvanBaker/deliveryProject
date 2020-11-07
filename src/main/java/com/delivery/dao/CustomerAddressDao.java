@@ -34,7 +34,7 @@ public interface CustomerAddressDao {
      * @param userId userid
      * @return List<UserAddress>
      */
-    @Select("select id, name,province_id, city_id, area_id, address_detail, user_id, del " +
+    @Select("select id, phone,name,province_id, city_id, area_id, address_detail, user_id, del " +
             "from customer_address where user_id = #{userId}")
     List<CustomerAddress> selectCustomerAddressByIdUserId(@Param("userId") int userId);
 
@@ -49,7 +49,7 @@ public interface CustomerAddressDao {
     int updateCustomerAddress(CustomerAddress customerAddress);
 
 
-    @Select("select id,province_id,city_id,area_id,address_detail,user_id from customer_address where id = #{id} and del='0'")
+    @Select("select id,phone,province_id,city_id,area_id,address_detail,user_id from customer_address where id = #{id} and del='0'")
    CustomerAddress selectOneCustomerAddressById(int id);
 
     /**
@@ -59,7 +59,7 @@ public interface CustomerAddressDao {
      * @param del    del
      * @return List<CustomerAddress>
      */
-    @Select("select id, name,province_id, city_id, area_id, address_detail, user_id, del " +
+    @Select("select id, phone, name,province_id, city_id, area_id, address_detail, user_id, del " +
             "from customer_address where user_id = #{id} and del = #{del}")
     List<CustomerAddress> selectCustomerAddressByUserIdAndDel(@Param("id") int userId, @Param("del") int del);
 
@@ -69,7 +69,7 @@ public interface CustomerAddressDao {
      * @param id id
      * @return CustomerAddress
      */
-    @Select("select id, name,province_id, city_id, area_id, address_detail, user_id, del " +
+    @Select("select id, phone, name,province_id, city_id, area_id, address_detail, user_id, del " +
             "from customer_address where id = #{id}")
     CustomerAddress selectCustomerAddressById(@Param("id") int id);
 
@@ -79,7 +79,7 @@ public interface CustomerAddressDao {
      * @param userId 用户id
      * @return List<PickupAddress>
      */
-    @Select("select id, name, city_name, areas_name, province_name, province_id, area_id, city_id, address_detail, user_id, del " +
+    @Select("select id, phone,name, city_name, areas_name, province_name, province_id, area_id, city_id, address_detail, user_id, del " +
             "from pickup_address where user_id = #{id} and del = 0")
     List<PickupAddress> selectEffectivePickAddressByUserId(@Param("id") int userId);
 
@@ -88,7 +88,7 @@ public interface CustomerAddressDao {
      * @param userId 用户id
      * @return List<PickupAddress>
      */
-    @Select("select id, city_name, name, areas_name, province_name, province_id, area_id, city_id, address_detail, user_id, del " +
+    @Select("select id, phone,city_name, name, areas_name, province_name, province_id, area_id, city_id, address_detail, user_id, del " +
             "from receive_address_view where user_id = #{id} and del =0")
     List<PickupAddress> selectEffectiveReceiveAddressByUserId(@Param("id") int userId);
 

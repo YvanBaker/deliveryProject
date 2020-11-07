@@ -115,6 +115,11 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
+    public boolean renewCustomerAddresses(CustomerAddress address) {
+        return customerAddressDao.updateCustomerAddress(address) > 0;
+    }
+
+    @Override
     public List<CustomerAddress> getAddressByUserId(Integer id) {
         return customerAddressDao.selectCustomerAddressByIdUserId(id);
     }
