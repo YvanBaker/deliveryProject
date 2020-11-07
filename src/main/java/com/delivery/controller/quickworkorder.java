@@ -3,23 +3,17 @@ package com.delivery.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.delivery.entity.QpWorkorder;
-import com.delivery.entity.Region;
 import com.delivery.service.RegionService;
 import com.delivery.service.WorkorderService;
-import com.delivery.util.CutAddressUtil;
 import com.delivery.util.PageUtil;
-import com.delivery.util.UuidUtil;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import javax.print.attribute.standard.Media;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 @Controller
@@ -100,11 +94,11 @@ public class quickworkorder {
                 response.getWriter().write("N");
             }else {
                 /*站内已收，直接派送*/
-                boolean b = workorderService.workorderAdd(qpWorkorder);
-                response.getWriter().write("Y");
-            }
-        }catch (NullPointerException e){
-            response.getWriter().write("N");
-        }
-    }
+//                boolean b = workorderService.workorderAdd(qpWorkorder);
+//                response.getWriter().write("Y");
+//            }
+//        }catch (NullPointerException e){
+//            response.getWriter().write("N");
+//        }
+//    }
 }
