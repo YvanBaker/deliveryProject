@@ -6,7 +6,6 @@ public class QpWorkorder {
 
   private Integer id;
   private String uuid;
-  private String workorId;
   private String arrivecity;
   private String product;
   private Integer num;
@@ -58,7 +57,7 @@ public class QpWorkorder {
     return "QpWorkorder{" +
             "id=" + id +
             ", uuid='" + uuid + '\'' +
-            ", workorId='" + workorId + '\'' +
+            ", workorId='" + workorId + '\'' +\
             ", arrivecity='" + arrivecity + '\'' +
             ", product='" + product + '\'' +
             ", num=" + num +
@@ -88,6 +87,7 @@ public class QpWorkorder {
     this.uuid = uuid;
   }
 
+
   public void setId(Integer id) {
     this.id = id;
   }
@@ -102,6 +102,7 @@ public class QpWorkorder {
   public void setWorkorId(String workorId) {
     this.workorId = workorId;
   }
+  
   public String getArrivecity() {
     return arrivecity;
   }

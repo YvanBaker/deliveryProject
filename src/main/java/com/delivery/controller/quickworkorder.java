@@ -1,5 +1,6 @@
 package com.delivery.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.delivery.entity.QpWorkorder;
 import com.delivery.entity.Region;
@@ -7,14 +8,19 @@ import com.delivery.service.RegionService;
 import com.delivery.service.WorkorderService;
 import com.delivery.util.CutAddressUtil;
 import com.delivery.util.PageUtil;
+import com.delivery.util.UuidUtil;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.print.attribute.standard.Media;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping("/sys")
@@ -38,18 +44,38 @@ public class quickworkorder {
      * @param response
      * @throws IOException
      */
-    @RequestMapping("workorAll")
+    @RequestMapping("/workorAll")
     public void workorAll(int page,int rows, HttpServletResponse response) throws IOException {
          PageUtil pageUtil= workorderService.workorderAll(page,rows);
          response.getWriter().write(JSONObject.toJSONString(pageUtil));
     }
 
     /**
+     * 快速添加一条工作单
+     * @param qpWorkorder
+     * @return
+     */
+    @RequestMapping(value = "/workOrderAddOne",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    public String workOrderAddOne(QpWorkorder qpWorkorder) {
+        String msg = "";
+        Pattern phone = Pattern.compile("^1[3-8]+\\d{9}$");
+        if (phone.matcher(qpWorkorder.getSenderphone()).matches()) {
+            boolean b= workorderService.workorderAdd(qpWorkorder);
+            msg= "Y";
+        }else {
+            msg= "N";
+        }
+        return JSON.toJSONString(msg);
+    }
+
+
+    /**
      * TODO 未测试
      * 添加工作单(快速)
      * @param qpWorkorder
      */
-    @RequestMapping("/workorderAdd")
+   /* @RequestMapping("/workorderAdd")
     public void workorderAdd(QpWorkorder qpWorkorder, HttpServletResponse response) throws IOException {
         String citySend=null;
         String cityReceive=null;

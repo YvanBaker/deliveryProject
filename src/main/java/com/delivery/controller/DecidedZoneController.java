@@ -71,33 +71,32 @@ public class DecidedZoneController {
     @ResponseBody
     public String delecteDecidedZone(String ids) {
         String[] splitId = ids.split(",");
+            Boolean b = true;//有关联
         for (int i = 0; i < splitId.length; i++) {
-            decidedzoneService.delectDecidedzone(splitId[i]);
+            if (decidedzoneService.assignOrdersIsNo(splitId[i])) {//如果true 表示没有关联 就改b值为
+                b = false;
+            }
         }
-        return JSON.toJSONString("删除成功");
+        if (b) {//有关联不能删除
+            return JSON.toJSONString("删除失败,有取派员正在派单!");
+        }else {
+            for (int i = 0; i < splitId.length; i++) {
+                decidedzoneService.delectDecidedzone(splitId[i]);
+            }
+            return JSON.toJSONString("删除成功");
+        }
     }
 
     /**
      * 显示所有关联定区
+     * 根据定区id和所属公司查询(包含分页)
      *
      * @return
      */
     @RequestMapping(value = "/decidedZoneShow", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public String decidedZoneShow(int page, int rows, String id, String station) {
-        PageUtil decidedzones = null;
-        if ((id != "" && id != null) || (station != "" && station != null)) {
-            int did = 0;
-            if (station != "" && station != null) {
-                station = "%" + station + "%";
-            }
-            if (id != "" && id != null) {
-                did = Integer.parseInt(id);
-            }
-            decidedzones = decidedzoneService.getDecidedZoneDim(page, rows, did, station);
-        } else {
-            decidedzones = decidedzoneService.getDecidedZoneAll(page, rows);
-        }
+    public String decidedZoneShow(int page, int rows, String name, String station) {
+        PageUtil decidedzones = decidedzoneService.getDecidedZoneShow(page, rows, name, station);
         return JSON.toJSONString(decidedzones);
     }
 
@@ -118,14 +117,8 @@ public class DecidedZoneController {
     }*/
 
 
-
-
-
-
-
-
     /**
-     * 关联区(查找）
+     * 关联区域(查找）
      *
      * @return
      */
@@ -137,13 +130,17 @@ public class DecidedZoneController {
     }
 
     /**
-     * 添加定区
+     * 添加和修改定区 定区名字去重 有传selectId就是修改 没有传selectId就是添加
      *
+     * @param areaId      地区id
+     * @param staffId     取派员id
+     * @param decidedName 定区名称
+     * @param selectId    选中定区id(可空)
      * @return
      */
     @RequestMapping(value = "/addDecided", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public String addDecided(String areaId, String staffId, String decidedName, String selectId) {
+    public String addDecided( String decidedName, String staffId,String areaId, String selectId) {
         //名字判重
         Decidedzone decidedzone = decidedzoneService.getDecidedZone(decidedName);
         String dId = "";
@@ -153,12 +150,17 @@ public class DecidedZoneController {
                 return JSON.toJSONString(0);//名字存在
             }
         }
-        if (selectId == "") {
-            decidedzoneService.addDecidedzone(areaId, staffId, decidedName);
-            return JSON.toJSONString(1);//添加*******不要加双引号**************
+        if (selectId == "") {//空为添加
+            decidedzoneService.addDecidedzone(decidedName, staffId,areaId );
+            return JSON.toJSONString(1);//添加
         } else {//判断自身名称是否改变，如果没改变
-            decidedzoneService.changDecidedzone(areaId, staffId, decidedName, selectId);
-            return JSON.toJSONString(2);//修改
+            if (decidedzoneService.assignOrdersIsNo(selectId)) {//如果true 表示没有关联 可以修改
+                decidedzoneService.changDecidedzone(decidedName, staffId, areaId, selectId);
+                return JSON.toJSONString(2);//修改
+            }else {
+                return JSON.toJSONString(3);//有关联,修改失败，
+            }
+
         }
     }
 
@@ -169,11 +171,11 @@ public class DecidedZoneController {
      * @return
      */
     @RequestMapping("/assignOrderToDecidedzone")
-    public String assignOrdersToDecidedzone(String id, String OrderIds,Model model) {
+    public String assignOrdersToDecidedzone(String id, String OrderIds, Model model) {
         //分区id----订单ids
-        System.out.println("OrderIds = " + OrderIds);
+
         boolean flog = staffOrderService.addAssignOrders(id, OrderIds);
-        model.addAttribute("msg","关联成功");
+        model.addAttribute("msg", "关联成功");
         return "base/decidedzone";
     }
 }

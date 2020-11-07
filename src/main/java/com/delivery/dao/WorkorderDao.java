@@ -30,4 +30,5 @@ public interface WorkorderDao {
 
     List<QpWorkorder> getHasAssociationsWorkorder();
 
+    boolean updataWorkorder(QpWorkorder qpWorkorder);
 }

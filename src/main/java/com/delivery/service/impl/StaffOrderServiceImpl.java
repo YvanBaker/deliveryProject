@@ -39,22 +39,22 @@ public class StaffOrderServiceImpl implements StaffOrderService {
 
     /**
      * Order添加到分区关联
-     * @param did
-     * @param orderIds
+     *
+     * @param did      定区id
+     * @param orderIds 多个订单uuid
      * @return
      */
     @Override
     public boolean addAssignOrders(String did, String orderIds) {
         int id = Integer.parseInt(did);
-        Decidedzone decidedzone=decidedzoneDao.getDecidedZoneById(id);
-        /*List<StaffOrder> staffOrders= staffOrderDao.getStaffOrderAll();*/
-        businessNoteDao.setBusinessNoteStaffIsNull();
-        staffOrderDao.deleThisAssignOrders(decidedzone.getRegion().getAreasId(),decidedzone.getStaff().getId());
+        Decidedzone decidedzone = decidedzoneDao.getDecidedZoneById(id);
+        businessNoteDao.setBusinessNoteStaffIsNull(decidedzone.getStaff().getId());//添加前先清空
+        staffOrderDao.deleThisAssignOrders(decidedzone.getRegion().getAreasId(), decidedzone.getStaff().getId());//添加前先清空
         if (orderIds != null && orderIds != "") {
             String[] ids = orderIds.split(",");
             for (int i = 0; i < ids.length; i++) {
-                businessNoteDao.setStaffById(ids[i],decidedzone.getStaff().getId());
-                staffOrderDao.addAssignOrders(decidedzone.getRegion().getAreasId(),decidedzone.getStaff().getId(),ids[i],0);
+                businessNoteDao.setStaffById(ids[i], decidedzone.getStaff().getId());
+                staffOrderDao.addAssignOrders(decidedzone.getRegion().getAreasId(), decidedzone.getStaff().getId(), ids[i], 0);
             }
         }
         return true;

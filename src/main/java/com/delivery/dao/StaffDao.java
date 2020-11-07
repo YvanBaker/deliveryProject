@@ -101,4 +101,7 @@ public interface StaffDao {
      */
     boolean staffRenew(Staff staff);
 
+    List<Staff> associationsStaff(String q);
+
+    Staff selectStaffByName(String name);
 }

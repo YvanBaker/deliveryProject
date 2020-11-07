@@ -12,6 +12,7 @@ import com.delivery.service.StaffOrderService;
 import com.delivery.service.WorkorderService;
 import com.delivery.util.CutAddressUtil;
 import com.delivery.util.PageUtil;
+import com.delivery.util.UuidUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -25,9 +26,23 @@ public class WorkorderServiceImpl implements WorkorderService {
     DecidedzoneService decidedzoneService;
     StaffOrderService staffOrderService;
 
+    /**
+     * 创建 修改工作单
+     * @param qpWorkorder
+     * @return
+     */
     @Override
     public boolean workorderAdd(QpWorkorder qpWorkorder) {
-        return workorderDao.addWorkorder(qpWorkorder);
+        String uuid = UuidUtil.getUuid().substring(20);
+
+        if (qpWorkorder.getUuid() == "" || qpWorkorder.getUuid()==null) {
+            qpWorkorder.setUuid(uuid);
+            workorderDao.addWorkorder(qpWorkorder);
+        }else {//修改工作单
+            workorderDao.updataWorkorder(qpWorkorder);
+        }
+
+        return true;
     }
 
     /**
@@ -38,7 +53,7 @@ public class WorkorderServiceImpl implements WorkorderService {
      */
     @Override
     public PageUtil workorderAll(int page, int rows) {
-        List<QpWorkorder> allWorkorder = workorderDao.getAllWorkorder((page-1)*rows,rows);
+        List<QpWorkorder> allWorkorder = workorderDao.getAllWorkorder((page - 1) * rows, rows);
         int total=workorderDao.getAllWorkorderCount();
         return new PageUtil(total,allWorkorder);
     }

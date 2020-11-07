@@ -17,15 +17,17 @@ public interface DecidedzoneDao {
 
     List<Decidedzone> getDecidedZoneAll();
 
-    List<Decidedzone> getDecidedZonelimit(int page, int rows);
+    List<Decidedzone> getDecidedZonelimit(@Param("page") int page, @Param("rows") int rows);
 
     int DecidedzoneCount();
 
-//    Decidedzone getDecidedZone(String deciname);
 
-    List<Decidedzone> getDecidedZonelimitDim(@Param("page") int page,@Param("rows") int rows,@Param("id") int id,@Param("station") String station);
+    Decidedzone getDecidedZone(String deciname);
+/*查询*/
+    List<Decidedzone> getDecidedZonelimitDim(@Param("page") int page,@Param("rows") int rows,@Param("name") String name,@Param("station") String station);
+/*统计*/
+    int getDecidedZoneConutDim(@Param("name") String name,@Param("station") String station);
 
-    int getDecidedZoneConutDim(@Param("id") int id,@Param("station") String station);
 
     boolean delectDecidedzone(@Param("id") int id);
 

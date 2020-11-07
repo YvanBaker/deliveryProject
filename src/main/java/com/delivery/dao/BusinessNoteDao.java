@@ -28,5 +28,7 @@ public interface BusinessNoteDao {
 
     BusinessNote getBusinessNotesByUuid(@Param("orderUuid") String orderUuid);
 
-    boolean setBusinessNoteStaffIsNull();
+    boolean setBusinessNoteStaffIsNull(int staffNum);
+
+    boolean diaoduOrderAssociationsStaff(@Param("oid") int oid,@Param("staffId") String staffId);
 }

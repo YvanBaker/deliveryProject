@@ -10,10 +10,13 @@
         update business_note set staff_num=#{id1} where uuid=#{uuid}
     </update>
     <update id="setBusinessNoteStaffIsNull">
-        update business_note set staff_num=null
+        update business_note set staff_num=null where staff_num=#{staffNum}
+    </update>
+    <update id="diaoduOrderAssociationsStaff">
+        update  business_note set staff_num=#{staffId} where id=#{oid}
     </update>
     <select id="getBusinessNotes" resultType="businessNote">
-        select * from business_note;
+        select * from business_note where staff_num is null ;
     </select>
     <select id="AssociationsOrderOnDbl" resultMap="businessNoteMap">
         select * from business_note,staff where business_note.staff_num=staff.id and business_note.id=#{id}
