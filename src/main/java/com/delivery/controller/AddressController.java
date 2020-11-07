@@ -52,6 +52,7 @@ public class AddressController {
      */
     @GetMapping(value = "/city", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
+    @CrossOrigin
     public String getCity(String provinceId) {
         List<City> cityList = addressService.queryCityByProvinceId(provinceId);
         MsgResponse msgResponse = MsgResponse.buildSuccess(SUCCESS, cityList);

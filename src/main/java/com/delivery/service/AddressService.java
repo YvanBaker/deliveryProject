@@ -95,6 +95,14 @@ public interface AddressService {
     boolean renewCustomerReceiveAddresses(CustomerReceiveAddress address);
 
     /**
+     * 更新 关联 用户id 的 送达地址
+     *
+     * @param address 地址
+     * @return true 成功
+     */
+    boolean renewCustomerAddresses(CustomerAddress address);
+
+    /**
      * 根据客户Id查询地址
      *
      * @param id

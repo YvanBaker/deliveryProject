@@ -15,6 +15,7 @@ import com.delivery.model.CustomerWorkOrderInfo;
 import com.delivery.model.MsgResponse;
 import com.delivery.model.PickupAddress;
 import com.delivery.service.AddressService;
+import com.delivery.service.AutoDistributionService;
 import com.delivery.service.CustomerService;
 import com.delivery.service.CustomerWorkOrderService;
 import com.delivery.util.JwtUtils;
@@ -23,10 +24,7 @@ import com.delivery.util.RandomUtils;
 import io.jsonwebtoken.Claims;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -53,6 +51,9 @@ public class CustomerController {
 
     @Resource
     private AddressService addressService;
+
+    @Resource
+    private AutoDistributionService autoDistributionService;
 
     @Resource
     private CustomerWorkOrderService customerWorkOrderService;
@@ -130,7 +131,7 @@ public class CustomerController {
     @CustomerToken
     public String placeOrder(CustomerWorkOrder order) {
         CustomerWorkOrder customerWorkOrder = customerService.saveOrder(order);
-        if (customerWorkOrder.getId() != null || customerWorkOrder.getId() == 0) {
+        if (customerWorkOrder.getId() != null || customerWorkOrder.getId() != 0) {
             return JSON.toJSONString(MsgResponse.buildSuccess(SUCCESS, customerWorkOrder));
         }
         return JSON.toJSONString(MsgResponse.buildError("下单失败"));
@@ -202,11 +203,18 @@ public class CustomerController {
     public String generateOrder(CustomerWorkOrder order, HttpServletRequest request) {
         String token = request.getHeader("token");
         Claims claims = JwtUtils.checkJWT(token);
-        Integer id = (Integer) claims.get("id");
-        order.setCustomerId(id);
+        Integer tokenId = (Integer) claims.get("id");
+        if (!tokenId.equals(order.getCustomerId())) {
+            return JSON.toJSONString(MsgResponse.buildError("下单失败！！"));
+        }
         customerWorkOrderService.generateOrder(order);
         if (order.getId() == null || order.getId() == 0) {
             return JSON.toJSONString(MsgResponse.buildError("下单失败！！"));
+        }
+        int flag = autoDistributionService.autoDistributionForGetGoodsAboutStaffOrder(order);
+        if (flag < 0) {
+            customerWorkOrderService.delOrder(order.getId());
+            return JSON.toJSONString(MsgResponse.buildError("下单失败，该区域在没有开放网点！！"));
         }
         return JSON.toJSONString(MsgResponse.buildSuccess("下单成功！！"));
     }
@@ -241,7 +249,7 @@ public class CustomerController {
     @PostMapping(value = "/saveAddress", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @CustomerToken
     @CrossOrigin
-    public String saveAddress(CustomerAddress customerAddress){
+    public String saveAddress(CustomerAddress customerAddress) {
         try {
             addressService.saveCustomerAddress(customerAddress);
         } catch (AddressNumberException e) {
@@ -253,11 +261,39 @@ public class CustomerController {
     @PostMapping(value = "/saveReceiveAddress", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @CustomerToken
     @CrossOrigin
-    public String savaReceiveAddress(CustomerReceiveAddress customerReceiveAddress){
+    public String savaReceiveAddress(CustomerReceiveAddress customerReceiveAddress) {
         try {
             addressService.saveCustomerReceiveAddress(customerReceiveAddress);
         } catch (AddressNumberException e) {
             return JSON.toJSONString(MsgResponse.buildError(e.getMessage()));
+        }
+        return JSON.toJSONString(MsgResponse.buildSuccess(SUCCESS));
+    }
+
+    @DeleteMapping(value = "/delAddress", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @CrossOrigin
+    @CustomerToken
+    public String delAddress(int id) {
+        CustomerAddress customerAddress = new CustomerAddress();
+        customerAddress.setId(id);
+        customerAddress.setDel(1);
+        boolean flag = addressService.renewCustomerAddresses(customerAddress);
+        if (!flag) {
+            return JSON.toJSONString(MsgResponse.buildError("删除失败"));
+        }
+        return JSON.toJSONString(MsgResponse.buildSuccess(SUCCESS));
+    }
+
+    @DeleteMapping(value = "/delReceiveAddress", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @CrossOrigin
+    @CustomerToken
+    public String delReceiveAddress(int id) {
+        CustomerReceiveAddress customerReceiveAddress = new CustomerReceiveAddress();
+        customerReceiveAddress.setId(id);
+        customerReceiveAddress.setDel(1);
+        boolean flag = addressService.renewCustomerReceiveAddresses(customerReceiveAddress);
+        if (!flag) {
+            return JSON.toJSONString(MsgResponse.buildError("删除失败"));
         }
         return JSON.toJSONString(MsgResponse.buildSuccess(SUCCESS));
     }

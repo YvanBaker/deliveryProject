@@ -72,7 +72,7 @@ public interface StaffOrderDao {
      * @param staffId 工人id
      * @return List<StaffOrder>
      */
-    @Select("select id, staff_id, order_id from staff_order where staff_id = #{id}")
+    @Select("select id, staff_id, order_id ,del from staff_order where staff_id = #{id}")
     List<StaffOrder> selectOrderByStaffId(@Param("id") int staffId);
 
     /**
@@ -86,12 +86,22 @@ public interface StaffOrderDao {
 
     /**
      * 更加 工单 id 查询 数据
+     * 测试类使用
+     * @param id
+     * @return StaffOrder
+     */
+    @Select("select id, staff_id, order_id ，area_id ,del from staff_order where id = #{id}")
+    StaffOrder selectOneOrderByOrderIdForTest(@Param("id") int id);
+
+    /**
+     * 更加 工单 id 查询 数据
      *
      * @param id
      * @return StaffOrder
      */
-    @Select("select id, staff_id, order_id from staff_order where id = #{id}")
-    StaffOrder selectOneOrderByOrderIdForTest(@Param("id") int id);
+    @Select("select id, staff_id, order_id from staff_order where staff_id = #{id} and del!='2'")
+    List<StaffOrder> selectOrderForRemoveStaff(@Param("id") int id);
+
 
      /* 添加关联
      * @param id

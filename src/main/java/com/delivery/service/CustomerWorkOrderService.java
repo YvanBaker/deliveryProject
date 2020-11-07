@@ -37,6 +37,13 @@ public interface CustomerWorkOrderService {
     boolean delOrder(int id);
 
     /**
+     * 完全删除 订单
+     * @param id id
+     * @return int
+     */
+    int deleteOrder(int id);
+
+    /**
      * 更新 订单
      * @param order 订单
      * @return boolean

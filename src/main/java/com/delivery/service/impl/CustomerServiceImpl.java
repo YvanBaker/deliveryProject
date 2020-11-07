@@ -162,6 +162,7 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerWorkOrder saveOrder(CustomerWorkOrder customerWorkOrder) {
         customerWorkOrder.setWorkOrderUuid(UuidUtil.getUuid());
         customerWorkOrder.setCreateTime(new Date(System.currentTimeMillis()));
+        customerWorkOrder.setConsummation(0);
         customerWorkOrderDao.insertOrder(customerWorkOrder);
         return customerWorkOrder;
     }

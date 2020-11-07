@@ -13,8 +13,8 @@ import java.util.List;
  * Created by LEO15 on 2020/11/4.
  * 自动分单
  */
-@Service
-public class AutoDistributonServiceImpl implements AutoDistributionService {
+@Service("autoDistributionService")
+public class AutoDistributionServiceImpl implements AutoDistributionService {
     @Resource
     RegionDao regionDao;
     @Resource

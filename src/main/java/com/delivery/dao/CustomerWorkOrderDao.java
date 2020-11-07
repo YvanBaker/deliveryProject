@@ -37,11 +37,12 @@ public interface CustomerWorkOrderDao {
 
     /**
      * 删除订单
+     *
      * @param orderId 订单id
      * @return int
      */
     @Update("update customer_work_order set consummation = 2 where id = #{id}")
-    int deleteOrder(@Param("id")int orderId);
+    int deleteOrder(@Param("id") int orderId);
 
     /**
      * 根据 订单类中 的 字段查询 （条件是 and）
@@ -90,4 +91,13 @@ public interface CustomerWorkOrderDao {
      */
     @Select("select * from customer_work_order where consummation = #{con}")
     List<CustomerWorkOrder> selectOrderByConsummation(@Param("con") int consummation);
+
+    /**
+     * 根据 id 删除订单
+     *
+     * @param id id
+     * @return int
+     */
+    @Delete("delete from customer_work_order where id = #{id}")
+    int deleteCustomerWorkOrder(@Param("id") int id);
 }
