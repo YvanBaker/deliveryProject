@@ -37,4 +37,6 @@ public interface LineDao {
 
     int selectLineCount();
 
+    Line selectLineForRemoveStaff(String driver);
+
 }

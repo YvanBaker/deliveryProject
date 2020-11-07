@@ -42,6 +42,10 @@ public interface DecidedzoneDao {
      */
     List<Decidedzone> selectOneDecidedzone(String regionId);
 
+    List<Decidedzone> selectDecidedZoneForRemoveStaff(String staffId);
+
+    boolean updateDecidedZoneForStaffToNull(int id);
+  
     boolean updateDecidedZone(@Param("areaId") String areaId,@Param("staffId") String staffId,@Param("decidedName") String decidedName,@Param("id") int id);
 
     Decidedzone getDecidedZoneById(@Param("id") int id);
