@@ -26,4 +26,7 @@
     <select id="selectOneRegionByAreaId" resultType="com.delivery.entity.Region">
         SELECT * from newRegion where areasId=#{areaId}
     </select>
+    <select id="findRegionByAreaId" resultType="region">
+        select * from newRegion where areasId=#{areaId}
+    </select>
 </mapper>

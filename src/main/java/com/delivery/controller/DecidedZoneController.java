@@ -64,7 +64,7 @@ public class DecidedZoneController {
     /**
      * 删除
      *
-     * @param ids
+     * @param ids 定区ids
      * @return
      */
     @RequestMapping(value = "/delecte", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -173,7 +173,6 @@ public class DecidedZoneController {
     @RequestMapping("/assignOrderToDecidedzone")
     public String assignOrdersToDecidedzone(String id, String OrderIds, Model model) {
         //分区id----订单ids
-
         boolean flog = staffOrderService.addAssignOrders(id, OrderIds);
         model.addAttribute("msg", "关联成功");
         return "base/decidedzone";

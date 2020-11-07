@@ -108,4 +108,9 @@ public class RegionServiceImpl implements RegionService {
         }
         return new PageUtil(total,subareas);
     }
+
+    @Override
+    public Region findRegionByAreaId(String AreaId) {
+        return regionDao.findRegionByAreaId(AreaId);
+    }
 }

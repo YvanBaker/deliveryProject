@@ -37,6 +37,7 @@ public class BusinessNoteServiceImpl implements BusinessNoteService {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         businessNote.setBuildTime(simpleDateFormat.format(new Date()));
         businessNote.setUuid(UuidUtil.getUuid().substring(20));
+
         return businessNoteDao.businessNoteAdd(businessNote);
     }
 

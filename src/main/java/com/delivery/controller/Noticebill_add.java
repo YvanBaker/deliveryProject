@@ -1,35 +1,35 @@
 package com.delivery.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.delivery.entity.BusinessNote;
-import com.delivery.entity.Customer;
-import com.delivery.entity.CustomerAddress;
-import com.delivery.entity.QpWorkorder;
-import com.delivery.service.AddressService;
-import com.delivery.service.BusinessNoteService;
-import com.delivery.service.CustomerService;
+import com.delivery.entity.*;
+import com.delivery.service.*;
+import com.delivery.util.CutAddressUtil;
 import com.delivery.utilentity.CustomerAndAddress;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/sys")
 public class Noticebill_add {
     @Resource
-    CustomerService customerService;
+    RegionService regionService;
     @Resource
-    AddressService customerAddressService;
+    RegionArgService regionArgService;
 
     @Resource
     BusinessNoteService businessNoteService;
@@ -51,19 +51,63 @@ public class Noticebill_add {
      * @return
      */
     @RequestMapping("/noticebillAdd")
-    public String noticebillAdd(BusinessNote businessNote, Model model) {
+    public String noticebillAdd(BusinessNote businessNote, RegionParam regionParam, Model model) {
+        Region address = regionService.findRegionByAreaId(regionParam.getAddressArea());
+        Region arrive = regionService.findRegionByAreaId(regionParam.getArriveCityArea());
+        businessNote.setAddress(address.getName() + regionParam.getAddressSuffix());
+        businessNote.setArriveCity(arrive.getName() + regionParam.getArriveCitySuffix());
         businessNoteService.addbusinessNote(businessNote);
         model.addAttribute("msg", "添加成功");
         return noticebill_addView();
     }
 
+    @RequestMapping(value = "/RegionOne", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    public String RegionOne() {
+        // 读取地区代表
+        List<RegionArg> lr = regionArgService.getList();
+        lr.forEach(System.out::println);
+        // 返回JSON格式的数据
+        String json = JSONArray.toJSONString(lr);
+        return json;
+    }
+
+    @RequestMapping(value = "/RegionTow", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    public String RegionTow(@RequestParam String parentid) {
+        if (parentid != null && !"".equals(parentid)) {
+            // 读取地区代表
+            List<RegionArg> lr = regionArgService.getCityList(parentid);
+            lr.forEach(System.out::println);
+            // 返回JSON格式的数据
+            String json = JSONArray.toJSONString(lr);
+            return json;
+        } else {
+            return "[]";
+        }
+    }
+
+    @RequestMapping(value = "/RegionTree", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    public String RegionTree(@RequestParam String parentid) {
+        if (parentid != null && !"".equals(parentid)) {
+            // 读取地区代表
+            List<RegionArg> lr = regionArgService.getAreaList(parentid);
+            // 返回JSON格式的数据
+            String json = JSONArray.toJSONString(lr);
+            return json;
+        } else {
+            return "[]";
+        }
+    }
+
     /**
      * 双击查看关联订单
      */
-    @RequestMapping(value = "/findAssociationsOrderOnDbl",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/findAssociationsOrderOnDbl", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     public String findAssociationsOrderOnDbl(String id) {
-         List<BusinessNote> businessNotes=businessNoteService.AssociationsOrderOnDbl(id);
+        List<BusinessNote> businessNotes = businessNoteService.AssociationsOrderOnDbl(id);
         return JSON.toJSONString(businessNotes);
     }
 

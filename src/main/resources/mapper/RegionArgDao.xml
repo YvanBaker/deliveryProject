@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.delivery.dao.RegionArgDao">
+    <select id="getProvinceList" resultMap="regionArgMap">
+        select  id,province_name from provinces
+    </select>
+    <resultMap id="regionArgMap" type="regionArg">
+        <id column="id" property="regionID"/>
+        <result column="province_name" property="regionName"/>
+    </resultMap>
+
+    <select id="getCityList" resultMap="regionArgMap1">
+        select  id,city_name,province_id from city where province_id=#{provinceId}
+    </select>
+    <resultMap id="regionArgMap1" type="regionArg">
+        <id column="id" property="regionID"/>
+        <result column="city_name" property="regionName"/>
+        <result column="province_id" property="parentRegionID"/>
+    </resultMap>
+    <select id="getAreaList" resultMap="regionArgMap3">
+        select  id,areas_name,city_id,province_id from areas where city_id=#{cityId}
+    </select>
+    <resultMap id="regionArgMap3" type="regionArg">
+        <id column="id" property="regionID"/>
+        <result column="areas_name" property="regionName"/>
+        <result column="city_id" property="parentRegionID"/>
+    </resultMap>
+</mapper>

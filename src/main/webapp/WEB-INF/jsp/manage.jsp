@@ -53,7 +53,7 @@
             <div title="基础功能">
                 <ul id="ztree1" class="ztree"></ul>
             </div>
-            <div title="系统管理" id="ztree2" class="ztree"></div>
+            <%--<div title="系统管理" id="ztree2" class="ztree"></div>--%>
         </div>
     </div>
     <%--中间--%>
@@ -188,7 +188,7 @@
     });
 
     /*系统管理菜单*/
-    $(function () {
+ /*   $(function () {
         var setting2 = {
             data: {
                 simpleData: {
@@ -224,7 +224,7 @@
             $.fn.zTree.init($("#ztree2"), setting2, data);
         }, 'json');
     })
-
+*/
 
     /*function doAdd() {
         $("#tt").tabs('add', {
