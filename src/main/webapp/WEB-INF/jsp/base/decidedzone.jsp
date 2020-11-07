@@ -41,12 +41,13 @@
         if (selectrow.length == 1) {//这里有bug********虽然正确重现记录******但是如果不改变表单内容就不会正确修改
             $('#addDecidedzoneWindow').window({title: "修改定区信息"})
             $('#addDecidedzoneWindow').window("open");//打开修改窗口
-            $("#addDecidedZoneFrom").form("load", {
-                selectId: selectrow[0].id,
-                decidedName: selectrow[0].decidedName,
-                staffId: selectrow[0].staff.name,
-                areaId: selectrow[0].region.name
-            });
+            $('#selectId').textbox('setValue',selectrow[0].id);
+            $('#deciname').val(selectrow[0].decidedName);
+            $('#staff').combobox('setValue', selectrow[0].staff.id);
+            $('#staff').combobox('setText', selectrow[0].staff.name);
+            $('#area').combobox('setValue',selectrow[0].region.id);
+            $('#area').combobox('setText', selectrow[0].region.name);
+            $("#addDecidedZoneFrom").form("load");
         }
     }
 
@@ -57,19 +58,24 @@
             //没有选中，提示
             $.messager.alert("提示信息", "请选择需要删除的记录！", "warning");
         } else {
-            var array = new Array();
-            //选中了记录,获取选中行的id
-            var n = 0;
-            for (var i = 0; i < selectrow.length; i++) {
-                var id = selectrow[i].id;
-                array.push(id);
-            }
-            var ids = array.join(",");
-            //发送请求，传递ids参数
-            $.post("/sys/delecte", {ids: ids}, function (data) {
-                alert(data)
-                $("#grid").datagrid("reload");
-            }, 'json')
+            $.messager.confirm("确认",'您确认想要删除记录吗？',function(r){
+                if (r){
+                    var array = new Array();
+                    //选中了记录,获取选中行的id
+                    var n = 0;
+                    for (var i = 0; i < selectrow.length; i++) {
+                        var id = selectrow[i].id;
+                        array.push(id);
+                    }
+                    var ids = array.join(",");
+                    //发送请求，传递ids参数
+                    $.post("/sys/delecte", {ids: ids}, function (data) {
+                        alert(data)
+                        $("#grid").datagrid("reload");
+                    }, 'json')
+                }
+            })
+
         }
     }
 
@@ -248,8 +254,6 @@
             height: 400,
             resizable: false
         });
-
-
     });
 
     /**
@@ -375,7 +379,7 @@
             <table class="table-edit" width="80%" align="center">
                 <tr class="title">
                     <td colspan="2">定区信息</td>
-                    <input type="hidden" name="selectId" value="-1"/>
+                    <input type="hidden" name="selectId" id="selectId"  class="easyui-textbox" value="-1"/>
                 </tr>
                 <tr>
                     <td>定区名称</td>
@@ -404,14 +408,14 @@
 <div class="easyui-window" title="查询定区窗口" id="searchWindow" collapsible="false" minimizable="false" maximizable="false"
      style="top:20px;left:200px">
     <div style="overflow:auto;padding:5px;" border="false">
-        <form id="searchFrom" method="post" action="/sys/decidedZoneShow">
+        <form id="searchFrom">
             <table class="table-edit" width="80%" align="center">
                 <tr class="title">
                     <td colspan="2">查询条件</td>
                 </tr>
                 <tr>
-                    <td>定区编码</td>
-                    <td><input type="text" name="id" class="easyui-numberbox"/></td>
+                    <td>定区名</td>
+                    <td><input type="text" name="name" class="easyui-validatebox"/></td>
                 </tr>
                 <tr>
                     <td>所属单位</td>
@@ -506,7 +510,11 @@
                         $("#grid").datagrid("reload");
                         $("#addDecidedzoneWindow").window('close');
                     }
-
+                    if (data === "3") {//修改
+                        $.messager.alert("提示", "修改失败,有取派员正在派单!", "info");
+                        $("#grid").datagrid("reload");
+                        $("#addDecidedzoneWindow").window('close');
+                    }
                 }
             });
         }

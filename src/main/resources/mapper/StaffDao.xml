@@ -70,22 +70,6 @@
             <if test="standard!=null||standard!=''">or standard like #{standard}</if>
         </where>
     </select>
-
-    <select id="staffDelIsYCountByDim" resultType="int" parameterType="findStaff">
-            select count(*) from staff
-            <where>
-                deltag='Y'
-                <if test="staffNum!=null||staffNum!=''">and uuid like #{staffNum}</if>
-                <if test="station!=null||station!=''">or station like #{station}</if>
-                <if test="standard!=null||standard!=''">or standard like #{standard}</if>
-            </where>
-    </select>
-    <select id="selectStaffDeltagIsYByDim" resultType="staff" parameterType="findStaff">
-        select * from staff
-        <where>
-            deltag='Y'
-            </where>
-    </select>
     <select id="selectStaffByDim" resultType="staff" parameterType="findStaff">
         select id,uuid,name,telephone,haspda,deltag,station,standard from staff
         <where>
@@ -94,5 +78,11 @@
             <if test="standard!=null||standard!=''">or standard like #{standard}</if>
             ORDER BY id asc limit #{page},#{rows}
         </where>
+    </select>
+    <select id="associationsStaff" resultType="staff">
+        select id,uuid,name,telephone,haspda,deltag,station,standard from staff where deltag='Y'
+    </select>
+    <select id="selectStaffByName" resultType="staff">
+        select id,uuid,name,telephone,haspda,deltag,station,standard from staff where name=#{name}
     </select>
 </mapper>

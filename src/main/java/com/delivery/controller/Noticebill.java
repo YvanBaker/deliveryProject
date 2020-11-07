@@ -1,5 +1,6 @@
 package com.delivery.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.delivery.entity.BusinessNote;
 import com.delivery.entity.Customer;
@@ -31,9 +32,8 @@ public class Noticebill {
 
     @Resource
     AddressService customerAddressService;
-    /**
-     *
-     */
+
+
     @Resource
     BusinessNoteService businessNoteService;
 
@@ -53,6 +53,7 @@ public class Noticebill {
         List<CustomerAddress> customerAddress = customerAddressService.getAddressByUserId(customer.getId());
         response.getWriter().write(JSONObject.toJSONString(new CustomerAndAddress(customer, customerAddress)));
     }
+
 
     /*@RequestMapping("/noticebillAdd")
     public String noticebillAdd(@ModelAttribute BusinessNote businessNote, Model model) {

@@ -5,19 +5,18 @@
     <insert id="addDecidedzonePuls">
         insert into decidedzone(decided_name,staff_id,region_id,del)values (#{decidedName},#{staffId},#{areaId},'Y')
     </insert>
-    <update id="delectDecidedzone">
-        update decidedzone set del='N' where id=#{id}
-    </update>
     <update id="updateDecidedZone">
         update decidedzone set decided_name=#{decidedName},staff_id=#{staffId},region_id=#{areaId} where id=#{id}
+    </update>
+    <update id="delectDecidedzone">
+        update decidedzone set del='N' where id=#{id}
     </update>
 
     <select id="getDecidedZoneAll" resultType="decidedzone" resultMap="decidedZoneMap1">
             select * from decidedzone,staff where decidedzone.staff_id=staff.id
     </select>
-    <!--在用-->
     <select id="getDecidedZonelimit" resultMap="decidedZoneMap1">
-        select * from decidedzone,staff,newRegion where del='Y' and decidedzone.staff_id=staff.id and decidedzone.region_id=newRegion.id  limit #{param1},#{param2}
+        select * from decidedzone,staff,newRegion where del='Y' and decidedzone.staff_id=staff.id and decidedzone.region_id=newRegion.id  limit #{page},#{rows}
     </select>
     <select id="DecidedzoneCount" resultType="_int">
         select count(*) from decidedzone where del='Y'
@@ -28,9 +27,11 @@
     <select id="getDecidedZonelimitDim" resultMap="decidedZoneMap1">
         select * from decidedzone,staff,newRegion
         <where>
-           del='Y' and decidedzone.staff_id=staff.id and decidedzone.region_id=newRegion.id having
-            <if test="id!=0"> decidedzone.id = #{id}</if>
-            <if test="station!=null and station!=''">or staff.station like #{station}</if>
+           del='Y' and decidedzone.staff_id=staff.id and decidedzone.region_id=newRegion.id
+            <if test="(name!='' and name!=null)and (station==null || station=='')">and decided_name like #{name}</if>
+            <if test="(station!=null and station!='') and(name==null || name=='') ">and staff.station like #{station}</if>
+            <if test="(name!='' and name!=null) and (station!=null and station!='') ">and (decided_name like #{name}or staff.station like #{station})</if>
+
         </where>
         limit #{page},#{rows}
     </select>
@@ -38,8 +39,9 @@
         select count(*) from decidedzone,staff,newRegion
         <where>
             del='Y' and decidedzone.staff_id=staff.id and decidedzone.region_id=newRegion.id
-            <if test="id!=0">and decidedzone.id = #{id}</if>
-            <if test="station!=null and station!=''">or staff.station like #{station}</if>
+            <if test="(name!='' and name!=null)and (station==null || station=='')">and decided_name like #{name}</if>
+            <if test="(station!=null and station!='') and(name==null || name=='') ">and staff.station like #{station}</if>
+            <if test="(name!='' and name!=null) and (station!=null and station!='') ">and (decided_name like #{name}or staff.station like #{station})</if>
         </where>
     </select>
     <select id="getDecidedZoneById" resultMap="decidedZoneMap1">

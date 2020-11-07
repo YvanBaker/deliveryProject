@@ -81,5 +81,15 @@ public class StaffServiceImpl implements StaffService {
         return staffDao.staffRenew(staff);
     }
 
+    /**
+     * 判重
+     * @param name
+     * @return
+     */
+    @Override
+    public Staff selectStaffByName(String name) {
+        return staffDao.selectStaffByName(name);
+    }
+
 
 }
