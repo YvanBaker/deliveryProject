@@ -4,7 +4,10 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.delivery.annotaions.CustomerToken;
 import com.delivery.entity.Customer;
+import com.delivery.entity.CustomerAddress;
+import com.delivery.entity.CustomerReceiveAddress;
 import com.delivery.entity.CustomerWorkOrder;
+import com.delivery.exception.customer.AddressNumberException;
 import com.delivery.exception.customer.CustomerAttributesNullException;
 import com.delivery.exception.customer.CustomerNameRepeatException;
 import com.delivery.exception.customer.CustomerNullException;
@@ -198,12 +201,7 @@ public class CustomerController {
     @CustomerToken
     public String generateOrder(CustomerWorkOrder order, HttpServletRequest request) {
         String token = request.getHeader("token");
-        Claims claims = null;
-        try {
-            claims = JwtUtils.checkJWT(token);
-        } catch (Exception e) {
-            return JSON.toJSONString(MsgResponse.buildError("用户登录过期！！"));
-        }
+        Claims claims = JwtUtils.checkJWT(token);
         Integer id = (Integer) claims.get("id");
         order.setCustomerId(id);
         customerWorkOrderService.generateOrder(order);
@@ -221,7 +219,6 @@ public class CustomerController {
         Claims claims = JwtUtils.checkJWT(token);
         Integer id = (Integer) claims.get("id");
         List<CustomerWorkOrderInfo> list = customerWorkOrderService.queryOrder(id);
-
         return JSON.toJSONString(MsgResponse.buildSuccess(SUCCESS, list),
                 SerializerFeature.DisableCircularReferenceDetect);
     }
@@ -239,5 +236,29 @@ public class CustomerController {
                     SerializerFeature.DisableCheckSpecialChar);
         }
         return JSON.toJSONString(MsgResponse.buildError("参数错误！！"));
+    }
+
+    @PostMapping(value = "/saveAddress", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @CustomerToken
+    @CrossOrigin
+    public String saveAddress(CustomerAddress customerAddress){
+        try {
+            addressService.saveCustomerAddress(customerAddress);
+        } catch (AddressNumberException e) {
+            return JSON.toJSONString(MsgResponse.buildError(e.getMessage()));
+        }
+        return JSON.toJSONString(MsgResponse.buildSuccess(SUCCESS));
+    }
+
+    @PostMapping(value = "/saveReceiveAddress", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @CustomerToken
+    @CrossOrigin
+    public String savaReceiveAddress(CustomerReceiveAddress customerReceiveAddress){
+        try {
+            addressService.saveCustomerReceiveAddress(customerReceiveAddress);
+        } catch (AddressNumberException e) {
+            return JSON.toJSONString(MsgResponse.buildError(e.getMessage()));
+        }
+        return JSON.toJSONString(MsgResponse.buildSuccess(SUCCESS));
     }
 }
