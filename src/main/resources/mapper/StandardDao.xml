@@ -53,7 +53,7 @@
         SELECT * from standard WHERE status='1' ORDER BY id asc limit #{arg0},#{arg1}
     </select>
     <select id="standardCount" resultType="java.lang.Integer">
-        SELECT COUNT(*) FROM standard
+        SELECT COUNT(*) FROM standard WHERE status='1'
     </select>
     <select id="selectStandardByStandardName" resultMap="standardMap">
         SELECT * FROM standard WHERE standardName=#{standardName}

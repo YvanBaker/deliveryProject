@@ -32,4 +32,8 @@ public interface DecidedzoneDao {
      * @return
      */
     List<Decidedzone> selectOneDecidedzone(String regionId);
+
+    List<Decidedzone> selectDecidedZoneForRemoveStaff(String staffId);
+
+    boolean updateDecidedZoneForStaffToNull(int id);
 }

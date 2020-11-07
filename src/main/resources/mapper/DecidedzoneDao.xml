@@ -8,6 +8,9 @@
     <insert id="addDecidedzonePuls">
         insert into decidedzone(decided_name,staff_id,region_id)values (#{decidedName},#{staffId},#{areaId})
     </insert>
+    <update id="updateDecidedZoneForStaffToNull">
+        UPDATE decidedzone SET staff_id='null' WHERE id=#{id}
+    </update>
     <select id="getDecidedZoneAll" resultType="decidedzone" resultMap="decidedZoneMap1">
             select * from decidedzone,staff where decidedzone.staff_id=staff.id
     </select>
@@ -23,6 +26,9 @@
     </select>
     <select id="selectOneDecidedzone" resultType="com.delivery.entity.Decidedzone">
         SELECT * from decidedzone where region_id=#{regionId} and del='Y'
+    </select>
+    <select id="selectDecidedZoneForRemoveStaff" resultType="com.delivery.entity.Decidedzone">
+        select * from decidedzone where staff_id=#{staffId} and del='Y'
     </select>
     <resultMap id="decidedZoneMap0" type="decidedzone">
         <id property="id" column="id"/>

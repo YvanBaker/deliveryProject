@@ -45,7 +45,7 @@
         <if test="name!=null and name!=''">and name=#{name}</if>
         <if test="station!=null and station!=''">and station=#{station}</if>
         <if test="uuid!=null and uuid!=''">and uuid=#{uuid}</if>
-
+        <if test="id!=null and id!=''">and id=#{id}</if>
     </select>
     <select id="selectStaffByStandard" resultMap="StaffMap" parameterType="Staff">
         select * from staff where standard=#{standard};
